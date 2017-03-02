@@ -1,0 +1,34 @@
+/**
+ * Takoyaki SASS Stylesheet
+ * =========================
+ *
+ * Main stylesheet of the application.
+ */
+@import '~bootstrap/scss/bootstrap.scss';
+
+/**
+ * Variables.
+ */
+$lace: #fdf5e6;
+$black: #343434;
+$red: #b22222;
+$orange: #ff8c00;
+
+/**
+ * Layout.
+ */
+body {
+  height: 100%;
+  background-color: $lace;
+  font-family: Lato, sans-serif;
+  border-top: 5px solid $black;
+  color: $black;
+}
+
+h1.hero {
+  margin-top: 50px;
+  font-weight: 300;
+  font-size: 80px;
+  text-align: center;
+  font-family: Lato, sans-serif;
+}
