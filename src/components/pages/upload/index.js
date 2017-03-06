@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 import Page from '../../Page.jsx';
 import Table from '../../Table.jsx';
 import Button from '../../bootstrap/Button.jsx';
-import {parseFile} from '../../../modules/data';
+import {parseFile} from '../../../modules/main';
 import {previewFile} from '../../../modules/file';
 
 /**
@@ -69,7 +69,7 @@ const enhance = compose(
     state => {
       return {
         file: state.file,
-        loading: state.data.parsing
+        loading: state.main.parsing
       };
     },
     dispatch => {

@@ -47,7 +47,7 @@ const enhance = compose(
   connect(
     state => {
       return {
-        data: state.data
+        data: state.main
       };
     }
   )

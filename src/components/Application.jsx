@@ -29,9 +29,9 @@ const enhance = compose(
   connect(
     state => {
       return {
-        headers: state.data.headers,
-        target: state.step.target,
-        step: state.step.current
+        headers: state.main.headers,
+        target: state.main.target,
+        step: state.main.current
       };
     },
     dispatch => {

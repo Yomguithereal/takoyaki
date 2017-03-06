@@ -1,23 +1,27 @@
 /**
- * Takoyaki Data Module
+ * Takoyaki Main Module
  * =====================
  *
- * Module in charge of data parsing & edition.
+ * Main logic module.
  */
 import CSV from 'papaparse';
 import {resolver} from './helpers';
-import {STEP_CHANGE} from './step';
 
 /**
  * Constants.
  */
 const DATA_PARSING = '§Data/Parsing';
 const DATA_PARSED = '§Data/Parsed';
+const STEP_CHANGE = '§Step/StepChange';
+const TARGET_CHANGE = '§Step/TargetChange';
 
 /**
  * Default state.
  */
 const DEFAULT_STATE = {
+  current: 'upload',
+  target: null,
+  recipe: null,
   rows: [],
   headers: [],
   parsing: false
@@ -33,6 +37,22 @@ export default resolver(DEFAULT_STATE, {
     return {
       ...state,
       parsing: true
+    };
+  },
+
+  // When step is changed
+  [STEP_CHANGE](state, action) {
+    return {
+      ...state,
+      current: action.step
+    };
+  },
+
+  // When target column is changed
+  [TARGET_CHANGE](state, action) {
+    return {
+      ...state,
+      target: action.target
     };
   },
 
@@ -71,5 +91,19 @@ export function parseFile(file, delimiter) {
         });
       }
     });
+  };
+}
+
+export function changeStep(step) {
+  return {
+    type: STEP_CHANGE,
+    current: step
+  };
+}
+
+export function changeTarget(column) {
+  return {
+    type: TARGET_CHANGE,
+    target: column
   };
 }
