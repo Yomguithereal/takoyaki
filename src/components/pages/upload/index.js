@@ -10,6 +10,8 @@ import {compose} from 'recompose';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Page from '../../Page.jsx';
+import Table from '../../Table.jsx';
+import Button from '../../bootstrap/Button.jsx';
 import {previewFile} from '../../../modules/file';
 
 /**
@@ -35,13 +37,35 @@ function renderDropzone() {
   return 'Drop your CSV file here...'
 }
 
+function renderActionBar(props) {
+  return (
+    <Button
+      kind="primary"
+      className="float-right"
+      disabled={!props.file.preview}>
+      Parse file
+    </Button>
+  );
+}
+
+function describeHeaders(headers) {
+  return headers.map(header => {
+    return {
+      header,
+      accessor: header
+    };
+  });
+}
+
 /**
  * Enhancer.
  */
 const enhance = compose(
   connect(
     state => {
-      return {}
+      return {
+        file: state.file
+      };
     },
     dispatch => {
       return {
@@ -62,11 +86,6 @@ class UploadPage extends Component {
 
     // Binding callbacks
     this.onDrop = this.onDrop.bind(this);
-
-    // Building initial state
-    this.state = {
-      file: null
-    };
   }
 
   onDrop(acceptedFiles) {
@@ -81,15 +100,23 @@ class UploadPage extends Component {
   }
 
   render() {
+    const {file} = this.props;
+
     return (
       <Page
         id="page-upload"
         title={TITLE}
-        description={DESCRIPTION}>
+        description={DESCRIPTION}
+        actionBar={renderActionBar(this.props)}>
         <div className="dropzone">
-          <Dropzone onDrop={this.onDrop}>
-            {renderDropzone}
-          </Dropzone>
+          {!file.preview &&
+            <Dropzone onDrop={this.onDrop}>
+              {renderDropzone}
+            </Dropzone>}
+          {file.preview &&
+            <Table
+              data={file.preview}
+              headers={describeHeaders(file.headers)} />}
         </div>
       </Page>
     );

@@ -12,6 +12,7 @@ export default function Page(props) {
     id,
     title,
     description,
+    actionBar,
     children
   } = props;
 
@@ -26,7 +27,9 @@ export default function Page(props) {
       <div id={id} className="content">
         {children}
       </div>
-      <div className="bottom-menu" />
+      <div className="bottom-menu">
+        {actionBar}
+      </div>
     </Col>
   );
 }

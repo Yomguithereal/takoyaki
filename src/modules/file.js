@@ -17,7 +17,8 @@ const FILE_PREVIEW = '§File/Preview';
  */
 const DEFAULT_STATE = {
   preview: null,
-  delimiter: ','
+  delimiter: ',',
+  headers: []
 };
 
 /**
@@ -28,9 +29,10 @@ export default resolver(DEFAULT_STATE, {
   // When a file is uploaded and we need a preview
   [FILE_PREVIEW](state, action) {
     return {
+      ...state,
       preview: action.preview,
       delimiter: action.delimiter,
-      ...state
+      headers: action.headers
     };
   }
 });
@@ -44,11 +46,14 @@ export function previewFile(file) {
     // Parsing a preview of the file
     CSV.parse(file, {
       preview: 30,
+      header: true,
       complete(results) {
+
         return dispatch({
           type: FILE_PREVIEW,
           preview: results.data,
-          delimiter: results.meta.delimiter
+          delimiter: results.meta.delimiter,
+          headers: results.meta.fields
         });
       }
     });

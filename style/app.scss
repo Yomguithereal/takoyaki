@@ -4,7 +4,6 @@
  *
  * Main stylesheet of the application.
  */
-@import '~bootstrap/scss/bootstrap.scss';
 
 /**
  * Variables.
@@ -14,6 +13,18 @@ $black: #343434;
 $red: #b22222;
 $orange: #ff8c00;
 $white: #ffffff;
+
+/**
+ * Bootstrap overrides.
+ */
+$btn-border-radius: 0;
+$btn-primary-bg: $black;
+
+/**
+ * Imports.
+ */
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~react-table/react-table.css';
 
 /**
  * Layout.
@@ -82,11 +93,13 @@ body {
 
   .content {
     height: calc(100% - 150px);
+    overflow-y: scroll;
   }
 
   .bottom-menu {
     height: 50px;
-    border-top: 1px solid $black;
+    padding-right: 20px;
+    // border-top: 1px solid $black;
   }
 }
 
@@ -96,7 +109,7 @@ body {
 #page-upload {
 
   .dropzone {
-    padding: 50px;
+    padding: 20px;
 
     & > div, & > div > div {
       width: 100% !important;
