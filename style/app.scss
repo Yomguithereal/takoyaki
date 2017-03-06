@@ -15,16 +15,27 @@ $orange: #ff8c00;
 $white: #ffffff;
 
 /**
- * Bootstrap overrides.
+ * Overrides.
  */
+
+// Bootstrap
 $btn-border-radius: 0;
 $btn-primary-bg: $black;
+
+// React-Select
+$select-input-border-radius: 0;
+$select-input-bg: $lace;
+$select-input-border-color: $black;
+$select-input-border-focus: $black;
+$select-option-focused-bg: $black;
+$select-option-focused-color: $white;
 
 /**
  * Imports.
  */
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~react-table/react-table.css';
+@import '~react-select/scss/default.scss';
 
 /**
  * Layout.
@@ -61,23 +72,38 @@ body {
   margin: 0;
 
   & > li {
-    cursor: pointer;
-    padding: 5px;
-    margin-bottom: 5px;
 
-    border: 1px solid $black;
+    & > .step-item {
+      cursor: pointer;
+      padding: 5px;
+      margin-bottom: 5px;
 
-    & > a {
-      color: $black;
+      border: 1px solid $black;
 
-      &:hover {
-        text-decoration: none;
+      & > a {
+        color: $black;
+
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
 
-    &.active {
+    &.active > .step-item {
       background-color: $black;
       color: $white;
+    }
+
+    // Recipes
+    & > .clustering-recipes {
+      list-style-type: none;
+      margin: 0;
+
+      & > .clustering-recipe-item {
+        cursor: pointer;
+        padding: 5px;
+        margin-bottom: 5px;
+      }
     }
   }
 }
@@ -118,6 +144,8 @@ body {
     }
 
     & > div {
+      border-radius: 0px !important;
+      border-color: $black !important;
       text-align: center;
     }
   }

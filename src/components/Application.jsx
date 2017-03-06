@@ -7,10 +7,12 @@
 import React from 'react';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {Grid, Row, Col} from './bootstrap/grid.jsx';
 import Steps from './steps.jsx';
 import UploadPage from './pages/upload';
 import CleanPage from './pages/clean';
+import {changeTarget} from '../modules/step';
 
 /**
  * Routes map.
@@ -27,7 +29,16 @@ const enhance = compose(
   connect(
     state => {
       return {
+        headers: state.data.headers,
+        target: state.step.target,
         step: state.step.current
+      };
+    },
+    dispatch => {
+      return {
+        actions: bindActionCreators({
+          changeTarget
+        }, dispatch)
       };
     }
   )
@@ -36,14 +47,18 @@ const enhance = compose(
 /**
  * Application component.
  */
-function Application({step}) {
+function Application({actions, headers, step, target}) {
   const Page = MAP[step];
 
   return (
     <Grid id="wrapper">
       <Row className="full-height no-gutters">
         <Col size={3} id="main-menu">
-          <Steps activeStep={step} />
+          <Steps
+            actions={actions}
+            activeStep={step}
+            target={target}
+            headers={headers} />
         </Col>
         <Page />
       </Row>
