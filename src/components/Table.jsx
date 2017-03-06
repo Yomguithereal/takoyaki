@@ -10,12 +10,13 @@ import ReactTable from 'react-table';
 export default function Table(props) {
   const {
     headers,
-    data
+    data,
+    defaultPageSize = 10
   } = props;
 
   return (
     <ReactTable
-      defaultPageSize={10}
+      defaultPageSize={defaultPageSize}
       columns={headers}
       data={data} />
   );

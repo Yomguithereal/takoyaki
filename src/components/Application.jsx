@@ -10,13 +10,15 @@ import {connect} from 'react-redux';
 import {Grid, Row, Col} from './bootstrap/grid.jsx';
 import Steps from './steps.jsx';
 import UploadPage from './pages/upload';
+import CleanPage from './pages/clean';
 import {changeStep} from '../modules/step';
 
 /**
  * Routes map.
  */
 const MAP = {
-  upload: UploadPage
+  upload: UploadPage,
+  clean: CleanPage
 };
 
 /**

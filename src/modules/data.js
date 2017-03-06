@@ -17,7 +17,7 @@ const DATA_PARSED = '§Data/Parsed';
  * Default state.
  */
 const DEFAULT_STATE = {
-  data: [],
+  rows: [],
   headers: []
 };
 
@@ -30,7 +30,7 @@ export default resolver(DEFAULT_STATE, {
   [DATA_PARSED](state, action) {
     return {
       ...state,
-      data: action.data,
+      rows: action.rows,
       headers: action.headers
     };
   }
@@ -48,11 +48,11 @@ export function parseFile(file, delimiter) {
       header: true,
       complete(results) {
 
-        dispatch({type: STEP_CHANGE, step: 'cluster'});
+        dispatch({type: STEP_CHANGE, step: 'clean'});
 
         return dispatch({
           type: DATA_PARSED,
-          data: results.data,
+          rows: results.data,
           headers: results.meta.fields
         });
       }
