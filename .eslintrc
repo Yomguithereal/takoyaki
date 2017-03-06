@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "@yomguithereal/eslint-config/es7",
+    "@yomguithereal/eslint-config/react"
+  ],
+  "rules": {
+    "react/require-optimization": 0
+  }
+}

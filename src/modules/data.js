@@ -27,7 +27,7 @@ const DEFAULT_STATE = {
 export default resolver(DEFAULT_STATE, {
 
   // When file is parsed
-  [DATA_PARSED](state, action) {
+  [DATA_PARSED](state, action) {
     return {
       ...state,
       rows: action.rows,

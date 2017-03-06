@@ -35,7 +35,7 @@ const DESCRIPTION = (
  * Helpers.
  */
 function renderDropzone() {
-  return 'Drop your CSV file here...'
+  return 'Drop your CSV file here...';
 }
 
 function renderActionBar(props, submit) {
@@ -75,7 +75,7 @@ const enhance = compose(
           previewFile,
           parseFile
         }, dispatch)
-      }
+      };
     }
   )
 );

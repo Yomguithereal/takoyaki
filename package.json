@@ -4,6 +4,7 @@
   "description": "Fuzzy clustering interface prototype.",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src/* --ext js --ext jsx",
     "dev": "webpack-dev-server -d --progress --colors --hot --hot-only"
   },
   "repository": {
@@ -40,12 +41,16 @@
     "talisman": "^0.18.0"
   },
   "devDependencies": {
+    "@yomguithereal/eslint-config": "^3.0.0",
     "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^6.3.2",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "css-loader": "^0.26.2",
+    "eslint": "^3.17.0",
+    "eslint-plugin-react": "^6.10.0",
     "node-sass": "^4.5.0",
     "sass-loader": "^6.0.2",
     "style-loader": "^0.13.2",

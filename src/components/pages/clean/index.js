@@ -6,11 +6,9 @@
  */
 import React, {Component} from 'react';
 import {compose} from 'recompose';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Page from '../../Page.jsx';
 import Table from '../../Table.jsx';
-import Button from '../../bootstrap/Button.jsx';
 
 /**
  * Description.
@@ -29,7 +27,7 @@ const DESCRIPTION = (
 /**
  * Helpers.
  */
-function renderActionBar(props, submit) {
+function renderActionBar() {
   return null;
 }
 

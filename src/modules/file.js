@@ -27,7 +27,7 @@ const DEFAULT_STATE = {
 export default resolver(DEFAULT_STATE, {
 
   // When a file is uploaded and we need a preview
-  [FILE_PREVIEW](state, action) {
+  [FILE_PREVIEW](state, action) {
     return {
       ...state,
       preview: action.preview,

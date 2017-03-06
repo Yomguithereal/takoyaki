@@ -24,7 +24,7 @@ const DEFAULT_STATE = {
 export default resolver(DEFAULT_STATE, {
 
   // When file is parsed
-  [STEP_CHANGE](state, action) {
+  [STEP_CHANGE](state, action) {
     return {
       ...state,
       current: action.step
