@@ -18,7 +18,3 @@ export default function Steps({activeStep}) {
     </ul>
   );
 }
-
-Steps.contextTypes = {
-  router: React.PropTypes.object
-};

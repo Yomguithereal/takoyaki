@@ -9,7 +9,7 @@ import {resolver} from './helpers';
 /**
  * Constants.
  */
-const STEP_CHANGE = '§Step/Change';
+export const STEP_CHANGE = '§Step/Change';
 
 /**
  * Default state.

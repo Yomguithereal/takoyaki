@@ -6,6 +6,7 @@
  */
 import CSV from 'papaparse';
 import {resolver} from './helpers';
+import {STEP_CHANGE} from './step';
 
 /**
  * Constants.
@@ -46,6 +47,8 @@ export function parseFile(file, delimiter) {
       delimiter,
       header: true,
       complete(results) {
+
+        dispatch({type: STEP_CHANGE, step: 'cluster'});
 
         return dispatch({
           type: DATA_PARSED,
