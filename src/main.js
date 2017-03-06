@@ -23,6 +23,7 @@ const STORE = createStore(
   reducer,
   applyMiddleware(thunk)
 );
+window.STORE = STORE;
 
 // Function rendering the application
 function renderApplication(Component) {

@@ -1,8 +1,8 @@
 /**
- * Takoyaki File Module
+ * Takoyaki Data Module
  * =====================
  *
- * Module in charge of file upload & preview.
+ * Module in charge of data parsing & edition.
  */
 import CSV from 'papaparse';
 import {resolver} from './helpers';
@@ -10,14 +10,13 @@ import {resolver} from './helpers';
 /**
  * Constants.
  */
-const FILE_PREVIEW = '§File/Preview';
+const DATA_PARSED = '§Data/Parsed';
 
 /**
  * Default state.
  */
 const DEFAULT_STATE = {
-  preview: null,
-  delimiter: ',',
+  data: [],
   headers: []
 };
 
@@ -26,12 +25,11 @@ const DEFAULT_STATE = {
  */
 export default resolver(DEFAULT_STATE, {
 
-  // When a file is uploaded and we need a preview
-  [FILE_PREVIEW](state, action) {
+  // When file is parsed
+  [DATA_PARSED](state, action) {
     return {
       ...state,
-      preview: action.preview,
-      delimiter: action.delimiter,
+      data: action.data,
       headers: action.headers
     };
   }
@@ -40,20 +38,18 @@ export default resolver(DEFAULT_STATE, {
 /**
  * Actions.
  */
-export function previewFile(file, delimiter) {
+export function parseFile(file, delimiter) {
   return dispatch => {
 
-    // Parsing a preview of the file
+    // Parsing the full file with provided options
     CSV.parse(file, {
       delimiter,
-      preview: 30,
       header: true,
       complete(results) {
 
         return dispatch({
-          type: FILE_PREVIEW,
-          preview: results.data,
-          delimiter: results.meta.delimiter,
+          type: DATA_PARSED,
+          data: results.data,
           headers: results.meta.fields
         });
       }

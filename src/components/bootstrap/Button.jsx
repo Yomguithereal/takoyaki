@@ -12,6 +12,7 @@ export default function Button(props) {
     kind,
     className,
     disabled,
+    onClick,
     children
   } = props;
 
@@ -24,6 +25,7 @@ export default function Button(props) {
   return (
     <button
       role="button"
+      onClick={onClick}
       className={classes}
       disabled={disabled}>
       {children}

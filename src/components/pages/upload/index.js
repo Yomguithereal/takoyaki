@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import Page from '../../Page.jsx';
 import Table from '../../Table.jsx';
 import Button from '../../bootstrap/Button.jsx';
+import {parseFile} from '../../../modules/data';
 import {previewFile} from '../../../modules/file';
 
 /**
@@ -37,11 +38,12 @@ function renderDropzone() {
   return 'Drop your CSV file here...'
 }
 
-function renderActionBar(props) {
+function renderActionBar(props, submit) {
   return (
     <Button
       kind="primary"
       className="float-right"
+      onClick={submit}
       disabled={!props.file.preview}>
       Parse file
     </Button>
@@ -70,7 +72,8 @@ const enhance = compose(
     dispatch => {
       return {
         actions: bindActionCreators({
-          previewFile
+          previewFile,
+          parseFile
         }, dispatch)
       }
     }
@@ -86,17 +89,27 @@ class UploadPage extends Component {
 
     // Binding callbacks
     this.onDrop = this.onDrop.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+
+    // State
+    this.file = null;
   }
 
   onDrop(acceptedFiles) {
-    const actions = this.props.actions;
+    const actions = this.props.actions,
+          delimiter = this.props.file.delimiter;
 
     if (!acceptedFiles || !acceptedFiles.length)
       return;
 
     const file = acceptedFiles[0];
+    this.file = file;
 
-    actions.previewFile(file);
+    actions.previewFile(file, delimiter);
+  }
+
+  onSubmit() {
+    this.props.actions.parseFile(this.file, this.props.file.delimiter);
   }
 
   render() {
@@ -107,7 +120,7 @@ class UploadPage extends Component {
         id="page-upload"
         title={TITLE}
         description={DESCRIPTION}
-        actionBar={renderActionBar(this.props)}>
+        actionBar={renderActionBar(this.props, this.onSubmit)}>
         <div className="dropzone">
           {!file.preview &&
             <Dropzone onDrop={this.onDrop}>
