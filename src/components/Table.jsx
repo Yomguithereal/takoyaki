@@ -16,6 +16,7 @@ export default function Table(props) {
 
   return (
     <ReactTable
+      sortable={false}
       defaultPageSize={defaultPageSize}
       columns={headers}
       data={data} />
