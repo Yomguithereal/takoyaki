@@ -22,6 +22,11 @@ $white: #ffffff;
 $btn-border-radius: 0;
 $btn-primary-bg: $black;
 
+$progress-border-radius: 0;
+$progress-bar-bg: $black;
+$progress-height: 10px;
+$progress-bar-animation-timing: .5s linear infinite !default;
+
 // React-Select
 $select-input-border-radius: 0;
 $select-input-bg: $lace;
@@ -36,6 +41,14 @@ $select-option-focused-color: $white;
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~react-table/react-table.css';
 @import '~react-select/scss/default.scss';
+
+/**
+ * Component overrides.
+ */
+.progress-bar-striped {
+  @include gradient-striped($lace, 45deg);
+  background-size: $progress-height $progress-height;
+}
 
 /**
  * Layout.
@@ -110,17 +123,21 @@ body {
 
 #page {
   .top-menu {
-    height: 100px;
+    height: 110px;
     border-bottom: 1px solid $black;
-    padding: 10px;
 
-    .description {
-      font-size: 0.8em;
+    & > .menu-content {
+      height: 100px;
+      padding: 10px;
+
+      .description {
+        font-size: 0.8em;
+      }
     }
   }
 
   .content {
-    height: calc(100% - 150px);
+    height: calc(100% - 160px);
     overflow-y: scroll;
   }
 

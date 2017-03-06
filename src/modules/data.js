@@ -11,6 +11,7 @@ import {STEP_CHANGE} from './step';
 /**
  * Constants.
  */
+const DATA_PARSING = '§Data/Parsing';
 const DATA_PARSED = '§Data/Parsed';
 
 /**
@@ -18,7 +19,8 @@ const DATA_PARSED = '§Data/Parsed';
  */
 const DEFAULT_STATE = {
   rows: [],
-  headers: []
+  headers: [],
+  parsing: false
 };
 
 /**
@@ -26,12 +28,21 @@ const DEFAULT_STATE = {
  */
 export default resolver(DEFAULT_STATE, {
 
+  // When file is parsing
+  [DATA_PARSING](state) {
+    return {
+      ...state,
+      parsing: true
+    };
+  },
+
   // When file is parsed
   [DATA_PARSED](state, action) {
     return {
       ...state,
       rows: action.rows,
-      headers: action.headers
+      headers: action.headers,
+      parsing: false
     };
   }
 });
@@ -41,6 +52,9 @@ export default resolver(DEFAULT_STATE, {
  */
 export function parseFile(file, delimiter) {
   return dispatch => {
+
+    // Loading
+    dispatch({type: DATA_PARSING});
 
     // Parsing the full file with provided options
     CSV.parse(file, {

@@ -13,7 +13,9 @@ export default function Button(props) {
     className,
     disabled,
     onClick,
-    children
+    children,
+    loading = false,
+    loadingText = 'Loading...'
   } = props;
 
   const classes = cls(
@@ -27,8 +29,8 @@ export default function Button(props) {
       role="button"
       onClick={onClick}
       className={classes}
-      disabled={disabled}>
-      {children}
+      disabled={disabled || loading}>
+      {loading ? loadingText : children}
     </button>
   );
 }

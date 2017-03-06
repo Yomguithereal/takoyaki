@@ -44,6 +44,8 @@ function renderActionBar(props, submit) {
       kind="primary"
       className="float-right"
       onClick={submit}
+      loadingText="Parsing..."
+      loading={props.loading}
       disabled={!props.file.preview}>
       Parse file
     </Button>
@@ -66,7 +68,8 @@ const enhance = compose(
   connect(
     state => {
       return {
-        file: state.file
+        file: state.file,
+        loading: state.data.parsing
       };
     },
     dispatch => {
@@ -113,14 +116,15 @@ class UploadPage extends Component {
   }
 
   render() {
-    const {file} = this.props;
+    const {file, loading} = this.props;
 
     return (
       <Page
         id="page-upload"
         title={TITLE}
         description={DESCRIPTION}
-        actionBar={renderActionBar(this.props, this.onSubmit)}>
+        actionBar={renderActionBar(this.props, this.onSubmit)}
+        loading={loading}>
         <div className="dropzone">
           {!file.preview &&
             <Dropzone onDrop={this.onDrop}>
