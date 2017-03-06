@@ -5,44 +5,52 @@
  * Main component of the application.
  */
 import React from 'react';
-import {Router, IndexRedirect, Route, hashHistory} from 'react-router';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
 import {Grid, Row, Col} from './bootstrap/grid.jsx';
 import Steps from './steps.jsx';
 import UploadPage from './pages/upload';
+import {changeStep} from '../modules/step';
 
 /**
- * Global layout of the application.
+ * Routes map.
  */
-function Layout({children}) {
+const MAP = {
+  upload: UploadPage
+};
+
+/**
+ * Enhancer.
+ */
+const enhance = compose(
+  connect(
+    state => {
+      return {
+        step: state.step.current
+      };
+    }
+  )
+);
+
+/**
+ * Application component.
+ */
+function Application({step}) {
+  const Page = MAP[step];
+
   return (
     <Grid id="wrapper">
       <Row className="full-height no-gutters">
         <Col size={3} id="main-menu">
-          <Steps />
+          <Steps activeStep={step} />
         </Col>
-        {children}
+        <Page />
       </Row>
     </Grid>
   );
 }
 
 /**
- * Dummy component for testing.
+ * Exporting.
  */
-function Dummy() {
-  return <div>Route...</div>;
-}
-
-/**
- * Application with router.
- */
-export default function Application() {
-  return (
-    <Router history={hashHistory}>
-      <Route path="/" component={Layout}>
-        <IndexRedirect to="/upload" />
-        <Route path="/upload" component={UploadPage} />
-      </Route>
-    </Router>
-  );
-}
+export default enhance(Application);

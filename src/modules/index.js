@@ -7,10 +7,12 @@
 import {combineReducers} from 'redux';
 import data from './data';
 import file from './file';
+import step from './step';
 
 const combined = combineReducers({
   data,
-  file
+  file,
+  step
 });
 
 export default combined;
