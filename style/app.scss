@@ -13,6 +13,7 @@ $lace: #fdf5e6;
 $black: #343434;
 $red: #b22222;
 $orange: #ff8c00;
+$white: #ffffff;
 
 /**
  * Layout.
@@ -40,6 +41,32 @@ body {
 
 #main-menu {
   border-right: 1px solid $black;
+}
+
+#steps {
+  list-style-type: none;
+  padding: 10px;
+
+  & > li {
+    cursor: pointer;
+    padding: 5px;
+    margin-bottom: 5px;
+
+    border: 1px solid $black;
+
+    & > a {
+      color: $black;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &.active {
+      background-color: $black;
+      color: $white;
+    }
+  }
 }
 
 #page {
