@@ -127,9 +127,12 @@ class UploadPage extends Component {
               {renderDropzone}
             </Dropzone>}
           {file.preview &&
-            <Table
-              data={file.preview}
-              headers={describeHeaders(file.headers)} />}
+            <div>
+              <em>Do you recognize your table?</em>
+              <Table
+                data={file.preview}
+                headers={describeHeaders(file.headers)} />
+            </div>}
         </div>
       </Page>
     );
