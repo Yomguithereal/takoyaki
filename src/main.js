@@ -6,7 +6,8 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import Application from './components/Application.jsx';
 import reducer from './modules';
@@ -18,7 +19,10 @@ import '../style/app.scss';
 const MOUNT_NODE = document.getElementById('app');
 
 // Creating redux store
-const STORE = createStore(reducer);
+const STORE = createStore(
+  reducer,
+  applyMiddleware(thunk)
+);
 
 // Function rendering the application
 function renderApplication(Component) {
