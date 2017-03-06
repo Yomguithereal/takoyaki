@@ -17,18 +17,21 @@ $orange: #ff8c00;
 /**
  * Layout.
  */
-body {
+html, body, #app {
   height: 100%;
+}
+
+body {
   background-color: $lace;
   font-family: Lato, sans-serif;
   border-top: 5px solid $black;
   color: $black;
 }
 
-h1.hero {
-  margin-top: 50px;
-  font-weight: 300;
-  font-size: 80px;
-  text-align: center;
-  font-family: Lato, sans-serif;
+#wrapper {
+  height: 100%;
+}
+
+.full-height {
+  height: 100%;
 }
