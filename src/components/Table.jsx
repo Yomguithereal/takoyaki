@@ -6,8 +6,9 @@
  */
 import React from 'react';
 import ReactTable from 'react-table';
+import {pure} from 'recompose';
 
-export default function Table(props) {
+function Table(props) {
   const {
     headers,
     data,
@@ -22,3 +23,5 @@ export default function Table(props) {
       data={data} />
   );
 }
+
+export default pure(Table);

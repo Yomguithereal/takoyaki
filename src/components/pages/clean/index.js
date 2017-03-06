@@ -6,9 +6,12 @@
  */
 import React, {Component} from 'react';
 import {compose} from 'recompose';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Page from '../../Page.jsx';
 import Table from '../../Table.jsx';
+import Button from '../../bootstrap/Button.jsx';
+import {computeClusters} from '../../../modules/main';
 
 /**
  * Description.
@@ -27,8 +30,16 @@ const DESCRIPTION = (
 /**
  * Helpers.
  */
-function renderActionBar() {
-  return null;
+function renderActionBar(props, submit) {
+  return (
+    <Button
+      kind="primary"
+      className="float-right"
+      onClick={submit}
+      loadingText="Parsing...">
+      Cluster
+    </Button>
+  );
 }
 
 function describeHeaders(headers) {
@@ -49,6 +60,13 @@ const enhance = compose(
       return {
         data: state.main
       };
+    },
+    dispatch => {
+      return {
+        actions: bindActionCreators({
+          computeClusters
+        }, dispatch)
+      };
     }
   )
 );
@@ -62,18 +80,17 @@ class CleanPage extends Component {
   }
 
   render() {
-    const {data} = this.props;
+    const {actions, data} = this.props;
 
     return (
       <Page
         id="page-clean"
         title={TITLE}
         description={DESCRIPTION}
-        actionBar={renderActionBar(this.props, this.onSubmit)}>
+        actionBar={renderActionBar(this.props, actions.computeClusters)}>
         <Table
-          data={data.rows}
-          headers={describeHeaders(data.headers)}
-          defaultPageSize={12} />
+          data={data.rows.slice(0, 30)}
+          headers={describeHeaders(data.headers)} />
       </Page>
     );
   }

@@ -5,10 +5,11 @@
  * Component representing a full page of the application.
  */
 import React from 'react';
+import {pure} from 'recompose';
 import {Col} from './bootstrap/grid.jsx';
 import ProgressBar from './bootstrap/ProgressBar.jsx';
 
-export default function Page(props) {
+function Page(props) {
   const {
     id,
     title,
@@ -38,3 +39,5 @@ export default function Page(props) {
     </Col>
   );
 }
+
+export default pure(Page);

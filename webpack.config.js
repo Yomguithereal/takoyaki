@@ -1,4 +1,5 @@
-const path = require('path');
+const path = require('path'),
+      webpack = require('webpack');
 
 module.exports = {
   entry: './src/main.js',
@@ -15,9 +16,16 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.worker\.js$/,
+        use: ['worker-loader']
       }
     ]
   },
+  plugins: [
+    new webpack.NamedModulesPlugin()
+  ],
   devServer: {
     port: 3000
   }

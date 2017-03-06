@@ -40,18 +40,30 @@ function TargetColumnSelector(props) {
 /**
  * A single clustering recipe.
  */
-function ClusteringRecipe({label}) {
-  return <li className="clustering-recipe-item">{label}</li>;
+function ClusteringRecipe({active, label, onClick}) {
+  return (
+    <li
+      className={cls('clustering-recipe-item', active && 'active')}
+      onClick={onClick}>
+      {label}
+    </li>
+  );
 }
 
 /**
  * The clustering recipers list.
  */
-function ClusteringRecipes() {
+function ClusteringRecipes({selected, changeRecipe}) {
   return (
     <ul className="clustering-recipes">
       {recipes.map(recipe => {
-        return <ClusteringRecipe key={recipe.key} label={recipe.label} />
+        return (
+          <ClusteringRecipe
+            active={selected === recipe}
+            key={recipe.key}
+            label={recipe.label}
+            onClick={() => changeRecipe(recipe)} />
+        );
       })}
     </ul>
   );
@@ -76,7 +88,14 @@ function Step({active, text, children}) {
 /**
  * The step list.
  */
-export default function Steps({actions, headers, target, activeStep}) {
+export default function Steps(props) {
+  const {
+    actions,
+    headers,
+    target,
+    recipe,
+    activeStep
+  } = props;
 
   return (
     <ul id="steps">
@@ -88,7 +107,9 @@ export default function Steps({actions, headers, target, activeStep}) {
           disabled={activeStep === 'upload'}
           columns={headers}
           onChange={actions.changeTarget} />
-        <ClusteringRecipes />
+        <ClusteringRecipes
+          selected={recipe}
+          changeRecipe={actions.changeRecipe} />
       </Step>
       <Step active={activeStep === 'export'} text="4. Export" />
     </ul>

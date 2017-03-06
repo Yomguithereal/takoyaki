@@ -10,13 +10,13 @@ export default [
     label: 'Fingerprint Collision',
     description: 'Colliding the fingerprints.',
     preprocessor: 'fingerprint',
-    method: 'keyCollision'
+    clusterer: 'keyCollision'
   },
   {
     key: 'metaphoneCollision',
     label: 'Metaphone Collision',
     description: 'Colliding the metaphones.',
     preprocessor: 'metaphone',
-    method: 'keyCollision'
+    clusterer: 'keyCollision'
   }
 ];

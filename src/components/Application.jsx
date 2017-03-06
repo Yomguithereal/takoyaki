@@ -12,7 +12,7 @@ import {Grid, Row, Col} from './bootstrap/grid.jsx';
 import Steps from './steps.jsx';
 import UploadPage from './pages/upload';
 import CleanPage from './pages/clean';
-import {changeTarget} from '../modules/step';
+import {changeTarget, changeRecipe} from '../modules/main';
 
 /**
  * Routes map.
@@ -30,6 +30,7 @@ const enhance = compose(
     state => {
       return {
         headers: state.main.headers,
+        recipe: state.main.recipe,
         target: state.main.target,
         step: state.main.current
       };
@@ -37,7 +38,8 @@ const enhance = compose(
     dispatch => {
       return {
         actions: bindActionCreators({
-          changeTarget
+          changeTarget,
+          changeRecipe
         }, dispatch)
       };
     }
@@ -47,7 +49,15 @@ const enhance = compose(
 /**
  * Application component.
  */
-function Application({actions, headers, step, target}) {
+function Application(props) {
+  const {
+    actions,
+    headers,
+    step,
+    recipe,
+    target
+  } = props;
+
   const Page = MAP[step];
 
   return (
@@ -57,6 +67,7 @@ function Application({actions, headers, step, target}) {
           <Steps
             actions={actions}
             activeStep={step}
+            recipe={recipe}
             target={target}
             headers={headers} />
         </Col>
