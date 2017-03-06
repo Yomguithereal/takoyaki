@@ -17,21 +17,21 @@ export function Grid({id, children, className}) {
   );
 }
 
-export function Row({children, className}) {
+export function Row({id, children, className}) {
   const classes = cls('row', className);
 
   return (
-    <div className={classes}>
+    <div id={id} className={classes}>
       {children}
     </div>
   );
 }
 
-export function Col({children, size, className}) {
+export function Col({id, children, size, className}) {
   const classes = cls('col', `col-${size}`, className);
 
   return (
-    <div className={classes}>
+    <div id={id} className={classes}>
       {children}
     </div>
   );
