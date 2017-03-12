@@ -25,5 +25,12 @@ export default [
     description: 'Using the Levenshtein distance.',
     clusterer: 'naive',
     distance: 'levenshtein'
+  },
+  {
+    key: 'donato',
+    label: 'The Donato',
+    description: 'Apply the Carry stemmer to strings before colliding them.',
+    preprocessor: 'carry',
+    clusterer: 'keyCollision'
   }
 ];

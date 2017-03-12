@@ -33,7 +33,8 @@ function performClustering(values, recipe) {
         distanceDefinition = distances[recipe.distance];
 
   //-- 1) Preprocessing & mapping unique values
-  const preprocessor = preprocessorDefinition && preprocessorDefinition.build();
+  const preprocessor = preprocessorDefinition && preprocessorDefinition.build(),
+        distance = distanceDefinition && distanceDefinition.distance;
 
   const map = new MultiMap();
 
@@ -48,7 +49,7 @@ function performClustering(values, recipe) {
 
   //-- 3) Building clusterer & computing the clusters
   const clusterer = clustererDefinition.build({
-    distance: distanceDefinition.distance,
+    distance,
     preprocessor,
     radius: 2
   });
