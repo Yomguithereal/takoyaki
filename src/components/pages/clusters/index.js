@@ -1,8 +1,8 @@
 /**
- * Takoyaki Clean Page
- * ====================
+ * Takoyaki Clusters Page
+ * =======================
  *
- * Clean page main component.
+ * Page showing the computed clusters in an orderly fashion.
  */
 import React, {Component} from 'react';
 import {compose} from 'recompose';
@@ -12,17 +12,17 @@ import Page from '../../Page.jsx';
 import Table from '../../Table.jsx';
 import Button from '../../bootstrap/Button.jsx';
 import {computeClusters} from '../../../modules/main';
+import {legibleClustersSelector} from '../../../selectors';
 
 /**
  * Description.
  */
-const TITLE = 'Cleaning the file & selecting cluster target';
+const TITLE = 'Computed clusters examination';
 
 const DESCRIPTION = (
   <p>
     <em>
-      Now that we uploaded the file, this should be a good time to polish some
-      of its rough edges before targeting a specific column to cluster.
+      Now that we found some clusters, what do you want to do with them?
     </em>
   </p>
 );
@@ -36,7 +36,7 @@ function renderActionBar(props, submit) {
       kind="primary"
       onClick={submit}
       loadingText="Clustering...">
-      Cluster
+      Re-Cluster
     </Button>
   );
 }
@@ -48,8 +48,7 @@ const enhance = compose(
   connect(
     state => {
       return {
-        data: state.main,
-        loading: state.main.clustering
+        clusters: legibleClustersSelector(state)
       };
     },
     dispatch => {
@@ -65,25 +64,36 @@ const enhance = compose(
 /**
  * Main component.
  */
-class CleanPage extends Component {
+class ClustersPage extends Component {
   constructor(props, context) {
     super(props, context);
   }
 
   render() {
-    const {actions, data, loading} = this.props;
+    const {actions, clusters} = this.props;
 
     return (
       <Page
-        id="page-clean"
+        id="page-clusters"
         title={TITLE}
         description={DESCRIPTION}
-        loading={loading}
         actionBar={renderActionBar(this.props, actions.computeClusters)}>
         <div className="table-wrapper">
-          <Table
-            data={data.rows}
-            headers={data.headers} />
+          <h4>We found {clusters.length} clusters:</h4>
+          <ul>
+            {clusters.map((cluster, i) => {
+              return (
+                <li key={i}>
+                  Cluster n°{i + 1} ({cluster.length} elements):
+                  <ul>
+                    {cluster.map(item => {
+                      return <li key={item.value}>"{item.value}" ({item.rows.length} rows)</li>;
+                    })}
+                  </ul>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </Page>
     );
@@ -93,4 +103,4 @@ class CleanPage extends Component {
 /**
  * Exporting.
  */
-export default enhance(CleanPage);
+export default enhance(ClustersPage);

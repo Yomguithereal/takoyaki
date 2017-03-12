@@ -12,6 +12,7 @@ import {Grid, Row, Col} from './bootstrap/grid.jsx';
 import Menu from './Menu.jsx';
 import UploadPage from './pages/upload';
 import CleanPage from './pages/clean';
+import ClustersPage from './pages/clusters';
 import {changeTarget, changeRecipe} from '../modules/main';
 
 /**
@@ -19,7 +20,8 @@ import {changeTarget, changeRecipe} from '../modules/main';
  */
 const MAP = {
   upload: UploadPage,
-  clean: CleanPage
+  clean: CleanPage,
+  clusters: ClustersPage
 };
 
 /**

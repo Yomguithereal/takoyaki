@@ -24,6 +24,7 @@ const DATA_PARSED = '§Main/DataParsed';
 const PAGE_CHANGE = '§Main/PageChange';
 const TARGET_CHANGE = '§Main/TargetChange';
 const RECIPE_CHANGE = '§Main/RecipeChange';
+const CLUSTERS_COMPUTING = '§Main/ClustersComputing';
 const CLUSTERS_COMPUTED = '§Main/ClustersComputed';
 
 /**
@@ -87,12 +88,23 @@ export default resolver(DEFAULT_STATE, {
     };
   },
 
+  // When clusters start computing
+  [CLUSTERS_COMPUTING](state, action) {
+    return {
+      ...state,
+      clustering: true
+    };
+  },
+
   // When clusters are computed
   [CLUSTERS_COMPUTED](state, action) {
     return {
       ...state,
       clustering: false,
-      clusters: action.clusters
+      clusters: {
+        data: action.clusters,
+        field: action.field
+      }
     };
   }
 });
@@ -112,7 +124,7 @@ export function parseFile(file, delimiter) {
       header: true,
       complete(results) {
 
-        dispatch({type: PAGE_CHANGE, page: 'clean'});
+        dispatch(changePage('clean'));
 
         return dispatch({
           type: DATA_PARSED,
@@ -151,11 +163,14 @@ export function computeClusters() {
   return (dispatch, getState) => {
     const {rows, recipe, target} = getState().main;
 
+    dispatch({type: CLUSTERS_COMPUTING});
+
     WORKER.onmessage = ({data: {clusters}}) => {
-      return dispatch({type: CLUSTERS_COMPUTED, clusters});
+      dispatch({type: CLUSTERS_COMPUTED, clusters, field: target});
+      return dispatch(changePage('clusters'));
     };
 
-    const values = rows.map(row => row[target.value] || '');
+    const values = rows.map(row => row[target] || '');
 
     WORKER.postMessage({values, recipe});
   };

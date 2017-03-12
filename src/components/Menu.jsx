@@ -33,7 +33,7 @@ function TargetColumnSelector(props) {
       disabled={disabled}
       options={options}
       value={selected}
-      onChange={onChange} />
+      onChange={o => onChange(o ? o.value : null)} />
   );
 }
 

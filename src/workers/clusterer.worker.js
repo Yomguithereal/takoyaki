@@ -8,6 +8,9 @@ import MultiMap from 'mnemonist/multi-map';
 import shuffleInPlace from 'pandemonium/shuffle-in-place';
 import preprocessors from '../definitions/preprocessors';
 import clusterers from '../definitions/clusterers';
+import distances from '../definitions/distances';
+
+// TODO: apply dedupe optimization for some clusterers
 
 /**
  * Message listener.
@@ -25,9 +28,12 @@ function onMessage(data) {
  * Process outline.
  */
 function performClustering(values, recipe) {
+  const preprocessorDefinition = preprocessors[recipe.preprocessor],
+        clustererDefinition = clusterers[recipe.clusterer],
+        distanceDefinition = distances[recipe.distance];
 
   //-- 1) Preprocessing & mapping unique values
-  const preprocessor = preprocessors[recipe.preprocessor].build();
+  const preprocessor = preprocessorDefinition && preprocessorDefinition.build();
 
   const map = new MultiMap();
 
@@ -37,10 +43,15 @@ function performClustering(values, recipe) {
   //-- 2) Retrieving & shuffling values
   const items = [...map.keys()];
 
-  shuffleInPlace(items);
+  if (clustererDefinition.shuffle)
+    shuffleInPlace(items);
 
   //-- 3) Building clusterer & computing the clusters
-  const clusterer = clusterers[recipe.clusterer].build({preprocessor});
+  const clusterer = clustererDefinition.build({
+    distance: distanceDefinition.distance,
+    preprocessor,
+    radius: 2
+  });
 
   const clusters = clusterer(items);
 
@@ -52,7 +63,10 @@ function performClustering(values, recipe) {
           rows = [];
 
     for (let j = 0, m = cluster.length; j < m; j++)
-      rows.push.apply(rows, map.get(cluster[j]));
+      rows.push({
+        value: cluster[j],
+        rows: map.get(cluster[j])
+      });
 
     expandedClusters[i] = rows;
   }

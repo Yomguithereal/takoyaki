@@ -18,5 +18,12 @@ export default [
     description: 'Colliding the metaphones.',
     preprocessor: 'metaphone',
     clusterer: 'keyCollision'
+  },
+  {
+    key: 'levenshteinNaive',
+    label: 'Levenshtein Naive',
+    description: 'Using the Levenshtein distance.',
+    clusterer: 'naive',
+    distance: 'levenshtein'
   }
 ];
