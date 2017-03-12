@@ -1,6 +1,6 @@
 /**
- * Takoyaki Steps Component
- * =========================
+ * Takoyaki Menu Component
+ * ========================
  *
  * Component displaying the steps of the application on the left.
  */
@@ -88,29 +88,29 @@ function Step({active, text, children}) {
 /**
  * The step list.
  */
-export default function Steps(props) {
+export default function Menu(props) {
   const {
     actions,
     headers,
     target,
     recipe,
-    activeStep
+    activePage
   } = props;
 
   return (
     <ul id="steps">
-      <Step active={activeStep === 'upload'} text="1. Upload" />
-      <Step active={activeStep === 'clean'} text="2. Clean & Cluster">
+      <Step active={activePage === 'upload'} text="1. Upload" />
+      <Step active={activePage === 'clean'} text="2. Clean & Cluster">
         <TargetColumnSelector
           selected={target}
-          disabled={activeStep === 'upload'}
+          disabled={activePage === 'upload'}
           columns={headers}
           onChange={actions.changeTarget} />
         <ClusteringRecipes
           selected={recipe}
           changeRecipe={actions.changeRecipe} />
       </Step>
-      <Step active={activeStep === 'export'} text="3. Export" />
+      <Step active={activePage === 'export'} text="3. Export" />
     </ul>
   );
 }

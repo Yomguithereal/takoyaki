@@ -9,7 +9,7 @@ import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Grid, Row, Col} from './bootstrap/grid.jsx';
-import Steps from './steps.jsx';
+import Menu from './Menu.jsx';
 import UploadPage from './pages/upload';
 import CleanPage from './pages/clean';
 import {changeTarget, changeRecipe} from '../modules/main';
@@ -32,7 +32,7 @@ const enhance = compose(
         headers: state.main.headers,
         recipe: state.main.recipe,
         target: state.main.target,
-        step: state.main.current
+        page: state.main.page
       };
     },
     dispatch => {
@@ -53,20 +53,20 @@ function Application(props) {
   const {
     actions,
     headers,
-    step,
+    page,
     recipe,
     target
   } = props;
 
-  const Page = MAP[step];
+  const Page = MAP[page];
 
   return (
     <Grid id="wrapper">
       <Row className="full-height no-gutters">
         <Col size={3} id="main-menu">
-          <Steps
+          <Menu
             actions={actions}
-            activeStep={step}
+            activePage={page}
             recipe={recipe}
             target={target}
             headers={headers} />

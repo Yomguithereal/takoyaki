@@ -21,7 +21,7 @@ let LOCK = false;
  */
 const DATA_PARSING = '§Main/DataParsing';
 const DATA_PARSED = '§Main/DataParsed';
-const STEP_CHANGE = '§Main/StepChange';
+const PAGE_CHANGE = '§Main/PageChange';
 const TARGET_CHANGE = '§Main/TargetChange';
 const RECIPE_CHANGE = '§Main/RecipeChange';
 const CLUSTERS_COMPUTED = '§Main/ClustersComputed';
@@ -30,7 +30,7 @@ const CLUSTERS_COMPUTED = '§Main/ClustersComputed';
  * Default state.
  */
 const DEFAULT_STATE = {
-  current: 'upload',
+  page: 'upload',
   target: null,
   recipe: null,
   rows: [],
@@ -45,11 +45,11 @@ const DEFAULT_STATE = {
  */
 export default resolver(DEFAULT_STATE, {
 
-  // When step is changed
-  [STEP_CHANGE](state, action) {
+  // When page is changed
+  [PAGE_CHANGE](state, action) {
     return {
       ...state,
-      current: action.step
+      page: action.page
     };
   },
 
@@ -112,7 +112,7 @@ export function parseFile(file, delimiter) {
       header: true,
       complete(results) {
 
-        dispatch({type: STEP_CHANGE, step: 'clean'});
+        dispatch({type: PAGE_CHANGE, page: 'clean'});
 
         return dispatch({
           type: DATA_PARSED,
@@ -124,10 +124,10 @@ export function parseFile(file, delimiter) {
   };
 }
 
-export function changeStep(step) {
+export function changePage(page) {
   return {
-    type: STEP_CHANGE,
-    current: step
+    type: PAGE_CHANGE,
+    page: page
   };
 }
 
