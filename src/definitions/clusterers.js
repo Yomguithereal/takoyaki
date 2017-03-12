@@ -11,9 +11,9 @@ export default {
     label: 'Key Collision',
     description: 'Colliding keys go into the same cluster.',
     map: false,
-    build(key) {
+    build({preprocessor}) {
       return items => {
-        return keyCollision({key}, items);
+        return keyCollision({key: preprocessor}, items);
       };
     }
   }

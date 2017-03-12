@@ -40,11 +40,24 @@ function performClustering(values, recipe) {
   shuffleInPlace(items);
 
   //-- 3) Building clusterer & computing the clusters
-  const clusterer = clusterers[recipe.clusterer].build(preprocessor);
+  const clusterer = clusterers[recipe.clusterer].build({preprocessor});
 
   const clusters = clusterer(items);
 
-  return clusters;
+  //-- 4) Expanding clusters to rows
+  const expandedClusters = new Array(clusters.length);
+
+  for (let i = 0, l = clusters.length; i < l; i++) {
+    const cluster = clusters[i],
+          rows = [];
+
+    for (let j = 0, m = cluster.length; j < m; j++)
+      rows.push.apply(rows, map.get(cluster[j]));
+
+    expandedClusters[i] = rows;
+  }
+
+  return expandedClusters;
 }
 
 /**
