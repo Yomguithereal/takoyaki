@@ -39,8 +39,10 @@ $select-option-focused-color: $white;
  * Imports.
  */
 @import '~bootstrap/scss/bootstrap.scss';
-@import '~react-table/react-table.css';
+@import '~fixed-data-table/dist/fixed-data-table-base.min.css';
 @import '~react-select/scss/default.scss';
+
+@import './data-table.scss';
 
 /**
  * Component overrides.
@@ -148,7 +150,13 @@ body {
   .bottom-menu {
     height: 50px;
     padding-right: 20px;
-    // border-top: 1px solid $black;
+    border-top: 1px solid $black;
+    padding: 5px;
+
+    button {
+      position: absolute;
+      right: 5px;
+    }
   }
 }
 
@@ -159,6 +167,9 @@ body {
 
   .dropzone {
     padding: 20px;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
 
     & > div, & > div > div {
       width: 100% !important;
@@ -168,6 +179,25 @@ body {
       border-radius: 0px !important;
       border-color: $black !important;
       text-align: center;
+    }
+
+    .data-table {
+      height: calc(100% - 10px);
+    }
+  }
+}
+
+#page-clean {
+
+  .table-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+
+    .data-table {
+      width: 100%;
+      height: 100%;
     }
   }
 }

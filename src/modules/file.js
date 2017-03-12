@@ -46,7 +46,7 @@ export function previewFile(file, delimiter) {
     // Parsing a preview of the file
     CSV.parse(file, {
       delimiter,
-      preview: 30,
+      preview: 50,
       header: true,
       complete(results) {
 

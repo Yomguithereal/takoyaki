@@ -34,21 +34,11 @@ function renderActionBar(props, submit) {
   return (
     <Button
       kind="primary"
-      className="float-right"
       onClick={submit}
       loadingText="Parsing...">
       Cluster
     </Button>
   );
-}
-
-function describeHeaders(headers) {
-  return headers.map(header => {
-    return {
-      header,
-      accessor: header
-    };
-  });
 }
 
 /**
@@ -88,9 +78,11 @@ class CleanPage extends Component {
         title={TITLE}
         description={DESCRIPTION}
         actionBar={renderActionBar(this.props, actions.computeClusters)}>
-        <Table
-          data={data.rows.slice(0, 30)}
-          headers={describeHeaders(data.headers)} />
+        <div className="table-wrapper">
+          <Table
+            data={data.rows}
+            headers={data.headers} />
+        </div>
       </Page>
     );
   }

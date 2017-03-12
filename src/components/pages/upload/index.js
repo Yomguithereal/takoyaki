@@ -42,7 +42,6 @@ function renderActionBar(props, submit) {
   return (
     <Button
       kind="primary"
-      className="float-right"
       onClick={submit}
       loadingText="Parsing..."
       loading={props.loading}
@@ -50,15 +49,6 @@ function renderActionBar(props, submit) {
       Parse file
     </Button>
   );
-}
-
-function describeHeaders(headers) {
-  return headers.map(header => {
-    return {
-      header,
-      accessor: header
-    };
-  });
 }
 
 /**
@@ -132,10 +122,10 @@ class UploadPage extends Component {
             </Dropzone>}
           {file.preview &&
             <div>
-              <em>Do you recognize your table?</em>
+              <em>Does it look like your table? (Sampling 50 rows)</em>
               <Table
                 data={file.preview}
-                headers={describeHeaders(file.headers)} />
+                headers={file.headers} />
             </div>}
         </div>
       </Page>

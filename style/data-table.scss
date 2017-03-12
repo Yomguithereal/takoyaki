@@ -1,0 +1,67 @@
+/**
+ * Takoyaki Data Table Stylesheet
+ * ===============================
+ *
+ * Bootstrapping Fixed Data Table styles to adapt our table to the UI's ones.
+ */
+
+/**
+ * Cells.
+ */
+.public_fixedDataTable_main {
+  border: none;
+}
+
+.public_fixedDataTable_header {
+  background-color: $black;
+  color: $white;
+
+  .public_fixedDataTableCell_main {
+    text-align: center;
+
+    div {
+      width: 100%;
+    }
+  }
+}
+
+.fixedDataTableRowLayout_rowWrapper {
+  .public_fixedDataTableCell_main {
+    padding: 5px;
+    text-align: left;
+  }
+}
+
+.public_fixedDataTable_hasBottomBorder {
+  border: none !important;
+}
+
+.public_fixedDataTableRow_odd {
+  background-color: darken(desaturate($lace, 70%), 20%);
+}
+
+/**
+ * Scrollbars.
+ */
+
+/* Touching the scroll-track directly makes the scroll-track bolder */
+.public_Scrollbar_main.public_Scrollbar_mainActive,
+.public_Scrollbar_main:hover {
+  // background-color: rgba(255, 255, 255, 0.8);
+}
+
+.public_Scrollbar_mainOpaque,
+.public_Scrollbar_mainOpaque.public_Scrollbar_mainActive,
+.public_Scrollbar_mainOpaque:hover {
+  // background-color: #fff;
+}
+
+.public_Scrollbar_face:after {
+  background-color: #c2c2c2;
+}
+
+.public_Scrollbar_main:hover .public_Scrollbar_face:after,
+.public_Scrollbar_mainActive .public_Scrollbar_face:after,
+.public_Scrollbar_faceActive:after {
+  background-color: #7d7d7d;
+}
