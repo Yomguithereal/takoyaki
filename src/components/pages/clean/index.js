@@ -35,7 +35,7 @@ function renderActionBar(props, submit) {
     <Button
       kind="primary"
       onClick={submit}
-      loadingText="Parsing...">
+      loadingText="Clustering...">
       Cluster
     </Button>
   );

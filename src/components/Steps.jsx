@@ -100,8 +100,7 @@ export default function Steps(props) {
   return (
     <ul id="steps">
       <Step active={activeStep === 'upload'} text="1. Upload" />
-      <Step active={activeStep === 'clean'} text="2. Clean" />
-      <Step active={activeStep === 'cluster'} text="3. Cluster">
+      <Step active={activeStep === 'clean'} text="2. Clean & Cluster">
         <TargetColumnSelector
           selected={target}
           disabled={activeStep === 'upload'}
@@ -111,7 +110,7 @@ export default function Steps(props) {
           selected={recipe}
           changeRecipe={actions.changeRecipe} />
       </Step>
-      <Step active={activeStep === 'export'} text="4. Export" />
+      <Step active={activeStep === 'export'} text="3. Export" />
     </ul>
   );
 }

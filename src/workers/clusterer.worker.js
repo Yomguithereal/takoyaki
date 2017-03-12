@@ -4,12 +4,10 @@
  *
  * WebWorker designed to run the cluster computations without freezing the UI.
  */
+import MultiMap from 'mnemonist/multi-map';
 import shuffleInPlace from 'pandemonium/shuffle-in-place';
 import preprocessors from '../definitions/preprocessors';
 import clusterers from '../definitions/clusterers';
-
-// TODO: differentiate clusterer needing mapping beforehand
-// TODO: drop transitive object when possible
 
 /**
  * Message listener.
@@ -19,6 +17,8 @@ function onMessage(data) {
         recipe = data.recipe;
 
   const clusters = performClustering(values, recipe);
+
+  return self.postMessage({clusters});
 }
 
 /**
@@ -29,22 +29,22 @@ function performClustering(values, recipe) {
   //-- 1) Preprocessing & mapping unique values
   const preprocessor = preprocessors[recipe.preprocessor].build();
 
-  const items = new Array(values.length);
+  const map = new MultiMap();
 
   for (let i = 0, l = values.length; i < l; i++)
-    items[i] = {value: preprocessor(values[i])};
+    map.set(values[i], i);
 
   //-- 2) Retrieving & shuffling values
+  const items = [...map.keys()];
+
   shuffleInPlace(items);
 
   //-- 3) Building clusterer & computing the clusters
-  const clusterer = clusterers[recipe.clusterer].build();
+  const clusterer = clusterers[recipe.clusterer].build(preprocessor);
 
   const clusters = clusterer(items);
 
-  console.log('clusters', clusters);
-
-  return [];
+  return clusters;
 }
 
 /**

@@ -25,10 +25,19 @@
   }
 }
 
-.fixedDataTableRowLayout_rowWrapper {
+.public_fixedDataTable_bodyRow {
   .public_fixedDataTableCell_main {
     padding: 5px;
     text-align: left;
+
+    .public_fixedDataTableCell_cellContent {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      // TODO: fix this when needing resizable columns!
+      width: 190px;
+    }
   }
 }
 

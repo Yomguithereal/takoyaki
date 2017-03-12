@@ -151,8 +151,8 @@ export function computeClusters() {
   return (dispatch, getState) => {
     const {rows, recipe, target} = getState().main;
 
-    WORKER.onmessage = ({clusters}) => {
-      return dispatch({type: CLUSTERS_COMPUTED}, clusters);
+    WORKER.onmessage = ({data: {clusters}}) => {
+      return dispatch({type: CLUSTERS_COMPUTED, clusters});
     };
 
     const values = rows.map(row => row[target.value] || '');
