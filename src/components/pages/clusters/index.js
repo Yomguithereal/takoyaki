@@ -48,7 +48,8 @@ const enhance = compose(
   connect(
     state => {
       return {
-        clusters: legibleClustersSelector(state)
+        clusters: legibleClustersSelector(state),
+        loading: state.main.clustering
       };
     },
     dispatch => {
@@ -70,13 +71,14 @@ class ClustersPage extends Component {
   }
 
   render() {
-    const {actions, clusters} = this.props;
+    const {actions, clusters, loading} = this.props;
 
     return (
       <Page
         id="page-clusters"
         title={TITLE}
         description={DESCRIPTION}
+        loading={loading}
         actionBar={renderActionBar(this.props, actions.computeClusters)}>
         <div className="table-wrapper">
           <h4>We found {clusters.length} clusters:</h4>
@@ -87,7 +89,7 @@ class ClustersPage extends Component {
                   Cluster n°{i + 1} ({cluster.length} elements):
                   <ul>
                     {cluster.map(item => {
-                      return <li key={item.value}>"{item.value}" ({item.rows.length} rows)</li>;
+                      return <li key={item.value}><span className="monospace">{item.value}</span> ({item.rows.length} rows)</li>;
                     })}
                   </ul>
                 </li>
