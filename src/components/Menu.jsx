@@ -7,7 +7,7 @@
 import React from 'react';
 import cls from 'classnames';
 import Select from 'react-select';
-import recipes from '../definitions/recipes';
+import Button from './bootstrap/Button.jsx';
 
 /**
  * Target column selector.
@@ -53,14 +53,14 @@ function ClusteringRecipe({active, label, onClick}) {
 /**
  * The clustering recipers list.
  */
-function ClusteringRecipes({selected, changeRecipe}) {
+function ClusteringRecipes({selected, recipes, changeRecipe}) {
   return (
     <ul className="clustering-recipes">
-      {recipes.map(recipe => {
+      {recipes.map((recipe, i) => {
         return (
           <ClusteringRecipe
             active={selected === recipe}
-            key={recipe.key}
+            key={i}
             label={recipe.label}
             onClick={() => changeRecipe(recipe)} />
         );
@@ -93,24 +93,30 @@ export default function Menu(props) {
     actions,
     headers,
     target,
-    recipe,
+    activeRecipe,
+    recipes,
     activePage
   } = props;
+
+  const canCluster = activePage !== 'upload';
 
   return (
     <ul id="steps">
       <Step active={activePage === 'upload'} text="1. Upload" />
-      <Step active={activePage === 'clean'} text="2. Clean & Cluster">
-        <div className="clustering-submenu">
-          <TargetColumnSelector
-            selected={target}
-            disabled={activePage === 'upload'}
-            columns={headers}
-            onChange={actions.changeTarget} />
-          <ClusteringRecipes
-            selected={recipe}
-            changeRecipe={actions.changeRecipe} />
-        </div>
+      <Step active={activePage === 'clusters' || activePage === 'clean'} text="2. Clean & Cluster">
+        {canCluster &&
+          <div className="clustering-submenu">
+            <TargetColumnSelector
+              selected={target}
+              disabled={activePage === 'upload'}
+              columns={headers}
+              onChange={actions.changeTarget} />
+            <ClusteringRecipes
+              recipes={recipes}
+              selected={activeRecipe}
+              changeRecipe={actions.changeRecipe} />
+            <Button size="sm" onClick={actions.createRecipe}>Create Recipe</Button>
+          </div>}
       </Step>
       <Step active={activePage === 'export'} text="3. Export" />
     </ul>

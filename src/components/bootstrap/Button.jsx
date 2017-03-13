@@ -9,7 +9,8 @@ import cls from 'classnames';
 
 export default function Button(props) {
   const {
-    kind,
+    kind = 'primary',
+    size = null,
     className,
     disabled,
     onClick,
@@ -21,6 +22,7 @@ export default function Button(props) {
   const classes = cls(
     'btn',
     `btn-${kind}`,
+    size && `btn-${size}`,
     className
   );
 

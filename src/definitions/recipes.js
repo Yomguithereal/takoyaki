@@ -6,28 +6,24 @@
  */
 export default [
   {
-    key: 'fingerprintCollision',
     label: 'Fingerprint Collision',
     description: 'Colliding the fingerprints.',
     preprocessor: 'fingerprint',
     clusterer: 'keyCollision'
   },
   {
-    key: 'metaphoneCollision',
     label: 'Metaphone Collision',
     description: 'Colliding the metaphones.',
     preprocessor: 'metaphone',
     clusterer: 'keyCollision'
   },
   {
-    key: 'levenshteinNaive',
     label: 'Levenshtein Naive',
     description: 'Using the Levenshtein distance.',
     clusterer: 'naive',
     distance: 'levenshtein'
   },
   {
-    key: 'donato',
     label: 'The Donato',
     description: 'Apply the Carry stemmer to strings before colliding them.',
     preprocessor: 'carry',

@@ -13,7 +13,9 @@ import Menu from './Menu.jsx';
 import UploadPage from './pages/upload';
 import CleanPage from './pages/clean';
 import ClustersPage from './pages/clusters';
+import RecipePage from './pages/recipe';
 import {changeTarget, changeRecipe} from '../modules/main';
+import {createRecipe} from '../modules/recipes';
 
 /**
  * Routes map.
@@ -21,7 +23,8 @@ import {changeTarget, changeRecipe} from '../modules/main';
 const MAP = {
   upload: UploadPage,
   clean: CleanPage,
-  clusters: ClustersPage
+  clusters: ClustersPage,
+  recipe: RecipePage
 };
 
 /**
@@ -34,14 +37,16 @@ const enhance = compose(
         headers: state.main.headers,
         recipe: state.main.recipe,
         target: state.main.target,
-        page: state.main.page
+        page: state.main.page,
+        recipes: state.recipes.recipes
       };
     },
     dispatch => {
       return {
         actions: bindActionCreators({
           changeTarget,
-          changeRecipe
+          changeRecipe,
+          createRecipe
         }, dispatch)
       };
     }
@@ -57,6 +62,7 @@ function Application(props) {
     headers,
     page,
     recipe,
+    recipes,
     target
   } = props;
 
@@ -69,7 +75,8 @@ function Application(props) {
           <Menu
             actions={actions}
             activePage={page}
-            recipe={recipe}
+            activeRecipe={recipe}
+            recipes={recipes}
             target={target}
             headers={headers} />
         </Col>

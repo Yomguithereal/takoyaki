@@ -21,6 +21,7 @@ $white: #ffffff;
 // Bootstrap
 $btn-border-radius: 0;
 $btn-primary-bg: $black;
+$btn-secondary-bg: rgba(0, 0, 0, 0);
 
 $progress-border-radius: 0;
 $progress-bar-bg: $black;
@@ -116,10 +117,12 @@ body {
     // Recipes
     & > .clustering-submenu {
       padding: 0px 10px;
+      margin-bottom: 10px;
 
       .clustering-recipes {
         list-style-type: none;
         margin: 0;
+        padding: 10px;
 
         & > .clustering-recipe-item {
           cursor: pointer;
@@ -212,4 +215,13 @@ body {
 
 #page-clusters {
   padding: 10px;
+}
+
+#page-recipe {
+  .recipe-steps {
+    button {
+      margin-right: 10px;
+      border: none;
+    }
+  }
 }
