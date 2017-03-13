@@ -114,17 +114,21 @@ body {
     }
 
     // Recipes
-    & > .clustering-recipes {
-      list-style-type: none;
-      margin: 0;
+    & > .clustering-submenu {
+      padding: 0px 10px;
 
-      & > .clustering-recipe-item {
-        cursor: pointer;
-        padding: 5px;
-        margin-bottom: 5px;
+      .clustering-recipes {
+        list-style-type: none;
+        margin: 0;
 
-        &.active {
-          font-weight: bold;
+        & > .clustering-recipe-item {
+          cursor: pointer;
+          padding: 5px;
+          margin-bottom: 5px;
+
+          &.active {
+            font-weight: bold;
+          }
         }
       }
     }

@@ -21,7 +21,7 @@ export default {
   naive: {
     label: 'Naive',
     description: 'Naive O(n^2) clusterer.',
-    shuffle: true,
+    shuffle: false,
     build({distance, radius}) {
       return items => {
         return naive({distance, radius}, items);

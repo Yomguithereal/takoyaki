@@ -13,6 +13,17 @@ import distances from '../definitions/distances';
 // TODO: apply dedupe optimization for some clusterers
 
 /**
+ * Helpers.
+ */
+function clusterComparator(a, b) {
+  if (a.rows.length > b.rows.length)
+    return -1;
+  else if (a.rows.length < b.rows.length)
+    return 1;
+  return 0;
+}
+
+/**
  * Message listener.
  */
 function onMessage(data) {
@@ -69,7 +80,7 @@ function performClustering(values, recipe) {
         rows: map.get(cluster[j])
       });
 
-    expandedClusters[i] = rows;
+    expandedClusters[i] = rows.sort(clusterComparator);
   }
 
   return expandedClusters;

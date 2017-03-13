@@ -101,14 +101,16 @@ export default function Menu(props) {
     <ul id="steps">
       <Step active={activePage === 'upload'} text="1. Upload" />
       <Step active={activePage === 'clean'} text="2. Clean & Cluster">
-        <TargetColumnSelector
-          selected={target}
-          disabled={activePage === 'upload'}
-          columns={headers}
-          onChange={actions.changeTarget} />
-        <ClusteringRecipes
-          selected={recipe}
-          changeRecipe={actions.changeRecipe} />
+        <div className="clustering-submenu">
+          <TargetColumnSelector
+            selected={target}
+            disabled={activePage === 'upload'}
+            columns={headers}
+            onChange={actions.changeTarget} />
+          <ClusteringRecipes
+            selected={recipe}
+            changeRecipe={actions.changeRecipe} />
+        </div>
       </Step>
       <Step active={activePage === 'export'} text="3. Export" />
     </ul>
