@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import Page from '../../Page.jsx';
 import Table from '../../Table.jsx';
 import Button from '../../bootstrap/Button.jsx';
-import {computeClusters} from '../../../modules/main';
+import {computeClusters, changeTarget} from '../../../modules/main';
 
 /**
  * Description.
@@ -31,9 +31,12 @@ const DESCRIPTION = (
  * Helpers.
  */
 function renderActionBar(props, submit) {
+  const canCluster = !!(props.target && props.recipe);
+
   return (
     <Button
       kind="primary"
+      disabled={!canCluster}
       onClick={submit}
       loadingText="Clustering...">
       Cluster
@@ -49,13 +52,16 @@ const enhance = compose(
     state => {
       return {
         data: state.main,
-        loading: state.main.clustering
+        loading: state.main.clustering,
+        target: state.main.target,
+        recipe: state.main.recipe
       };
     },
     dispatch => {
       return {
         actions: bindActionCreators({
-          computeClusters
+          computeClusters,
+          changeTarget
         }, dispatch)
       };
     }
@@ -71,7 +77,13 @@ class CleanPage extends Component {
   }
 
   render() {
-    const {actions, data, loading} = this.props;
+    const {
+      actions,
+      data,
+      loading,
+      target,
+      recipe
+    } = this.props;
 
     return (
       <Page
@@ -83,7 +95,9 @@ class CleanPage extends Component {
         <div className="table-wrapper">
           <Table
             data={data.rows}
-            headers={data.headers} />
+            headers={data.headers}
+            onSelectHeader={actions.changeTarget}
+            selectedHeader={target} />
         </div>
       </Page>
     );

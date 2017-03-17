@@ -32,6 +32,7 @@
     "pandemonium": "^1.0.2",
     "papaparse": "^4.1.4",
     "phonogram": "^0.1.0",
+    "ramda": "^0.23.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-dropzone": "^3.11.0",

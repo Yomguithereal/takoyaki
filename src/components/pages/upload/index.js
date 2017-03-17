@@ -117,7 +117,7 @@ class UploadPage extends Component {
         loading={loading}>
         <div className="dropzone">
           {!file.preview &&
-            <Dropzone onDrop={this.onDrop}>
+            <Dropzone onDrop={this.onDrop} style={{margin: '20px', border: '2px dashed black'}}>
               {renderDropzone}
             </Dropzone>}
           {file.preview &&

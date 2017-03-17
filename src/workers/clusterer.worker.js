@@ -6,6 +6,7 @@
  */
 import MultiMap from 'mnemonist/multi-map';
 import shuffleInPlace from 'pandemonium/shuffle-in-place';
+import {compose} from 'ramda';
 import preprocessors from '../definitions/preprocessors';
 import clusterers from '../definitions/clusterers';
 import distances from '../definitions/distances';
@@ -39,13 +40,16 @@ function onMessage(data) {
  * Process outline.
  */
 function performClustering(values, recipe) {
-  const preprocessorDefinition = preprocessors[recipe.preprocessor],
-        clustererDefinition = clusterers[recipe.clusterer],
+  const clustererDefinition = clusterers[recipe.clusterer],
         distanceDefinition = distances[recipe.distance];
 
   //-- 1) Preprocessing & mapping unique values
-  const preprocessor = preprocessorDefinition && preprocessorDefinition.build(),
-        distance = distanceDefinition && distanceDefinition.distance;
+  const distance = distanceDefinition && distanceDefinition.distance;
+
+  let preprocessor;
+
+  if (recipe.preprocessor)
+    preprocessor = compose(...recipe.preprocessor.map(p => preprocessors[p].build()));
 
   const map = new MultiMap();
 

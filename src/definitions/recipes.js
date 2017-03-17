@@ -8,13 +8,13 @@ export default [
   {
     label: 'Fingerprint Collision',
     description: 'Colliding the fingerprints.',
-    preprocessor: 'fingerprint',
+    preprocessor: ['fingerprint'],
     clusterer: 'keyCollision'
   },
   {
     label: 'Metaphone Collision',
     description: 'Colliding the metaphones.',
-    preprocessor: 'metaphone',
+    preprocessor: ['metaphone'],
     clusterer: 'keyCollision'
   },
   {
@@ -26,7 +26,7 @@ export default [
   {
     label: 'The Donato',
     description: 'Apply the Carry stemmer to strings before colliding them.',
-    preprocessor: 'carry',
+    preprocessor: ['carry'],
     clusterer: 'keyCollision'
   }
 ];

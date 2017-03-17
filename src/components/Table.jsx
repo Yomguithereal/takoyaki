@@ -6,6 +6,7 @@
  */
 import React from 'react';
 import Measure from 'react-measure';
+import cls from 'classnames';
 import {Table as FixedDataTable, Column, Cell} from 'fixed-data-table';
 
 /**
@@ -13,11 +14,13 @@ import {Table as FixedDataTable, Column, Cell} from 'fixed-data-table';
  */
 function HeaderCell(props) {
   const {
-    name
+    selected,
+    name,
+    onClick
   } = props;
 
   return (
-    <Cell>
+    <Cell onClick={() => onClick(name)} className={cls(selected === name && 'active')}>
       <strong>
         {name}
       </strong>
@@ -50,7 +53,9 @@ function SimpleCell(props) {
 function Table(props) {
   const {
     headers = [],
-    data
+    data,
+    selectedHeader,
+    onSelectHeader
   } = props;
 
   return (
@@ -62,8 +67,8 @@ function Table(props) {
           <div className="data-table">
             <FixedDataTable
               rowsCount={data.length}
-              rowHeight={30}
-              headerHeight={30}
+              rowHeight={25}
+              headerHeight={25}
               width={dimensions.width}
               height={dimensions.height}>
               {headers.map(header => {
@@ -71,7 +76,7 @@ function Table(props) {
                   <Column
                     key={header}
                     width={columnWidth}
-                    header={<HeaderCell name={header} />}
+                    header={<HeaderCell name={header} onClick={onSelectHeader} selected={selectedHeader} />}
                     cell={<SimpleCell field={header} data={data} />} />
                 );
               })}

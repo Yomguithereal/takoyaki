@@ -11,7 +11,19 @@ import {connect} from 'react-redux';
 import Page from '../../Page.jsx';
 import Table from '../../Table.jsx';
 import Button from '../../bootstrap/Button.jsx';
+import PreprocessorBuilder from './PreprocessorBuilder.jsx';
+import ClusteringMethodSelector from './ClusteringMethodSelector.jsx';
+import MetricSelector from './MetricSelector.jsx';
 import {changeStep} from '../../../modules/recipes';
+
+/**
+ * Map.
+ */
+const MAP = {
+  preprocessing: PreprocessorBuilder,
+  method: ClusteringMethodSelector,
+  metric: MetricSelector
+};
 
 /**
  * Description.
@@ -87,6 +99,8 @@ class RecipePage extends Component {
       step
     } = this.props;
 
+    const Inner = MAP[step];
+
     return (
       <Page
         id="page-recipe"
@@ -113,6 +127,7 @@ class RecipePage extends Component {
             3. Metric
           </Step>
         </div>
+        <Inner />
       </Page>
     );
   }
