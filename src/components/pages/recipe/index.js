@@ -14,7 +14,13 @@ import Button from '../../bootstrap/Button.jsx';
 import PreprocessorBuilder from './PreprocessorBuilder.jsx';
 import ClusteringMethodSelector from './ClusteringMethodSelector.jsx';
 import MetricSelector from './MetricSelector.jsx';
-import {changePage} from '../../../modules/main';
+import {
+  currentRecipeSelector,
+  preprocessorSampleSelector
+} from '../../../selectors';
+import {
+  changePage
+} from '../../../modules/main';
 import {
   changeStep,
   addPreprocessor
@@ -64,7 +70,8 @@ const enhance = compose(
     state => {
       return {
         step: state.recipes.step,
-        recipe: state.recipes.recipes[state.main.recipe]
+        recipe: currentRecipeSelector(state),
+        sample: preprocessorSampleSelector(state)
       };
     },
     dispatch => {
@@ -104,7 +111,8 @@ class RecipePage extends Component {
     const {
       actions,
       step,
-      recipe
+      recipe,
+      sample
     } = this.props;
 
     const Inner = MAP[step];
@@ -135,7 +143,7 @@ class RecipePage extends Component {
             3. Metric
           </Step>
         </div>
-        <Inner recipe={recipe} actions={actions} />
+        <Inner recipe={recipe} actions={actions} sample={sample} />
       </Page>
     );
   }

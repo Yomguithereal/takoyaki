@@ -9,6 +9,7 @@ import React from 'react';
 import Select from 'react-select';
 import {compose, withState} from 'recompose';
 import preprocessors from '../../../definitions/preprocessors';
+import Table from '../../Table.jsx';
 import Button from '../../bootstrap/Button.jsx';
 import {Row, Col} from '../../bootstrap/grid.jsx';
 
@@ -66,7 +67,8 @@ export default enhance(function PreprocessorBuilder(props) {
     actions,
     selected,
     setSelected,
-    recipe
+    recipe,
+    sample
   } = props;
 
   const {
@@ -93,7 +95,11 @@ export default enhance(function PreprocessorBuilder(props) {
           })}
         </ul>
       </Col>
-      <Col size={6} />
+      <Col size={6} className="preview-row">
+        <Table
+          data={sample}
+          headers={['before', 'after']} />
+      </Col>
     </Row>
   );
 });

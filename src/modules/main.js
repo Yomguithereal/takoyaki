@@ -5,10 +5,10 @@
  * Main logic module.
  */
 import CSV from 'papaparse';
+import dangerousButPerformantSample from 'pandemonium/dangerous-but-performant-sample';
+import {currentRecipeSelector} from '../selectors';
 import {resolver} from './helpers';
 import ClustererWorker from '../workers/clusterer.worker';
-
-// TODO: pluck the target value from option.
 
 /**
  * Booting worker.
@@ -34,6 +34,7 @@ const DEFAULT_STATE = {
   target: null,
   recipe: null,
   rows: [],
+  sample: [],
   headers: [],
   parsing: false,
   clusters: null,
@@ -82,6 +83,7 @@ export default resolver(DEFAULT_STATE, {
     return {
       ...state,
       rows: action.rows,
+      sample: dangerousButPerformantSample(Math.min(50, action.rows.length), action.rows),
       headers: action.headers,
       parsing: false
     };
@@ -160,7 +162,9 @@ export function computeClusters() {
   let LOCK = true;
 
   return (dispatch, getState) => {
-    const {rows, recipe, target} = getState().main;
+    const {rows, target} = getState().main;
+
+    const recipe = currentRecipeSelector(getState());
 
     dispatch({type: CLUSTERS_COMPUTING});
 

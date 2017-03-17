@@ -4,6 +4,7 @@
  *
  * Definining the preprocessors that can be used by Takoyaki.
  */
+import {compose} from 'ramda';
 
 // Normalizers
 import fingerprint from 'talisman/keyers/fingerprint';
@@ -15,7 +16,7 @@ import metaphone from 'talisman/phonetics/metaphone';
 import carry from 'talisman/stemmers/french/carry';
 
 // Definitions
-export default {
+const preprocessors = {
   fingerprint: {
     label: 'String fingerprint',
     description: 'Normalize the string.',
@@ -41,3 +42,13 @@ export default {
     }
   }
 };
+
+// Helper
+export function buildPreprocessorChain(list, ...args) {
+  if (!list || !list.length)
+    return x => x;
+
+  return compose(...list.map(id => preprocessors[id].build(...args)));
+}
+
+export default preprocessors;

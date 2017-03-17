@@ -6,8 +6,7 @@
  */
 import MultiMap from 'mnemonist/multi-map';
 import shuffleInPlace from 'pandemonium/shuffle-in-place';
-import {compose} from 'ramda';
-import preprocessors from '../definitions/preprocessors';
+import preprocessors, {buildPreprocessorChain} from '../definitions/preprocessors';
 import clusterers from '../definitions/clusterers';
 import distances from '../definitions/distances';
 
@@ -49,7 +48,7 @@ function performClustering(values, recipe) {
   let preprocessor;
 
   if (recipe.preprocessor)
-    preprocessor = compose(...recipe.preprocessor.map(p => preprocessors[p].build()));
+    preprocessor = buildPreprocessorChain(recipe.preprocessor);
 
   const map = new MultiMap();
 

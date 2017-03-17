@@ -16,7 +16,7 @@ function HeaderCell(props) {
   const {
     selected,
     name,
-    onClick
+    onClick = Function.prototype
   } = props;
 
   return (
@@ -41,7 +41,7 @@ function SimpleCell(props) {
   const value = data[rowIndex][field];
 
   return (
-    <Cell>
+    <Cell title={value}>
       {value}
     </Cell>
   );
