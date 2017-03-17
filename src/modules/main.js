@@ -14,7 +14,6 @@ import ClustererWorker from '../workers/clusterer.worker';
  * Booting worker.
  */
 const WORKER = new ClustererWorker();
-let LOCK = false;
 
 /**
  * Constants.

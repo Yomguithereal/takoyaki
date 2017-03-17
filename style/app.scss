@@ -42,7 +42,6 @@ $select-option-focused-color: $white;
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~fixed-data-table/dist/fixed-data-table-base.min.css';
 @import '~react-select/scss/default.scss';
-
 @import './data-table.scss';
 
 /**
@@ -169,6 +168,14 @@ body {
       right: 5px;
     }
   }
+}
+
+/**
+ * Generic classes.
+ */
+.description {
+  font-style: italic;
+  font-size: 0.8em;
 }
 
 /**

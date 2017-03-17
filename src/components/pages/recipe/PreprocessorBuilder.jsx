@@ -7,26 +7,89 @@
  */
 import React from 'react';
 import Select from 'react-select';
+import {compose, withState} from 'recompose';
+import preprocessors from '../../../definitions/preprocessors';
 import Button from '../../bootstrap/Button.jsx';
 import {Row, Col} from '../../bootstrap/grid.jsx';
 
-function PreprocessorSelector() {
+const OPTIONS = [];
+
+for (const id in preprocessors) {
+  OPTIONS.push({
+    value: id,
+    label: preprocessors[id].label,
+    description: preprocessors[id].description
+  });
+}
+
+function PreprocessorOption(props) {
+  const {
+    label,
+    description
+  } = props;
+
   return (
-    <Select
-      />
+    <div>
+      {label}
+      <p className="description">
+        {description}
+      </p>
+    </div>
   );
 }
 
-export default function PreprocessorBuilder() {
+function PreprocessorSelector(props) {
+  const {
+    selected,
+    onChange
+  } = props;
+
+  return (
+    <Select
+      options={OPTIONS}
+      optionRenderer={PreprocessorOption}
+      value={selected}
+      onChange={onChange} />
+  );
+}
+
+const enhance = compose(
+  withState(
+    'selected',
+    'setSelected',
+    null
+  )
+);
+
+export default enhance(function PreprocessorBuilder(props) {
+  const {
+    selected,
+    setSelected,
+    recipe
+  } = props;
+
+  const {
+    preprocessor = []
+  } = recipe;
+
   return (
     <Row className="step-preprocessor">
       <Col size={6}>
-        <PreprocessorSelector />
+        <PreprocessorSelector
+          selected={selected}
+          onChange={setSelected} />
         <Button kind="primary">
           Add
         </Button>
+        <ul>
+          {preprocessor.map((name, i) => {
+            return (
+              <li key={i}>{name}</li>
+            );
+          })}
+        </ul>
       </Col>
       <Col size={6} />
     </Row>
   );
-}
+});

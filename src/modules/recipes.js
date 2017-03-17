@@ -52,7 +52,10 @@ export function createRecipe() {
 
     const recipe = {
       label: 'New clustering recipe',
-      description: 'My incredible clustering recipe.'
+      description: 'My incredible clustering recipe.',
+      preprocessor: [],
+      clusterer: null,
+      distance: null
     };
 
     dispatch({

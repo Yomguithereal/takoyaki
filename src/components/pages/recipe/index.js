@@ -59,7 +59,8 @@ const enhance = compose(
   connect(
     state => {
       return {
-        step: state.recipes.step
+        step: state.recipes.step,
+        recipe: state.main.recipe
       };
     },
     dispatch => {
@@ -96,7 +97,8 @@ class RecipePage extends Component {
   render() {
     const {
       actions,
-      step
+      step,
+      recipe
     } = this.props;
 
     const Inner = MAP[step];
@@ -127,7 +129,7 @@ class RecipePage extends Component {
             3. Metric
           </Step>
         </div>
-        <Inner />
+        <Inner recipe={recipe} />
       </Page>
     );
   }
