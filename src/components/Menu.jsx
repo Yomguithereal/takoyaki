@@ -6,6 +6,7 @@
  */
 import React from 'react';
 import cls from 'classnames';
+import {values} from 'ramda';
 import Select from 'react-select';
 import Button from './bootstrap/Button.jsx';
 
@@ -56,13 +57,13 @@ function ClusteringRecipe({active, label, onClick}) {
 function ClusteringRecipes({selected, recipes, changeRecipe}) {
   return (
     <ul className="clustering-recipes">
-      {recipes.map((recipe, i) => {
+      {values(recipes).map((recipe, i) => {
         return (
           <ClusteringRecipe
-            active={selected === recipe}
+            active={selected === recipe.id}
             key={i}
             label={recipe.label}
-            onClick={() => changeRecipe(recipe)} />
+            onClick={() => changeRecipe(recipe.id)} />
         );
       })}
     </ul>

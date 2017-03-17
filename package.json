@@ -43,7 +43,8 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^2.5.4",
-    "talisman": "^0.18.0"
+    "talisman": "^0.18.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "@yomguithereal/eslint-config": "^3.0.0",

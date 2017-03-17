@@ -14,7 +14,11 @@ import Button from '../../bootstrap/Button.jsx';
 import PreprocessorBuilder from './PreprocessorBuilder.jsx';
 import ClusteringMethodSelector from './ClusteringMethodSelector.jsx';
 import MetricSelector from './MetricSelector.jsx';
-import {changeStep} from '../../../modules/recipes';
+import {changePage} from '../../../modules/main';
+import {
+  changeStep,
+  addPreprocessor
+} from '../../../modules/recipes';
 
 /**
  * Map.
@@ -60,12 +64,14 @@ const enhance = compose(
     state => {
       return {
         step: state.recipes.step,
-        recipe: state.main.recipe
+        recipe: state.recipes.recipes[state.main.recipe]
       };
     },
     dispatch => {
       return {
         actions: bindActionCreators({
+          addPreprocessor,
+          changePage,
           changeStep
         }, dispatch)
       };
@@ -108,7 +114,7 @@ class RecipePage extends Component {
         id="page-recipe"
         title={TITLE}
         description={DESCRIPTION}
-        actionBar={renderActionBar(this.props, actions.computeClusters)}>
+        actionBar={renderActionBar(this.props, () => actions.changePage('clean'))}>
         <div className="recipe-steps">
           <Step
             active={step === 'preprocessing'}
@@ -129,7 +135,7 @@ class RecipePage extends Component {
             3. Metric
           </Step>
         </div>
-        <Inner recipe={recipe} />
+        <Inner recipe={recipe} actions={actions} />
       </Page>
     );
   }

@@ -63,6 +63,7 @@ const enhance = compose(
 
 export default enhance(function PreprocessorBuilder(props) {
   const {
+    actions,
     selected,
     setSelected,
     recipe
@@ -78,7 +79,10 @@ export default enhance(function PreprocessorBuilder(props) {
         <PreprocessorSelector
           selected={selected}
           onChange={setSelected} />
-        <Button kind="primary">
+        <Button
+          kind="primary"
+          disabled={!selected}
+          onClick={() => actions.addPreprocessor(recipe.id, selected.value)}>
           Add
         </Button>
         <ul>
