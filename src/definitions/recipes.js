@@ -24,7 +24,7 @@ export default {
     label: 'Levenshtein Naive',
     description: 'Using the Levenshtein distance.',
     clusterer: 'naive',
-    distance: 'levenshtein'
+    metric: 'levenshtein'
   },
   donato: {
     id: 'donato',

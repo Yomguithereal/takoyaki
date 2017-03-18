@@ -23,7 +23,9 @@ import {
 } from '../../../modules/main';
 import {
   changeStep,
-  addPreprocessor
+  addPreprocessor,
+  changeClusterer,
+  changeMetric
 } from '../../../modules/recipes';
 
 /**
@@ -79,7 +81,9 @@ const enhance = compose(
         actions: bindActionCreators({
           addPreprocessor,
           changePage,
-          changeStep
+          changeStep,
+          changeClusterer,
+          changeMetric
         }, dispatch)
       };
     }

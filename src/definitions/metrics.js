@@ -1,6 +1,6 @@
 /**
- * Takoyaki Distances Definitions
- * ===============================
+ * Takoyaki Metrics Definitions
+ * =============================
  *
  * Definining the distance metrics that can be used by Takoyaki.
  */
@@ -10,6 +10,8 @@ export default {
   levenshtein: {
     label: 'Levenshtein distance',
     description: 'You know it...',
-    distance: levenshtein
+    build() {
+      return levenshtein;
+    }
   }
 };

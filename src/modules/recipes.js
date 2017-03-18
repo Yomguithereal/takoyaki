@@ -12,9 +12,11 @@ import {resolver} from './helpers';
 /**
  * Constants.
  */
-const RECIPES_CREATE = '§Recipe/Create';
-const RECIPES_STEP = '§Recipe/Step';
-const RECIPES_ADD_PREPROCESSOR = '§Recipe/AddPreprocessor';
+const RECIPES_CREATE = '§Recipes/Create';
+const RECIPES_STEP = '§Recipes/Step';
+const RECIPES_ADD_PREPROCESSOR = '§Recipes/AddPreprocessor';
+const RECIPES_CHANGE_CLUSTERER = '§Recipes/ChangeClusterer';
+const RECIPES_CHANGE_METRIC = '§Recipes/ChangeMetric';
 
 /**
  * Default state.
@@ -62,6 +64,38 @@ export default resolver(DEFAULT_STATE, {
         }
       }
     };
+  },
+
+  // When the clustering method is changed
+  [RECIPES_CHANGE_CLUSTERER](state, action) {
+    const recipe = state.recipes[action.id];
+
+    return {
+      ...state,
+      recipes: {
+        ...state.recipes,
+        [action.id]: {
+          ...recipe,
+          clusterer: action.clusterer
+        }
+      }
+    };
+  },
+
+  // When the metric is changed
+  [RECIPES_CHANGE_METRIC](state, action) {
+    const recipe = state.recipes[action.id];
+
+    return {
+      ...state,
+      recipes: {
+        ...state.recipes,
+        [action.id]: {
+          ...recipe,
+          metric: action.metric
+        }
+      }
+    };
   }
 });
 
@@ -101,5 +135,21 @@ export function addPreprocessor(id, preprocessor) {
     type: RECIPES_ADD_PREPROCESSOR,
     id,
     preprocessor
+  };
+}
+
+export function changeClusterer(id, clusterer) {
+  return {
+    type: RECIPES_CHANGE_CLUSTERER,
+    id,
+    clusterer
+  };
+}
+
+export function changeMetric(id, metric) {
+  return {
+    type: RECIPES_CHANGE_METRIC,
+    id,
+    metric
   };
 }

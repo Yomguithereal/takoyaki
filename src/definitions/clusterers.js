@@ -22,9 +22,9 @@ export default {
     label: 'Naive',
     description: 'Naive O(n^2) clusterer.',
     shuffle: false,
-    build({distance, radius}) {
+    build({metric, radius}) {
       return items => {
-        return naive({distance, radius}, items);
+        return naive({distance: metric, radius}, items);
       };
     }
   }

@@ -8,7 +8,7 @@ import MultiMap from 'mnemonist/multi-map';
 import shuffleInPlace from 'pandemonium/shuffle-in-place';
 import preprocessors, {buildPreprocessorChain} from '../definitions/preprocessors';
 import clusterers from '../definitions/clusterers';
-import distances from '../definitions/distances';
+import metrics from '../definitions/metrics';
 
 // TODO: apply dedupe optimization for some clusterers
 
@@ -40,10 +40,10 @@ function onMessage(data) {
  */
 function performClustering(values, recipe) {
   const clustererDefinition = clusterers[recipe.clusterer],
-        distanceDefinition = distances[recipe.distance];
+        metricDefinition = metrics[recipe.metric];
 
   //-- 1) Preprocessing & mapping unique values
-  const distance = distanceDefinition && distanceDefinition.distance;
+  const metric = metricDefinition && metricDefinition.build();
 
   let preprocessor;
 
@@ -63,7 +63,7 @@ function performClustering(values, recipe) {
 
   //-- 3) Building clusterer & computing the clusters
   const clusterer = clustererDefinition.build({
-    distance,
+    metric,
     preprocessor,
     radius: 2
   });
