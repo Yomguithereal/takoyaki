@@ -1,18 +1,12 @@
 /**
- * Takoyaki Module Endpoint
- * =========================
+ * Takoyaki Redux Modules
+ * =======================
  *
- * Endpoint combining all the modules' reducers for the store to consume.
+ * Redux module endpoint.
  */
 import {combineReducers} from 'redux';
-import file from './file';
 import main from './main';
-import recipes from './recipes';
 
-const combined = combineReducers({
-  file,
-  main,
-  recipes
+export default combineReducers({
+  main
 });
-
-export default combined;

@@ -9,7 +9,7 @@ import {render} from 'react-dom';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
-import Application from './components/Application.jsx';
+import Application from './components/Application';
 import reducer from './modules';
 
 // Requiring style
@@ -43,8 +43,8 @@ renderApplication(Application);
 if (module.hot) {
 
   // Reloading components
-  module.hot.accept('./components/Application.jsx', () => {
-    const NextApplication = require('./components/Application.jsx').default;
+  module.hot.accept('./components/Application', () => {
+    const NextApplication = require('./components/Application').default;
     renderApplication(NextApplication);
   });
 
