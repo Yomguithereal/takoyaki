@@ -27,9 +27,12 @@
   "dependencies": {
     "bulma": "^0.5.1",
     "mnemonist": "^0.14.0",
+    "papaparse": "^4.3.6",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-dropzone": "^4.1.2",
     "react-redux": "^5.0.6",
+    "react-virtualized": "^9.9.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "talisman": "^0.19.1"

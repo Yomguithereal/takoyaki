@@ -5,15 +5,48 @@
  * Root-level component rendering the whole app.
  */
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import UploadPage from './pages/upload/UploadPage';
 
-export default function Application() {
+/**
+ * Routing function.
+ */
+const router = step => {
+  if (step === 'upload')
+    return UploadPage;
+};
+
+/**
+ * Connection to store.
+ */
+const connectToStore = connect(
+  state => {
+    return {
+      step: state.main.step
+    };
+  },
+  dispatch => {
+    return bindActionCreators({}, dispatch);
+  }
+);
+
+/**
+ * Main component.
+ */
+export default connectToStore(function Application(props) {
+  const {
+    step
+  } = props;
+
+  const RoutedComponent = router(step);
+
   return (
-    <div>
-      <h3 className="title is-4">
-        <span className="affix">2.2</span>A Fine Clustering Application
-      </h3>
-      This is some very interesting text whose goal is to
-      find a suitable font. Does it scale?
-    </div>
+    <main>
+      <h1 className="title is-3">
+        Takoyaki
+      </h1>
+      <RoutedComponent />
+    </main>
   );
-}
+});

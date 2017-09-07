@@ -4,6 +4,7 @@
  *
  * Main stylesheet of the application.
  */
+@import './react-virtualized.css';
 
 /**
  * Loading Bulma initial variables.
@@ -15,6 +16,7 @@
  */
 $family-titles: 'Muli', sans-serif;
 
+$black: #222;
 $primary: #C65146;
 $sand: #EBE1D3;
 $green: #10A887;
@@ -26,7 +28,7 @@ $red: #DA3C3C;
  * Bulma variables override.
  */
 $family-sans-serif: 'Bitter', sans-serif;
-$text: #222;
+$text: $black;
 
 $info: $blue;
 $success: $green;
@@ -49,4 +51,25 @@ $danger: $red;
     color: $red;
     margin-right: 10px;
   }
+}
+
+main {
+  padding: 15px 30px;
+}
+
+.highlight {
+  color: $primary;
+  font-weight: bold;
+}
+
+/**
+ * Components.
+ */
+.dropzone {
+  width: 100%;
+  height: 200px;
+  border: 2px dashed $black;
+  text-align: center;
+  padding-top: 85px;
+  font-style: italic;
 }
