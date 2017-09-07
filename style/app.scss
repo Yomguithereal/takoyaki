@@ -4,3 +4,49 @@
  *
  * Main stylesheet of the application.
  */
+
+/**
+ * Loading Bulma initial variables.
+ */
+@import '~bulma/sass/utilities/initial-variables';
+
+/**
+ * Own variables.
+ */
+$family-titles: 'Muli', sans-serif;
+
+$primary: #C65146;
+$sand: #EBE1D3;
+$green: #10A887;
+$blue: #2B90D9;
+$orange: #F17F42;
+$red: #DA3C3C;
+
+/**
+ * Bulma variables override.
+ */
+$family-sans-serif: 'Bitter', sans-serif;
+$text: #222;
+
+$info: $blue;
+$success: $green;
+$warning: $orange;
+$danger: $red;
+
+/**
+ * Loading Bulma.
+ */
+@import '~bulma';
+
+/**
+ * Elements.
+ */
+.title {
+  font-family: $family-titles;
+  font-weight: 900;
+
+  .affix {
+    color: $red;
+    margin-right: 10px;
+  }
+}
