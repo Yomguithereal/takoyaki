@@ -11,6 +11,10 @@
 .ReactVirtualized__Grid {
 }
 
+.ReactVirtualized__Grid:focus {
+  outline: none;
+}
+
 .ReactVirtualized__Grid__innerScrollContainer {
 }
 

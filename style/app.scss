@@ -23,6 +23,8 @@ $green: #10A887;
 $blue: #2B90D9;
 $orange: #F17F42;
 $red: #DA3C3C;
+$muted: #DCDCDC;
+$light-background: #F5F5F5;
 
 /**
  * Bulma variables override.
@@ -62,6 +64,18 @@ main {
   font-weight: bold;
 }
 
+.space-indicator {
+  color: $primary;
+}
+
+.highlight-number {
+  color: $green;
+}
+
+.align-right {
+  text-align: right;
+}
+
 /**
  * Components.
  */
@@ -79,13 +93,20 @@ main {
   max-width: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
+  // overflow: hidden;
   font-family: $family-monospace;
+  padding-left: 10px;
   padding-right: 10px;
   font-size: 0.9em;
 
   &.header {
     font-weight: bold;
     text-decoration: underline;
+    background-color: $light-background;
+  }
+
+  &.line-number {
+    text-align: right;
+    background-color: $light-background;
   }
 }

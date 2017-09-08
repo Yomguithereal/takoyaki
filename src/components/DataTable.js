@@ -6,6 +6,7 @@
  */
 import React from 'react';
 import cls from 'classnames';
+import {replaceSingleCharacter} from './helpers';
 import {
   AutoSizer,
   CellMeasurer,
@@ -14,11 +15,16 @@ import {
 } from 'react-virtualized';
 
 /**
+ * Constants.
+ */
+const SPACE_REGEX = /\s/g;
+
+/**
  * Measurer cache.
  */
 const cache = new CellMeasurerCache({
   defaultWidth: 100,
-  minWidth: 75,
+  minWidth: 40,
   fixedHeight: true
 });
 
@@ -47,9 +53,24 @@ export default function DataTable(props) {
         value = data[rowIndex - 1][headers[columnIndex - 1]];
     }
 
+    const title = value;
+
     // Highlighting empty values
-    if (value === '')
+    if (value === '') {
       value = <span className="highlight">.</span>;
+    }
+
+    else if (columnIndex !== 0 && rowIndex !== 0 && !isNaN(value)) {
+      value = <div className="highlight-number">{value}</div>;
+    }
+
+    else if (columnIndex !== 0) {
+      let key = 0;
+
+      value = replaceSingleCharacter(value, SPACE_REGEX, key => {
+        return <span key={key} className="space-indicator">&#8729;</span>;
+      });
+    }
 
     return (
       <CellMeasurer
@@ -59,7 +80,12 @@ export default function DataTable(props) {
         parent={parent}
         rowIndex={rowIndex}>
         <div
-          className={cls('table-cell', rowIndex === 0 && 'header')}
+          title={title}
+          className={cls(
+            'table-cell',
+            rowIndex === 0 && 'header',
+            columnIndex === 0 && 'line-number'
+          )}
           style={style}>
           {value}
         </div>
@@ -74,7 +100,7 @@ export default function DataTable(props) {
           <div>
             <MultiGrid
               fixedRowCount={1}
-              fixedCellCount={1}
+              fixedColumnCount={1}
               cellRenderer={cellRenderer}
               deferredMeasurementCache={cache}
               columnCount={headers.length + 1}
