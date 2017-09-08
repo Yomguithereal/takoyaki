@@ -23,7 +23,8 @@ const SPACE_REGEX = /\s/g;
 export default function DataTable(props) {
   const {
     data,
-    headers
+    headers,
+    height = 400
   } = props;
 
   // Computing column sizes
@@ -132,7 +133,7 @@ export default function DataTable(props) {
             columnWidth={columnWidthSolver}
             rowCount={data.length + 1}
             rowHeight={30}
-            height={500}
+            height={height}
             width={Math.min(totalColumnWidth, width)} />
         );
       }}

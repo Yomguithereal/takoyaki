@@ -40,9 +40,24 @@ $warning: $orange;
 $danger: $red;
 
 /**
- * Loading Bulma.
+ * React Select variables override.
+ */
+$select-input-border-radius: 0px !default;
+$select-item-border-radius: 0px !default;
+$select-option-focused-bg: $light-background !default;
+$select-input-border-focus: $grey-lighter !default;
+
+.drop-up .Select-menu-outer {
+  top: auto;
+  bottom: 100%;
+  border-bottom: 0;
+}
+
+/**
+ * Loading libraries.
  */
 @import '~bulma';
+@import '~react-select/scss/default.scss';
 
 /**
  * Elements.

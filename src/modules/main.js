@@ -20,7 +20,8 @@ const MAIN_PARSED = '§Main/Parsed';
 const DEFAULT_STATE = {
   step: 'upload',
   data: null,
-  headers: null
+  headers: null,
+  selectedHeader: null
 };
 
 /**

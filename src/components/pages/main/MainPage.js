@@ -8,8 +8,10 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
+import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
 import DataTable from '../../DataTable';
+import {RecipeSelect} from '../../selectors';
 
 import {actions as mainActions} from '../../../modules/main';
 
@@ -19,7 +21,8 @@ import {actions as mainActions} from '../../../modules/main';
 const connectToStore = connect(
   state => {
     return {
-      main: state.main
+      main: state.main,
+      recipes: state.recipes
     };
   },
   dispatch => {
@@ -39,19 +42,36 @@ class UploadPage extends Component {
 
   render() {
     const {
-      main
+      main,
+      recipes
     } = this.props;
 
     return (
       <div className="full-height">
         <section className="workspace">
           <AffixTitle affix="2.1">
-            Inspect your data
+            Inspect your data & select a column to work with
           </AffixTitle>
           <DataTable
             headers={main.headers}
-            data={main.data} />
+            data={main.data}
+            height={360} />
+          <br />
+          <AffixTitle affix="2.2">
+            Select a recipe to apply
+          </AffixTitle>
+          <RecipeSelect recipes={recipes.recipes} up />
         </section>
+        <div className="level action-bar">
+          <div className="level-left" />
+          <div className="level-right">
+            <div className="level-item">
+              <Button disabled>
+                Cluster
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

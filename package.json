@@ -33,10 +33,12 @@
     "react-dom": "^15.6.1",
     "react-dropzone": "^4.1.2",
     "react-redux": "^5.0.6",
+    "react-select": "^1.0.0-rc.5",
     "react-virtualized": "^9.9.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "talisman": "^0.19.1"
+    "talisman": "^0.19.1",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "@yomguithereal/eslint-config": "^3.0.0",

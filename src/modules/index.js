@@ -7,8 +7,10 @@
 import {combineReducers} from 'redux';
 import main from './main';
 import upload from './upload';
+import recipes from './recipes';
 
 export default combineReducers({
   main,
-  upload
+  upload,
+  recipes
 });
