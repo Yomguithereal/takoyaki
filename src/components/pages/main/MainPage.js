@@ -8,6 +8,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {format} from 'd3-format';
 
 import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
@@ -16,6 +17,12 @@ import {RecipeSelect} from '../../selectors';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as mainActions} from '../../../modules/main';
+import {actions as uploadActions} from '../../../modules/upload';
+
+/**
+ * Formats.
+ */
+const NUMBER_FORMAT = format(',');
 
 /**
  * Connection to store.
@@ -29,7 +36,8 @@ const connectToStore = connect(
   },
   dispatch => {
     return {
-      actions: bindActionCreators(mainActions, dispatch)
+      actions: bindActionCreators(mainActions, dispatch),
+      uploadActions: bindActionCreators(uploadActions, dispatch)
     };
   }
 );
@@ -43,6 +51,7 @@ class UploadPage extends Component {
 
     this.selectHeader = this.selectHeader.bind(this);
     this.selectRecipe = this.selectRecipe.bind(this);
+    this.backToUpload = this.backToUpload.bind(this);
   }
 
   selectHeader(header) {
@@ -57,6 +66,13 @@ class UploadPage extends Component {
       return this.props.actions.selectRecipe(null);
 
     this.props.actions.selectRecipe(option.value);
+  }
+
+  backToUpload() {
+    this.props.uploadActions.reset();
+
+    // TODO: also need to reset the data etc. Need a global constant
+    this.props.actions.changeStep('upload');
   }
 
   render() {
@@ -74,7 +90,7 @@ class UploadPage extends Component {
       <div className="full-height">
         <section className="workspace">
           <AffixTitle affix="1.">
-            Inspect your data ({main.data.length} rows) & select a column to work with
+            Inspect your data ({NUMBER_FORMAT(main.data.length)} rows) & select a column to work with
           </AffixTitle>
           <DataTable
             headers={main.headers}
@@ -96,13 +112,19 @@ class UploadPage extends Component {
                   onChange={this.selectRecipe} />
               </LevelItem>
               <LevelItem>
-                <Button disabled>Create a custom recipe</Button>
+                <Button onClick={() => actions.changeStep('recipe')}>Create a custom recipe</Button>
               </LevelItem>
             </LevelLeft>
           </Level>
         </section>
         <Level className="action-bar">
-          <LevelLeft />
+          <LevelLeft>
+            <Button
+              outlined
+              onClick={this.backToUpload}>
+              Upload another file
+            </Button>
+          </LevelLeft>
           <LevelRight>
             <LevelItem>
               <Button

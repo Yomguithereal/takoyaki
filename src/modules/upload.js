@@ -12,6 +12,7 @@ import {createReducer} from './helpers';
  */
 const UPLOAD_PARSING = '§Upload/Parsing';
 const UPLOAD_PARSED = '§Upload/PreviewParsed';
+const UPLOAD_RESET = '§Upload/Reset';
 
 /**
  * Default state.
@@ -40,6 +41,14 @@ export default createReducer(DEFAULT_STATE, {
       previewData: action.data,
       previewHeaders: action.headers
     };
+  },
+
+  [UPLOAD_RESET](state, action) {
+    return {
+      ...state,
+      previewData: null,
+      previewHeaders: null
+    };
   }
 });
 
@@ -65,5 +74,9 @@ export const actions = {
         }
       });
     };
+  },
+
+  reset() {
+    return {type: UPLOAD_RESET};
   }
 };

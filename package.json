@@ -27,6 +27,7 @@
   "dependencies": {
     "bulma": "^0.5.1",
     "classnames": "^2.2.5",
+    "d3-format": "^1.2.0",
     "mnemonist": "^0.14.0",
     "papaparse": "^4.3.6",
     "react": "^15.6.1",

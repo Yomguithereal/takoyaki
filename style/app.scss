@@ -84,6 +84,10 @@ $select-input-border-focus: $grey-lighter !default;
   }
 }
 
+.main-title {
+  cursor: pointer;
+}
+
 html, body, main, #app {
   height: 100%;
 }
@@ -97,11 +101,12 @@ main {
 }
 
 .workspace {
-  height: calc(100% - 36px);
+  height: calc(100% - 36px - 15px);
+  overflow-y: auto;
 }
 
 .action-bar {
-
+  padding-top: 15px;
 }
 
 .highlight {
@@ -172,6 +177,7 @@ main {
   margin-bottom: 25px;
 
   .cluster-value-list {
+    margin-top: 10px;
     padding-left: 25px;
   }
 }

@@ -10,6 +10,8 @@ export default {
   levenshtein: {
     label: 'Levenshtein distance',
     description: 'You know it...',
-    distance: levenshtein
+    build() {
+      return levenshtein;
+    }
   }
 };

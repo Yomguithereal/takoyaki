@@ -46,6 +46,7 @@ class UploadPage extends Component {
 
     this.onDrop = this.onDrop.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.reset = this.reset.bind(this);
 
     // Keeping track of the uploaded file
     this.file = null;
@@ -74,10 +75,19 @@ class UploadPage extends Component {
     this.file = null;
   }
 
+  reset() {
+    if (!this.file)
+      return;
+
+    this.file = null;
+    this.props.actions.upload.reset();
+  }
+
   render() {
     const {
       main,
-      upload
+      upload,
+      actions
     } = this.props;
 
     return (
@@ -108,7 +118,17 @@ class UploadPage extends Component {
           )}
         </section>
         <Level className="action-bar">
-          <LevelLeft />
+          <LevelLeft>
+            {upload.previewData && (
+              <LevelItem>
+                <Button
+                  outlined
+                  onClick={this.reset}>
+                  Upload another file
+                </Button>
+              </LevelItem>
+            )}
+          </LevelLeft>
           <LevelRight>
             {upload.previewData && (
               <LevelItem>

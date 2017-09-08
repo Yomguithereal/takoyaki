@@ -5,15 +5,24 @@
  * Component displaying the information of a single cluster.
  */
 import React from 'react';
+import {format} from 'd3-format';
+
+/**
+ * Formats.
+ */
+const NUMBER_FORMAT = format(',');
 
 /**
  * Component displaying a single value.
  */
 function ClusterValue(props) {
   return (
-    <code>
-      {props.value}
-    </code>
+    <div>
+      <code>
+        {props.value}
+      </code>
+      &nbsp;{NUMBER_FORMAT(props.rows.length)}
+    </div>
   );
 }
 
@@ -28,12 +37,12 @@ export default function ClusterInformation(props) {
 
   return (
     <div className="cluster-information">
-      Cluster n°{number} containing <span className="highlight">{data.length}</span> distinct values:
+      Cluster n°{number} containing <span className="highlight">{NUMBER_FORMAT(data.length)}</span> distinct values:
       <ul className="cluster-value-list">
         {data.map((group, i) => {
           return (
             <li key={i}>
-              <ClusterValue value={group.value} />
+              <ClusterValue value={group.value} rows={group.rows} />
             </li>
           );
         })}
