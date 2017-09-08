@@ -26,6 +26,7 @@
   "homepage": "https://github.com/yomguithereal/takoyaki#readme",
   "dependencies": {
     "bulma": "^0.5.1",
+    "classnames": "^2.2.5",
     "mnemonist": "^0.14.0",
     "papaparse": "^4.3.6",
     "react": "^15.6.1",

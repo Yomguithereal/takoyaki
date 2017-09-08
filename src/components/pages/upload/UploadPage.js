@@ -81,7 +81,7 @@ class UploadPage extends Component {
               headers={upload.previewHeaders}
               data={upload.previewData} />
             <hr />
-            <Button>Parse</Button>
+            <Button outlined>Parse</Button>
           </div>
         )}
       </div>

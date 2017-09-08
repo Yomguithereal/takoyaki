@@ -73,3 +73,19 @@ main {
   padding-top: 85px;
   font-style: italic;
 }
+
+.table-cell {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-family: $family-monospace;
+  padding-right: 10px;
+  font-size: 0.9em;
+
+  &.header {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
