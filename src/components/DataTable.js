@@ -24,6 +24,8 @@ export default function DataTable(props) {
   const {
     data,
     headers,
+    selectedHeader = null,
+    onClickHeader = null,
     height = 400
   } = props;
 
@@ -69,14 +71,17 @@ export default function DataTable(props) {
   const cellRenderer = ({columnIndex, key, rowIndex, style}) => {
     let value;
 
-    if (rowIndex === 0) {
-      if (columnIndex === 0)
+    let isHeader = rowIndex === 0;
+    let isNbLine = columnIndex === 0;
+
+    if (isHeader) {
+      if (isNbLine)
         value = '#';
       else
         value = headers[columnIndex - 1];
     }
     else {
-      if (columnIndex === 0)
+      if (isNbLine)
         value = rowIndex;
       else
         value = data[rowIndex - 1][headers[columnIndex - 1]];
@@ -91,13 +96,13 @@ export default function DataTable(props) {
       return null;
     }
 
-    else if (columnIndex !== 0 && rowIndex !== 0 && !isNaN(value)) {
+    else if (!isNbLine && !isHeader && !isNaN(value)) {
 
       // TODO: numbers with trailing/leading spaces should not go there.
       value = <div className="highlight-number">{value}</div>;
     }
 
-    else if (columnIndex !== 0 && rowIndex !== 0) {
+    else if (!isNbLine && !isHeader) {
       if (value.length > 200)
         value = value.slice(0, 199) + '…';
 
@@ -106,12 +111,28 @@ export default function DataTable(props) {
       });
     }
 
+    if (isHeader)
+      return (
+        <div
+          key={key}
+          className={cls(
+            'table-cell',
+            'header',
+            isNbLine && 'line-number',
+            headers[columnIndex - 1] === selectedHeader && 'selected',
+            onClickHeader && 'pointer'
+          )}
+          onClick={onClickHeader ? () => onClickHeader(headers[columnIndex - 1]) : Function.prototype}
+          style={style}>
+          {value}
+        </div>
+      );
+
     return (
       <div
         key={key}
         className={cls(
           'table-cell',
-          rowIndex === 0 && 'header',
           columnIndex === 0 && 'line-number'
         )}
         style={style}>

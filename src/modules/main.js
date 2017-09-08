@@ -13,6 +13,7 @@ import {createReducer} from './helpers';
 const MAIN_CHANGE_STEP = '§Main/ChangeStep';
 const MAIN_PARSING = '§Main/Parsing';
 const MAIN_PARSED = '§Main/Parsed';
+const MAIN_SELECT_HEADER = '§Main/SelectHeader';
 
 /**
  * Default state.
@@ -50,6 +51,13 @@ export default createReducer(DEFAULT_STATE, {
       headers: action.headers,
       step: 'main'
     };
+  },
+
+  [MAIN_SELECT_HEADER](state, action) {
+    return {
+      ...state,
+      selectedHeader: action.header
+    };
   }
 });
 
@@ -80,5 +88,10 @@ export const actions = {
         }
       });
     };
+  },
+
+  // Selecting a header to work with
+  selectHeader(header) {
+    return {type: MAIN_SELECT_HEADER, header};
   }
 };

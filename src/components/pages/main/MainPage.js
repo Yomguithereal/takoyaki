@@ -27,7 +27,7 @@ const connectToStore = connect(
   },
   dispatch => {
     return {
-      mainActions: bindActionCreators(mainActions, dispatch)
+      actions: bindActionCreators(mainActions, dispatch)
     };
   }
 );
@@ -38,6 +38,12 @@ const connectToStore = connect(
 class UploadPage extends Component {
   constructor(props, context) {
     super(props, context);
+
+    this.selectHeader = this.selectHeader.bind(this);
+  }
+
+  selectHeader(header) {
+    this.props.actions.selectHeader(header);
   }
 
   render() {
@@ -55,7 +61,9 @@ class UploadPage extends Component {
           <DataTable
             headers={main.headers}
             data={main.data}
-            height={360} />
+            height={360}
+            onClickHeader={this.selectHeader}
+            selectedHeader={main.selectedHeader} />
           <br />
           <AffixTitle affix="2.2">
             Select a recipe to apply

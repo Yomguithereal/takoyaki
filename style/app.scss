@@ -112,6 +112,10 @@ main {
   text-align: right;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 /**
  * Components.
  */
@@ -145,5 +149,9 @@ main {
     text-align: right;
     background-color: $light-background;
     border-right: 1px solid $grey-lighter;
+  }
+
+  &.selected {
+    background-color: $sand;
   }
 }
