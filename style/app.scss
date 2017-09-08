@@ -14,6 +14,8 @@
 /**
  * Own variables.
  */
+$action-bar-height: 50px;
+
 $family-titles: 'Muli', sans-serif;
 
 $black: #222;
@@ -55,8 +57,24 @@ $danger: $red;
   }
 }
 
+html, body, main, #app {
+  height: 100%;
+}
+
 main {
   padding: 15px 30px;
+}
+
+.full-height {
+  height: calc(100% - 60px);
+}
+
+.workspace {
+  height: calc(100% - 36px);
+}
+
+.action-bar {
+
 }
 
 .highlight {
@@ -64,8 +82,10 @@ main {
   font-weight: bold;
 }
 
-.space-indicator {
+.space-indicator:before {
   color: $primary;
+  content: '∙';
+  margin-right: -8px;
 }
 
 .highlight-number {

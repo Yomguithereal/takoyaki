@@ -53,7 +53,7 @@ export const actions = {
     return dispatch => {
 
       return CSV.parse(file, {
-        preview: 50,
+        preview: 100,
         header: true,
         complete(results) {
           return dispatch({

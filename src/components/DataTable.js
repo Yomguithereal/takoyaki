@@ -61,14 +61,14 @@ export default function DataTable(props) {
     }
 
     else if (columnIndex !== 0 && rowIndex !== 0 && !isNaN(value)) {
+
+      // TODO: numbers with trailing/leading spaces should not go there.
       value = <div className="highlight-number">{value}</div>;
     }
 
     else if (columnIndex !== 0) {
-      let key = 0;
-
-      value = replaceSingleCharacter(value, SPACE_REGEX, key => {
-        return <span key={key} className="space-indicator">&#8729;</span>;
+      value = replaceSingleCharacter(value, SPACE_REGEX, k => {
+        return <span key={k} className="space-indicator">&nbsp;</span>;
       });
     }
 
@@ -97,19 +97,17 @@ export default function DataTable(props) {
     <AutoSizer disableHeight>
       {({width}) => {
         return (
-          <div>
-            <MultiGrid
-              fixedRowCount={1}
-              fixedColumnCount={1}
-              cellRenderer={cellRenderer}
-              deferredMeasurementCache={cache}
-              columnCount={headers.length + 1}
-              columnWidth={cache.columnWidth}
-              rowCount={data.length + 1}
-              rowHeight={30}
-              height={300}
-              width={width} />
-          </div>
+          <MultiGrid
+            fixedRowCount={1}
+            fixedColumnCount={1}
+            cellRenderer={cellRenderer}
+            deferredMeasurementCache={cache}
+            columnCount={headers.length + 1}
+            columnWidth={cache.columnWidth}
+            rowCount={data.length + 1}
+            rowHeight={30}
+            height={400}
+            width={width} />
         );
       }}
     </AutoSizer>
