@@ -21,7 +21,8 @@ const RECIPES_CHANGE_METRIC = '§Recipes/ChangeMetric';
  * Default state.
  */
 const DEFAULT_STATE = {
-  recipes
+  recipes,
+  editedRecipe: null
 };
 
 /**

@@ -82,7 +82,7 @@ class UploadPage extends Component {
     return (
       <div className="full-height">
         <section className="workspace">
-          <AffixTitle affix="1.1">
+          <AffixTitle affix="1">
             Upload a CSV file
           </AffixTitle>
           {!upload.previewData && (
@@ -93,7 +93,7 @@ class UploadPage extends Component {
           )}
           {upload.previewData && (
             <div>
-              <AffixTitle affix="1.2">
+              <AffixTitle affix="2">
                 Check that your file is correctly parsed
               </AffixTitle>
               <p>

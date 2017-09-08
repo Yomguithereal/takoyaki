@@ -15,7 +15,7 @@ import metaphone from 'talisman/phonetics/metaphone';
 import carry from 'talisman/stemmers/french/carry';
 
 // Definitions
-export default {
+const preprocessors = {
   fingerprint: {
     label: 'String fingerprint',
     description: 'Normalize the string.',
@@ -41,3 +41,21 @@ export default {
     }
   }
 };
+
+export default preprocessors;
+
+// Helper
+export function buildPreprocessorChain(list, ...args) {
+  if (!list || !list.length)
+    return x => x;
+
+  const fns = list.map(id => preprocessors[id].build(...args));
+
+  return value => {
+
+    for (let i = 0, l = fns.length; i < l; i++)
+      value = fns[i](value);
+
+    return value;
+  };
+}

@@ -17,6 +17,8 @@ import {
  */
 const SPACE_REGEX = /\s/g;
 
+const MONOSPACE_GLYPH_WIDTH = 9;
+
 /**
  * Main component.
  */
@@ -53,18 +55,18 @@ export default function DataTable(props) {
     columnSizes[header] = max;
   });
 
-  let totalColumnWidth = indexColumnSize * 9 + 15;
+  let totalColumnWidth = indexColumnSize * MONOSPACE_GLYPH_WIDTH + 15;
 
   for (const k in columnSizes)
-    totalColumnWidth += columnSizes[k] * 9 + 15;
+    totalColumnWidth += columnSizes[k] * MONOSPACE_GLYPH_WIDTH + 15;
 
   const columnWidthSolver = ({index}) => {
 
     // NOTE: for monospace 14px, the glyph width seems to be ~9px
     if (index === 0)
-      return indexColumnSize * 9 + 15;
+      return indexColumnSize * MONOSPACE_GLYPH_WIDTH + 15;
 
-    return columnSizes[headers[index - 1]] * 9 + 15;
+    return columnSizes[headers[index - 1]] * MONOSPACE_GLYPH_WIDTH + 15;
   };
 
   // Custom cell renderer

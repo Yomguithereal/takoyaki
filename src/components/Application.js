@@ -19,6 +19,9 @@ const router = step => {
 
   if (step === 'main')
     return MainPage;
+
+  if (step === 'clusters')
+    return () => <div>Clusters!</div>;
 };
 
 /**

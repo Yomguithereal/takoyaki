@@ -1,66 +1,31 @@
 /**
- * Takoyaki Preprocessors Definitions
- * ===================================
+ * Takoyaki Clusterer Definitions
+ * ===============================
  *
- * Definining the preprocessors that can be used by Takoyaki.
+ * Definining the clustering methods that can be used by Takoyaki.
  */
-import {compose} from 'ramda';
+import keyCollision from 'talisman/clustering/record-linkage/key-collision';
+import naive from 'talisman/clustering/record-linkage/naive';
 
-// Normalizers
-import fingerprint from 'talisman/keyers/fingerprint';
-import normalize from 'talisman/keyers/normalize';
-
-// Phonetics
-import metaphone from 'talisman/phonetics/metaphone';
-
-// Stemmers
-import carry from 'talisman/stemmers/french/carry';
-
-// Tokenizers
-// ...
-
-// Definitions
-const preprocessors = {
-  fingerprint: {
-    label: 'String fingerprint',
-    description: 'Extract the "fingerprint" of the given string.',
-    category: 'normalizer',
-    build() {
-      return fingerprint;
+export default {
+  keyCollision: {
+    label: 'Key Collision',
+    description: 'Colliding keys go into the same cluster.',
+    shuffle: false,
+    build({preprocessor}) {
+      return items => {
+        return keyCollision({key: preprocessor}, items);
+      };
     }
   },
-  normalize: {
-    label: 'Normalizer',
-    description: 'Normalize the string.',
-    category: 'normalizer',
-    build() {
-      return normalize;
-    }
-  },
-  metaphone: {
-    label: 'Metaphone',
-    description: 'Phonetic encoding.',
-    category: 'phonetics',
-    build() {
-      return metaphone;
-    }
-  },
-  carry: {
-    label: 'Carry',
-    description: 'Carry stemmer for the French language.',
-    category: 'stemmer',
-    build() {
-      return carry;
+  naive: {
+    label: 'Naive',
+    description: 'Naive O(n^2) clusterer.',
+    shuffle: false,
+    build({metric, radius}) {
+      return items => {
+        return naive({distance: metric, radius}, items);
+      };
     }
   }
 };
-
-// Helper
-export function buildPreprocessorChain(list, ...args) {
-  if (!list || !list.length)
-    return x => x;
-
-  return compose(...list.map(id => preprocessors[id].build(...args)));
-}
-
-export default preprocessors;

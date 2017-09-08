@@ -45,12 +45,20 @@ $danger: $red;
 $select-input-border-radius: 0px !default;
 $select-item-border-radius: 0px !default;
 $select-option-focused-bg: $light-background !default;
+$select-option-selected-bg: $light-background !default;
 $select-input-border-focus: $grey-lighter !default;
 
 .drop-up .Select-menu-outer {
   top: auto;
   bottom: 100%;
   border-bottom: 0;
+}
+
+/**
+ * React Virtualized override.
+ */
+.ReactVirtualized__Grid:focus {
+  outline: none;
 }
 
 /**
@@ -100,8 +108,8 @@ main {
 .space-indicator:before {
   color: $primary;
   content: '∙';
-  font-size: 10px;
-  margin-right: -8px;
+  font-size: 0.9em;
+  margin-right: -9px;
 }
 
 .highlight-number {

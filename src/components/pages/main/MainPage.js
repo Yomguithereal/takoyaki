@@ -40,23 +40,39 @@ class UploadPage extends Component {
     super(props, context);
 
     this.selectHeader = this.selectHeader.bind(this);
+    this.selectRecipe = this.selectRecipe.bind(this);
   }
 
   selectHeader(header) {
+    if (!header)
+      return;
+
     this.props.actions.selectHeader(header);
+  }
+
+  selectRecipe(option) {
+    if (!option)
+      return this.props.actions.selectRecipe(null);
+
+    this.props.actions.selectRecipe(option.value);
   }
 
   render() {
     const {
+      actions,
       main,
       recipes
     } = this.props;
 
+    const canCluster = main.selectedRecipe && main.selectedHeader;
+
+    // TODO: expected time to run and nb of computations
+
     return (
       <div className="full-height">
         <section className="workspace">
-          <AffixTitle affix="2.1">
-            Inspect your data & select a column to work with
+          <AffixTitle affix="1.">
+            Inspect your data ({main.data.length} rows) & select a column to work with
           </AffixTitle>
           <DataTable
             headers={main.headers}
@@ -65,17 +81,24 @@ class UploadPage extends Component {
             onClickHeader={this.selectHeader}
             selectedHeader={main.selectedHeader} />
           <br />
-          <AffixTitle affix="2.2">
-            Select a recipe to apply
+          <AffixTitle affix="2.">
+            Select a recipe to apply {main.selectedHeader && `to the "${main.selectedHeader}" column`}
           </AffixTitle>
-          <RecipeSelect recipes={recipes.recipes} up />
+          <RecipeSelect
+            up
+            recipes={recipes.recipes}
+            value={main.selectedRecipe}
+            onChange={this.selectRecipe} />
         </section>
         <div className="level action-bar">
           <div className="level-left" />
           <div className="level-right">
             <div className="level-item">
-              <Button disabled>
-                Cluster
+              <Button
+                disabled={!canCluster}
+                loading={main.clustering}
+                onClick={actions.runRecipe}>
+                Cluster & Edit
               </Button>
             </div>
           </div>

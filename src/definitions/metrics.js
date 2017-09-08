@@ -1,6 +1,6 @@
 /**
- * Takoyaki Distances Definitions
- * ===============================
+ * Takoyaki Metrics Definitions
+ * =============================
  *
  * Definining the distance metrics that can be used by Takoyaki.
  */
