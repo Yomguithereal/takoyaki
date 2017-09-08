@@ -12,7 +12,8 @@ export default function Button(props) {
     children,
     level = 'primary',
     outlined = false,
-    loading = false
+    loading = false,
+    onClick = Function.prototype
   } = props;
 
   const className = cls(
@@ -23,7 +24,7 @@ export default function Button(props) {
   );
 
   return (
-    <button className={className}>
+    <button className={className} onClick={onClick}>
       {children}
     </button>
   );

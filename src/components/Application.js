@@ -8,6 +8,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import UploadPage from './pages/upload/UploadPage';
+import MainPage from './pages/main/MainPage';
 
 /**
  * Routing function.
@@ -15,6 +16,9 @@ import UploadPage from './pages/upload/UploadPage';
 const router = step => {
   if (step === 'upload')
     return UploadPage;
+
+  if (step === 'main')
+    return MainPage;
 };
 
 /**

@@ -13,7 +13,8 @@ import AffixTitle from '../../AffixTitle';
 import DataTable from '../../DataTable';
 import Button from '../../Button';
 
-import {actions} from '../../../modules/upload';
+import {actions as uploadActions} from '../../../modules/upload';
+import {actions as mainActions} from '../../../modules/main';
 
 /**
  * Connection to store.
@@ -21,12 +22,14 @@ import {actions} from '../../../modules/upload';
 const connectToStore = connect(
   state => {
     return {
+      main: state.main,
       upload: state.upload
     };
   },
   dispatch => {
     return {
-      actions: bindActionCreators(actions, dispatch)
+      uploadActions: bindActionCreators(uploadActions, dispatch),
+      mainActions: bindActionCreators(mainActions, dispatch)
     };
   }
 );
@@ -39,11 +42,14 @@ class UploadPage extends Component {
     super(props, context);
 
     this.onDrop = this.onDrop.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+
+    // Keeping track of the uploaded file
     this.file = null;
   }
 
   onDrop(acceptedFiles) {
-    const actions = this.props.actions;
+    const uploadActions = this.props.uploadActions;
 
     if (!acceptedFiles || !acceptedFiles.length)
       return;
@@ -51,11 +57,23 @@ class UploadPage extends Component {
     const file = acceptedFiles[0];
     this.file = file;
 
-    actions.previewData(file);
+    uploadActions.previewData(file);
+  }
+
+  onSubmit() {
+    if (!this.file)
+      return;
+
+    const mainActions = this.props.mainActions;
+
+    mainActions.parseData(this.file);
+
+    this.file = null;
   }
 
   render() {
     const {
+      main,
       upload
     } = this.props;
 
@@ -91,7 +109,11 @@ class UploadPage extends Component {
           <div className="level-right">
             {upload.previewData && (
               <div className="level-item">
-                <Button>Parse the whole file</Button>
+                <Button
+                  loading={main.parsing}
+                  onClick={this.onSubmit}>
+                  Parse the whole file
+                </Button>
               </div>
             )}
           </div>

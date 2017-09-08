@@ -9,8 +9,6 @@ import cls from 'classnames';
 import {replaceSingleCharacter} from './helpers';
 import {
   AutoSizer,
-  CellMeasurer,
-  CellMeasurerCache,
   MultiGrid
 } from 'react-virtualized';
 
@@ -18,15 +16,6 @@ import {
  * Constants.
  */
 const SPACE_REGEX = /\s/g;
-
-/**
- * Measurer cache.
- */
-const cache = new CellMeasurerCache({
-  defaultWidth: 100,
-  minWidth: 40,
-  fixedHeight: true
-});
 
 /**
  * Main component.
@@ -37,6 +26,36 @@ export default function DataTable(props) {
     headers
   } = props;
 
+  // Computing column sizes
+  const columnSizes = {};
+
+  const indexColumnSize = ('' + data.length).length || 1;
+
+  headers.forEach(header => {
+    let max = Math.max(header.length, 1);
+
+    for (let i = 0, l = data.length; i < l; i++) {
+      const string = data[i][header];
+
+      if (string) {
+        const value = string.length;
+
+        if (value > max)
+          max = value;
+      }
+    }
+
+    columnSizes[header] = max;
+  });
+
+  const columnWidthSolver = ({index}) => {
+    if (index === 0)
+      return indexColumnSize * 9 + 15;
+
+    return columnSizes[headers[index - 1]] * 9 + 15;
+  };
+
+  // Custom cell renderer
   const cellRenderer = ({columnIndex, key, rowIndex, style, parent}) => {
     let value;
 
@@ -60,39 +79,38 @@ export default function DataTable(props) {
       value = <span className="highlight">.</span>;
     }
 
+    else if (!value) {
+      return null;
+    }
+
     else if (columnIndex !== 0 && rowIndex !== 0 && !isNaN(value)) {
 
       // TODO: numbers with trailing/leading spaces should not go there.
       value = <div className="highlight-number">{value}</div>;
     }
 
-    else if (columnIndex !== 0) {
+    else if (columnIndex !== 0 && rowIndex !== 0) {
       value = replaceSingleCharacter(value, SPACE_REGEX, k => {
         return <span key={k} className="space-indicator">&nbsp;</span>;
       });
     }
 
     return (
-      <CellMeasurer
-        cache={cache}
-        columnIndex={columnIndex}
+      <div
         key={key}
-        parent={parent}
-        rowIndex={rowIndex}>
-        <div
-          title={title}
-          className={cls(
-            'table-cell',
-            rowIndex === 0 && 'header',
-            columnIndex === 0 && 'line-number'
-          )}
-          style={style}>
-          {value}
-        </div>
-      </CellMeasurer>
+        title={title}
+        className={cls(
+          'table-cell',
+          rowIndex === 0 && 'header',
+          columnIndex === 0 && 'line-number'
+        )}
+        style={style}>
+        {value}
+      </div>
     );
   };
 
+  // Rendering the component
   return (
     <AutoSizer disableHeight>
       {({width}) => {
@@ -101,9 +119,8 @@ export default function DataTable(props) {
             fixedRowCount={1}
             fixedColumnCount={1}
             cellRenderer={cellRenderer}
-            deferredMeasurementCache={cache}
             columnCount={headers.length + 1}
-            columnWidth={cache.columnWidth}
+            columnWidth={columnWidthSolver}
             rowCount={data.length + 1}
             rowHeight={30}
             height={400}
