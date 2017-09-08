@@ -28,8 +28,10 @@ const connectToStore = connect(
   },
   dispatch => {
     return {
-      uploadActions: bindActionCreators(uploadActions, dispatch),
-      mainActions: bindActionCreators(mainActions, dispatch)
+      actions: {
+        upload: bindActionCreators(uploadActions, dispatch),
+        main: bindActionCreators(mainActions, dispatch)
+      }
     };
   }
 );
@@ -49,7 +51,7 @@ class UploadPage extends Component {
   }
 
   onDrop(acceptedFiles) {
-    const uploadActions = this.props.uploadActions;
+    const actions = this.props.actions;
 
     if (!acceptedFiles || !acceptedFiles.length)
       return;
@@ -57,16 +59,16 @@ class UploadPage extends Component {
     const file = acceptedFiles[0];
     this.file = file;
 
-    uploadActions.previewData(file);
+    actions.upload.previewData(file);
   }
 
   onSubmit() {
     if (!this.file)
       return;
 
-    const mainActions = this.props.mainActions;
+    const actions = this.props.actions;
 
-    mainActions.parseData(this.file);
+    actions.main.parseData(this.file);
 
     this.file = null;
   }
@@ -120,7 +122,7 @@ class UploadPage extends Component {
         </div>
       </div>
     );
-  };
+  }
 }
 
 export default connectToStore(UploadPage);

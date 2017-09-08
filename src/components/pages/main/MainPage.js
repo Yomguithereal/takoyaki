@@ -10,7 +10,6 @@ import {connect} from 'react-redux';
 
 import AffixTitle from '../../AffixTitle';
 import DataTable from '../../DataTable';
-import Button from '../../Button';
 
 import {actions as mainActions} from '../../../modules/main';
 
@@ -55,7 +54,7 @@ class UploadPage extends Component {
         </section>
       </div>
     );
-  };
+  }
 }
 
 export default connectToStore(UploadPage);

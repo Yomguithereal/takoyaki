@@ -65,7 +65,7 @@ export default function DataTable(props) {
   };
 
   // Custom cell renderer
-  const cellRenderer = ({columnIndex, key, rowIndex, style, parent}) => {
+  const cellRenderer = ({columnIndex, key, rowIndex, style}) => {
     let value;
 
     if (rowIndex === 0) {

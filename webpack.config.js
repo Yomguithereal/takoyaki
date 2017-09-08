@@ -11,7 +11,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        use: 'babel-loader'
       },
       {
         test: /\.scss$/,
@@ -20,6 +20,10 @@ module.exports = {
       {
         test: /\.worker\.js$/,
         use: ['worker-loader']
+      },
+      {
+        test: /\.woff2?$/,
+        use: 'file-loader'
       }
     ]
   },

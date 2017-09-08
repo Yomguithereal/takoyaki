@@ -4,7 +4,7 @@
  *
  * Main stylesheet of the application.
  */
-@import './react-virtualized.css';
+@import './fonts.css';
 
 /**
  * Loading Bulma initial variables.
@@ -85,6 +85,7 @@ main {
 .space-indicator:before {
   color: $primary;
   content: '∙';
+  font-size: 10px;
   margin-right: -8px;
 }
 

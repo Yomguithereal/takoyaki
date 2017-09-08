@@ -26,7 +26,7 @@ const DEFAULT_STATE = {
  * Main reducer.
  */
 export default createReducer(DEFAULT_STATE, {
-  [UPLOAD_PARSING](state, action) {
+  [UPLOAD_PARSING](state) {
     return {
       ...state,
       parsing: true
@@ -63,7 +63,7 @@ export const actions = {
             headers: results.meta.fields
           });
         }
-      })
+      });
     };
   }
 };
