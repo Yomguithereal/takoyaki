@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import UploadPage from './pages/upload/UploadPage';
 import MainPage from './pages/main/MainPage';
+import ClustersPage from './pages/clusters/ClustersPage';
 
 /**
  * Routing function.
@@ -21,7 +22,7 @@ const router = step => {
     return MainPage;
 
   if (step === 'clusters')
-    return () => <div>Clusters!</div>;
+    return ClustersPage;
 };
 
 /**

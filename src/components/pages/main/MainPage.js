@@ -1,8 +1,9 @@
 /**
- * Takoyaki Upload Page Component
- * ===============================
+ * Takoyaki Main Page Component
+ * =============================
  *
- * Page displayed when the user is requested to upload a file.
+ * Page displayed when the user is requested to select a column to work with
+ * and a clustering recipe to apply.
  */
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
@@ -12,6 +13,7 @@ import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
 import DataTable from '../../DataTable';
 import {RecipeSelect} from '../../selectors';
+import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as mainActions} from '../../../modules/main';
 
@@ -84,25 +86,34 @@ class UploadPage extends Component {
           <AffixTitle affix="2.">
             Select a recipe to apply {main.selectedHeader && `to the "${main.selectedHeader}" column`}
           </AffixTitle>
-          <RecipeSelect
-            up
-            recipes={recipes.recipes}
-            value={main.selectedRecipe}
-            onChange={this.selectRecipe} />
+          <Level>
+            <LevelLeft>
+              <LevelItem>
+                <RecipeSelect
+                  up
+                  recipes={recipes.recipes}
+                  value={main.selectedRecipe}
+                  onChange={this.selectRecipe} />
+              </LevelItem>
+              <LevelItem>
+                <Button disabled>Create a custom recipe</Button>
+              </LevelItem>
+            </LevelLeft>
+          </Level>
         </section>
-        <div className="level action-bar">
-          <div className="level-left" />
-          <div className="level-right">
-            <div className="level-item">
+        <Level className="action-bar">
+          <LevelLeft />
+          <LevelRight>
+            <LevelItem>
               <Button
                 disabled={!canCluster}
                 loading={main.clustering}
                 onClick={actions.runRecipe}>
                 Cluster & Edit
               </Button>
-            </div>
-          </div>
-        </div>
+            </LevelItem>
+          </LevelRight>
+        </Level>
       </div>
     );
   }

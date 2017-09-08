@@ -39,6 +39,10 @@ $success: $green;
 $warning: $orange;
 $danger: $red;
 
+$radius-small: 0px;
+$radius: 0px;
+$radius-large: 0px;
+
 /**
  * React Select variables override.
  */
@@ -161,5 +165,13 @@ main {
 
   &.selected {
     background-color: $sand;
+  }
+}
+
+.cluster-information {
+  margin-bottom: 25px;
+
+  .cluster-value-list {
+    padding-left: 25px;
   }
 }

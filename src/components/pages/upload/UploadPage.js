@@ -12,6 +12,7 @@ import Dropzone from 'react-dropzone';
 import AffixTitle from '../../AffixTitle';
 import DataTable from '../../DataTable';
 import Button from '../../Button';
+import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as uploadActions} from '../../../modules/upload';
 import {actions as mainActions} from '../../../modules/main';
@@ -106,20 +107,20 @@ class UploadPage extends Component {
             </div>
           )}
         </section>
-        <div className="level action-bar">
-          <div className="level-left" />
-          <div className="level-right">
+        <Level className="action-bar">
+          <LevelLeft />
+          <LevelRight>
             {upload.previewData && (
-              <div className="level-item">
+              <LevelItem>
                 <Button
                   loading={main.parsing}
                   onClick={this.onSubmit}>
                   Parse the whole file
                 </Button>
-              </div>
+              </LevelItem>
             )}
-          </div>
-        </div>
+          </LevelRight>
+        </Level>
       </div>
     );
   }

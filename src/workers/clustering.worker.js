@@ -83,7 +83,7 @@ function performClustering(values, recipe) {
         rows: map.get(cluster[j])
       });
 
-    // TODO: use radix sort
+    // TODO: use radix sort, and check the sort, it's weird
     expandedClusters[i] = rows.sort(clusterComparator);
   }
 
