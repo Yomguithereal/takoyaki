@@ -38,7 +38,9 @@ export default function DataTable(props) {
       const string = data[i][header];
 
       if (string) {
-        const value = string.length;
+
+        // We must not accept more than 200 characters to remain performant
+        const value = Math.min(string.length, 200);
 
         if (value > max)
           max = value;
@@ -48,7 +50,14 @@ export default function DataTable(props) {
     columnSizes[header] = max;
   });
 
+  let totalColumnWidth = indexColumnSize * 9 + 15;
+
+  for (const k in columnSizes)
+    totalColumnWidth += columnSizes[k] * 9 + 15;
+
   const columnWidthSolver = ({index}) => {
+
+    // NOTE: for monospace 14px, the glyph width seems to be ~9px
     if (index === 0)
       return indexColumnSize * 9 + 15;
 
@@ -72,8 +81,6 @@ export default function DataTable(props) {
         value = data[rowIndex - 1][headers[columnIndex - 1]];
     }
 
-    const title = value;
-
     // Highlighting empty values
     if (value === '') {
       value = <span className="highlight">.</span>;
@@ -90,6 +97,9 @@ export default function DataTable(props) {
     }
 
     else if (columnIndex !== 0 && rowIndex !== 0) {
+      if (value.length > 200)
+        value = value.slice(0, 199) + '…';
+
       value = replaceSingleCharacter(value, SPACE_REGEX, k => {
         return <span key={k} className="space-indicator">&nbsp;</span>;
       });
@@ -98,7 +108,6 @@ export default function DataTable(props) {
     return (
       <div
         key={key}
-        title={title}
         className={cls(
           'table-cell',
           rowIndex === 0 && 'header',
@@ -123,8 +132,8 @@ export default function DataTable(props) {
             columnWidth={columnWidthSolver}
             rowCount={data.length + 1}
             rowHeight={30}
-            height={400}
-            width={width} />
+            height={500}
+            width={Math.min(totalColumnWidth, width)} />
         );
       }}
     </AutoSizer>

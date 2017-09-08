@@ -55,6 +55,7 @@ export const actions = {
       return CSV.parse(file, {
         preview: 100,
         header: true,
+        skipEmptyLines: true,
         complete(results) {
           return dispatch({
             type: UPLOAD_PARSED,

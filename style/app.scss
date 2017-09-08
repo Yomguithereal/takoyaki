@@ -128,5 +128,6 @@ main {
   &.line-number {
     text-align: right;
     background-color: $light-background;
+    border-right: 1px solid $grey-lighter;
   }
 }

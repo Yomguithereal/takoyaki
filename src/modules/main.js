@@ -69,6 +69,7 @@ export const actions = {
 
       return CSV.parse(file, {
         header: true,
+        skipEmptyLines: true,
         complete(results) {
           return dispatch({
             type: MAIN_PARSED,
