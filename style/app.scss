@@ -92,8 +92,45 @@ html, body, main, #app {
   height: 100%;
 }
 
-main {
-  padding: 15px 30px;
+$aside-width: 40px;
+
+.app-wrapper {
+  height: 100%;
+  margin: 0;
+
+  .app-aside {
+    padding-top: 14px;
+    padding-left: 17px;
+    width: $aside-width;
+
+    .icon-bar {
+
+      .icon-item {
+        cursor: pointer;
+        padding: 5px;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 5px;
+
+        svg {
+          fill: $black;
+        }
+
+        &.active {
+          background-color: $black;
+
+          svg {
+            fill: white;
+          }
+        }
+      }
+    }
+  }
+
+  .app-section {
+    padding: 15px 30px;
+    width: calc(100% - #{$aside-width});
+  }
 }
 
 .full-height {

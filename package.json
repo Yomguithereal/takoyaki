@@ -33,6 +33,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-dropzone": "^4.1.2",
+    "react-material-icon-svg": "^1.3.3",
     "react-redux": "^5.0.6",
     "react-select": "^1.0.0-rc.5",
     "react-virtualized": "^9.9.0",

@@ -8,6 +8,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+import IconBar from './IconBar';
 import UploadPage from './pages/upload/UploadPage';
 import MainPage from './pages/main/MainPage';
 import ClustersPage from './pages/clusters/ClustersPage';
@@ -63,17 +64,27 @@ export default connectToStore(function Application(props) {
     if (step === 'upload')
       return;
 
+    if (step === 'main')
+      return;
+
     return actions.changeStep('main');
   };
 
   return (
     <main>
-      <h1
-        className="title is-3 main-title"
-        onClick={handleTitleClick}>
-        Takoyaki
-      </h1>
-      <RoutedComponent />
+      <div className="columns app-wrapper">
+        <aside className="app-aside">
+          <IconBar step={step} />
+        </aside>
+        <section className="app-section">
+          <h1
+            className="title is-3 main-title"
+            onClick={handleTitleClick}>
+            Takoyaki
+          </h1>
+          <RoutedComponent />
+        </section>
+      </div>
     </main>
   );
 });

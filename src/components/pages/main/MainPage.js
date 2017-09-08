@@ -90,7 +90,7 @@ class UploadPage extends Component {
       <div className="full-height">
         <section className="workspace">
           <AffixTitle affix="1.">
-            Inspect your data ({NUMBER_FORMAT(main.data.length)} rows) & select a column to work with
+            Inspect your data (<span className="highlight">{NUMBER_FORMAT(main.data.length)}</span> rows) & select a column to work with
           </AffixTitle>
           <DataTable
             headers={main.headers}
@@ -100,7 +100,7 @@ class UploadPage extends Component {
             selectedHeader={main.selectedHeader} />
           <br />
           <AffixTitle affix="2.">
-            Select a recipe to apply {main.selectedHeader && `to the "${main.selectedHeader}" column`}
+            Select a recipe to apply {main.selectedHeader && <span>to the <span className="highlight">{main.selectedHeader}</span> column</span>}
           </AffixTitle>
           <Level>
             <LevelLeft>
