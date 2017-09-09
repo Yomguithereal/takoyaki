@@ -10,8 +10,6 @@ import preprocessors, {buildPreprocessorChain} from '../definitions/preprocessor
 import clusterers from '../definitions/clusterers';
 import metrics from '../definitions/metrics';
 
-// TODO: apply dedupe optimization for some clusterers
-
 /**
  * Helpers.
  */
@@ -83,7 +81,6 @@ function performClustering(values, recipe) {
         rows: map.get(cluster[j])
       });
 
-    // TODO: use radix sort, and check the sort, it's weird
     expandedClusters[i] = rows.sort(clusterComparator);
   }
 

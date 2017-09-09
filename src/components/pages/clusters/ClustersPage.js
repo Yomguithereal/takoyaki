@@ -54,7 +54,7 @@ class UploadPage extends Component {
         <section className="workspace">
           <AffixTitle affix="1.">
             Check the <span className="highlight">{main.clusters.length}</span> found clusters on
-            column "{main.clusteredHeader}"
+            column <span className="highlight">{main.clusteredHeader}</span>
           </AffixTitle>
           {main.clusters.map((data, i) => {
             return (

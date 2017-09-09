@@ -221,10 +221,38 @@ $aside-width: 44px;
 }
 
 .cluster-information {
-  margin-bottom: 25px;
+  margin-bottom: 35px;
 
   .cluster-value-list {
     margin-top: 10px;
     padding-left: 25px;
+
+    .cluster-value {
+      white-space: pre;
+      cursor: pointer;
+    }
+
+    th {
+      font-size: 0.9em;
+    }
+
+    .cluster-value-rows {
+      width: 80px;
+    }
+  }
+
+  .cluster-merger {
+    margin-top: 10px;
+    font-size: 0.9em;
+
+    .cluster-harmonized-value {
+      margin-left: 5px;
+      width: 300px;
+      font-family: $family-monospace;
+
+      &:focus {
+        outline: 1px solid $grey-lighter;
+      }
+    }
   }
 }
