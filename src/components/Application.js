@@ -74,7 +74,7 @@ export default connectToStore(function Application(props) {
     <main>
       <div className="columns app-wrapper">
         <aside className="app-aside">
-          <IconBar step={step} />
+          <IconBar step={step} />
         </aside>
         <section className="app-section">
           <h1

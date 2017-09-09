@@ -5,7 +5,9 @@
  * Top-level module.
  */
 import CSV from 'papaparse';
+import {createSelector} from 'reselect';
 import {createReducer} from './helpers';
+import CLUSTERERS from '../definitions/clusterers';
 import ClusteringWorker from '../workers/clustering.worker.js';
 
 /**
@@ -39,11 +41,15 @@ const DEFAULT_STATE = {
  * Selectors.
  */
 export const selectors = {
+
+  // Get data from the recipe
   recipeData(state) {
     const recipes = state.recipes;
 
     return recipes.recipes[state.main.selectedRecipe];
   },
+
+  // Extract the values to cluster
   valuesToCluster(state) {
     const {
       data,
@@ -56,8 +62,39 @@ export const selectors = {
       values[i] = data[i][selectedHeader];
 
     return values;
-  }
+  },
+
+  // Get the number of distinct values from the selected column
+  nbDistinctSelectedValues: createSelector(
+    state => state.main.selectedHeader,
+    state => state.main.data,
+    (header, data) => {
+      if (!header || !data)
+        return null;
+
+      const values = new Set();
+
+      for (let i = 0, l = data.length; i < l; i++)
+        values.add(data[i][header]);
+
+      return values.size;
+    }
+  )
 };
+
+// Get the approx nb of computations to apply the chosen clusterer
+selectors.estimate = createSelector(
+  selectors.recipeData,
+  selectors.nbDistinctSelectedValues,
+  (recipe, nb) => {
+    if (!recipe || nb === null)
+      return;
+
+    const clustererDefinition = CLUSTERERS[recipe.clusterer];
+
+    return clustererDefinition.estimate(nb);
+  }
+);
 
 /**
  * Main reducer.

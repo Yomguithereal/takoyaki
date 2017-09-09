@@ -11,21 +11,29 @@ export default {
   keyCollision: {
     label: 'Key Collision',
     description: 'Colliding keys go into the same cluster.',
+    scalability: 'high',
     shuffle: false,
     build({preprocessor}) {
       return items => {
         return keyCollision({key: preprocessor}, items);
       };
+    },
+    estimate(nb) {
+      return nb;
     }
   },
   naive: {
     label: 'Naive',
     description: 'Naive O(n^2) clusterer.',
+    scalability: 'low',
     shuffle: false,
     build({metric, radius}) {
       return items => {
         return naive({distance: metric, radius}, items);
       };
+    },
+    estimate(nb) {
+      return nb * nb;
     }
   }
 };

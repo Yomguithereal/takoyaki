@@ -12,11 +12,6 @@ import ViewHeadlineIcon from 'react-material-icon-svg/dist/ViewHeadlineIcon';
 import UngroupIcon from 'react-material-icon-svg/dist/UngroupIcon';
 import EyeIcon from 'react-material-icon-svg/dist/EyeIcon';
 import TableEditIcon from 'react-material-icon-svg/dist/TableEditIcon';
-import DownloadIcon from 'react-material-icon-svg/dist/DownloadIcon';
-
-      // <li className="icon-item download-button">
-      //   <DownloadIcon width={26} height={26} />
-      // </li>
 
 export default function IconBar(props) {
   const {

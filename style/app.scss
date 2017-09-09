@@ -124,16 +124,6 @@ $aside-width: 44px;
           }
         }
       }
-
-      .download-button {
-        background-color: $primary;
-        position: absolute;
-        bottom: 10px;
-
-        svg {
-          fill: white;
-        }
-      }
     }
   }
 
@@ -178,6 +168,14 @@ $aside-width: 44px;
 
 .pointer {
   cursor: pointer;
+}
+
+.download-button {
+  margin-left: 5px;
+
+  svg {
+    fill: white;
+  }
 }
 
 /**

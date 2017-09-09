@@ -73,8 +73,8 @@ export default function DataTable(props) {
   const cellRenderer = ({columnIndex, key, rowIndex, style}) => {
     let value;
 
-    let isHeader = rowIndex === 0;
-    let isNbLine = columnIndex === 0;
+    const isHeader = rowIndex === 0;
+    const isNbLine = columnIndex === 0;
 
     if (isHeader) {
       if (isNbLine)

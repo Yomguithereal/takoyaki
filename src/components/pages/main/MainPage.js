@@ -11,18 +11,20 @@ import {connect} from 'react-redux';
 import {format} from 'd3-format';
 
 import Button from '../../Button';
+import DownloadButton from '../../DownloadButton';
 import AffixTitle from '../../AffixTitle';
 import DataTable from '../../DataTable';
 import {RecipeSelect} from '../../selectors';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
-import {actions as mainActions} from '../../../modules/main';
+import {actions as mainActions, selectors as mainSelectors} from '../../../modules/main';
 import {actions as uploadActions} from '../../../modules/upload';
 
 /**
  * Formats.
  */
 const NUMBER_FORMAT = format(',');
+const SI_FORMAT = format(',.0s');
 
 /**
  * Connection to store.
@@ -31,7 +33,9 @@ const connectToStore = connect(
   state => {
     return {
       main: state.main,
-      recipes: state.recipes
+      recipes: state.recipes,
+      nbDistinctSelectedValues: mainSelectors.nbDistinctSelectedValues(state),
+      estimate: mainSelectors.estimate(state)
     };
   },
   dispatch => {
@@ -79,12 +83,12 @@ class UploadPage extends Component {
     const {
       actions,
       main,
-      recipes
+      recipes,
+      nbDistinctSelectedValues,
+      estimate
     } = this.props;
 
     const canCluster = main.selectedRecipe && main.selectedHeader;
-
-    // TODO: expected time to run and nb of computations
 
     return (
       <div className="full-height">
@@ -116,6 +120,12 @@ class UploadPage extends Component {
               </LevelItem>
             </LevelLeft>
           </Level>
+          {main.selectedRecipe && main.selectedHeader && (
+            <p>
+              Applying this recipe on <span className="highlight">{NUMBER_FORMAT(nbDistinctSelectedValues)}</span> distinct values requires
+              running ~<span className="highlight">{SI_FORMAT(estimate)}</span> computations.
+            </p>
+          )}
         </section>
         <Level className="action-bar">
           <LevelLeft>
@@ -133,6 +143,7 @@ class UploadPage extends Component {
                 onClick={actions.runRecipe}>
                 Cluster & Edit
               </Button>
+              <DownloadButton />
             </LevelItem>
           </LevelRight>
         </Level>
