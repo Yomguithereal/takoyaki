@@ -14,19 +14,21 @@ export default function Button(props) {
     disabled = false,
     outlined = false,
     loading = false,
-    onClick = Function.prototype
+    onClick = Function.prototype,
+    className
   } = props;
 
-  const className = cls(
+  const classes = cls(
     'button',
     `is-${level}`,
     outlined && 'is-outlined',
-    loading && 'is-loading'
+    loading && 'is-loading',
+    className
   );
 
   return (
     <button
-      className={className}
+      className={classes}
       disabled={disabled}
       onClick={onClick}>
       {children}

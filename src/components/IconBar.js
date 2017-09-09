@@ -9,8 +9,14 @@ import cls from 'classnames';
 
 import UploadIcon from 'react-material-icon-svg/dist/UploadIcon';
 import ViewHeadlineIcon from 'react-material-icon-svg/dist/ViewHeadlineIcon';
+import UngroupIcon from 'react-material-icon-svg/dist/UngroupIcon';
+import EyeIcon from 'react-material-icon-svg/dist/EyeIcon';
 import TableEditIcon from 'react-material-icon-svg/dist/TableEditIcon';
-import BorderColorIcon from 'react-material-icon-svg/dist/BorderColorIcon';
+import DownloadIcon from 'react-material-icon-svg/dist/DownloadIcon';
+
+      // <li className="icon-item download-button">
+      //   <DownloadIcon width={26} height={26} />
+      // </li>
 
 export default function IconBar(props) {
   const {
@@ -20,16 +26,19 @@ export default function IconBar(props) {
   return (
     <ul className="icon-bar">
       <li className={cls('icon-item', step === 'upload' && 'active')}>
-        <UploadIcon width={30} height={30} />
+        <UploadIcon width={26} height={26} />
       </li>
       <li className={cls('icon-item', step === 'main' && 'active')}>
-        <ViewHeadlineIcon width={30} height={30} />
+        <ViewHeadlineIcon width={26} height={26} />
       </li>
       <li className={cls('icon-item', step === 'clusters' && 'active')}>
-        <TableEditIcon width={30} height={30} />
+        <UngroupIcon width={26} height={26} />
+      </li>
+      <li className={cls('icon-item', step === 'focus' && 'active')}>
+        <EyeIcon width={26} height={26} />
       </li>
       <li className={cls('icon-item', step === 'recipe' && 'active')}>
-        <BorderColorIcon width={30} height={34} />
+        <TableEditIcon width={26} height={26} />
       </li>
     </ul>
   );
