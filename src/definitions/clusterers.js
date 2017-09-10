@@ -33,7 +33,7 @@ export default {
       };
     },
     estimate(nb) {
-      return nb * nb;
+      return (nb * (nb - 1)) / 2;
     }
   }
 };
