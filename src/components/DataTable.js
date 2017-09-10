@@ -26,6 +26,7 @@ export default function DataTable(props) {
   const {
     data,
     headers,
+    rows = null,
     selectedHeader = null,
     onClickHeader = null,
     height = 400
@@ -34,7 +35,10 @@ export default function DataTable(props) {
   // Computing column sizes
   const columnSizes = {};
 
-  const indexColumnSize = ('' + data.length).length || 1;
+  let indexColumnSize = ('' + data.length).length || 1;
+
+  if (rows)
+    indexColumnSize = ('' + rows[rows.length - 1]).length || 1;
 
   headers.forEach(header => {
     let max = Math.max(header.length, 1);
@@ -84,7 +88,7 @@ export default function DataTable(props) {
     }
     else {
       if (isNbLine)
-        value = rowIndex;
+        value = rows ? (rows[rowIndex - 1] + 1) : rowIndex;
       else
         value = data[rowIndex - 1][headers[columnIndex - 1]];
     }

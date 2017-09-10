@@ -37,7 +37,8 @@ function ClusterValue(props) {
 export default function ClusterInformation(props) {
   const {
     number,
-    data
+    data,
+    explore
   } = props;
 
   const nbRows = sumBy(group => group.rows.length, data);
@@ -45,7 +46,7 @@ export default function ClusterInformation(props) {
   return (
     <div className="cluster-information">
       Cluster n°<strong>{number + 1}</strong> containing <span className="highlight">{NUMBER_FORMAT(data.length)}</span> distinct values
-      over <span className="highlight">{NUMBER_FORMAT(nbRows)}</span> rows:
+      over <span className="highlight">{NUMBER_FORMAT(nbRows)}</span> rows (<a className="explore-link" onClick={() => explore(number)}>explore</a>):
       <table className="cluster-value-list">
         <thead>
           <tr>

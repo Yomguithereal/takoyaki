@@ -20,6 +20,7 @@ const MAIN_SELECT_HEADER = '§Main/SelectHeader';
 const MAIN_SELECT_RECIPE = '§Main/SelectRecipe';
 const MAIN_CLUSTERING = '§Main/Clustering';
 const MAIN_CLUSTERED = '§Main/Clustered';
+const MAIN_EXPLORE = '§Main/Explore';
 
 const CLUSTERING_WORKER = new ClusteringWorker();
 
@@ -34,7 +35,8 @@ const DEFAULT_STATE = {
   selectedRecipe: 'fingerprint',
   clustering: false,
   clusters: null,
-  clusteredHeader: null
+  clusteredHeader: null,
+  exploredCluster: null
 };
 
 /**
@@ -153,6 +155,14 @@ export default createReducer(DEFAULT_STATE, {
       clusters: action.clusters,
       clusteredHeader: action.header
     };
+  },
+
+  [MAIN_EXPLORE](state, action) {
+    return {
+      ...state,
+      exploredCluster: action.cluster,
+      step: 'exploration'
+    };
   }
 });
 
@@ -218,5 +228,10 @@ export const actions = {
       // Asking worker to perform task
       CLUSTERING_WORKER.postMessage({recipe, values});
     };
+  },
+
+  // Exploring a cluster
+  explore(cluster) {
+    return {type: MAIN_EXPLORE, cluster};
   }
 };

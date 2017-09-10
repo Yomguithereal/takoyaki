@@ -29,7 +29,7 @@ export default function IconBar(props) {
       <li className={cls('icon-item', step === 'clusters' && 'active')}>
         <UngroupIcon width={26} height={26} />
       </li>
-      <li className={cls('icon-item', step === 'focus' && 'active')}>
+      <li className={cls('icon-item', step === 'exploration' && 'active')}>
         <EyeIcon width={26} height={26} />
       </li>
       <li className={cls('icon-item', step === 'recipe' && 'active')}>

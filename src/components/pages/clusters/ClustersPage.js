@@ -11,8 +11,6 @@ import {connect} from 'react-redux';
 import ClusterInformation from './ClusterInformation';
 import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
-import DataTable from '../../DataTable';
-import {RecipeSelect} from '../../selectors';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as mainActions} from '../../../modules/main';
@@ -37,7 +35,7 @@ const connectToStore = connect(
 /**
  * Main component.
  */
-class UploadPage extends Component {
+class ClustersPage extends Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -61,7 +59,8 @@ class UploadPage extends Component {
               <ClusterInformation
                 key={i}
                 number={i}
-                data={data} />
+                data={data}
+                explore={actions.explore} />
             );
           })}
         </section>
@@ -89,4 +88,4 @@ class UploadPage extends Component {
   }
 }
 
-export default connectToStore(UploadPage);
+export default connectToStore(ClustersPage);

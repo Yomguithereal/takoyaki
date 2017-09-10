@@ -162,6 +162,18 @@ $aside-width: 44px;
   color: $green;
 }
 
+.red {
+  color: $red;
+}
+
+.orange {
+  color: $orange;
+}
+
+.green {
+  color: $green;
+}
+
 .align-right {
   text-align: right;
 }
@@ -175,6 +187,20 @@ $aside-width: 44px;
 
   svg {
     fill: white;
+  }
+}
+
+/**
+ * Selectors.
+ */
+.recipe-selector {
+  .Select-control {
+
+  }
+
+  .recipe-description {
+    font-size: 0.8em;
+    font-style: italic;
   }
 }
 
@@ -220,6 +246,10 @@ $aside-width: 44px;
 
 .cluster-information {
   margin-bottom: 35px;
+
+  .explore-link {
+    text-decoration: underline;
+  }
 
   .cluster-value-list {
     margin-top: 10px;

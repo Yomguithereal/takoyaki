@@ -12,6 +12,7 @@ import IconBar from './IconBar';
 import UploadPage from './pages/upload/UploadPage';
 import MainPage from './pages/main/MainPage';
 import ClustersPage from './pages/clusters/ClustersPage';
+import ExplorationPage from './pages/exploration/ExplorationPage';
 import RecipePage from './pages/recipe/RecipePage';
 
 import {actions as mainActions} from '../modules/main';
@@ -28,6 +29,9 @@ const router = step => {
 
   if (step === 'clusters')
     return ClustersPage;
+
+  if (step === 'exploration')
+    return ExplorationPage;
 
   if (step === 'recipe')
     return RecipePage;
