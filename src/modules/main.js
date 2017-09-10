@@ -47,7 +47,7 @@ const DEFAULT_STATE = {
 export const selectors = {
 
   // Get data from the recipe
-  recipeData(state) {
+  recipeData(state) {
     const recipes = state.recipes;
 
     return recipes.recipes[state.main.selectedRecipe];

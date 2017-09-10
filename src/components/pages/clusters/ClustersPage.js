@@ -43,8 +43,7 @@ class ClustersPage extends Component {
   render() {
     const {
       actions,
-      main,
-      recipes
+      main
     } = this.props;
 
     return (

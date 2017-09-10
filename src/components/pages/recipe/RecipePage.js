@@ -10,7 +10,6 @@ import {connect} from 'react-redux';
 
 import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
-import DataTable from '../../DataTable';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as mainActions} from '../../../modules/main';
@@ -41,9 +40,7 @@ class UploadPage extends Component {
 
   render() {
     const {
-      actions,
-      main,
-      recipes
+      actions
     } = this.props;
 
     return (

@@ -88,8 +88,7 @@ class UploadPage extends Component {
   render() {
     const {
       main,
-      upload,
-      actions
+      upload
     } = this.props;
 
     return (

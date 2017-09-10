@@ -14,12 +14,13 @@ export default {
     description: 'Colliding keys go into the same cluster.',
     scalability: 'high',
     shuffle: false,
+    needMetric: false,
     build({preprocessor}) {
       return items => {
         return keyCollision({key: preprocessor}, items);
       };
     },
-    estimate(nb) {
+    estimate(nb) {
       return nb;
     }
   },
@@ -28,6 +29,7 @@ export default {
     description: 'Naive O(n^2) clusterer.',
     scalability: 'low',
     shuffle: false,
+    needMetric: true,
     build({metric, radius}) {
       return items => {
         return naive({distance: metric, radius}, items);
@@ -42,6 +44,7 @@ export default {
     description: 'Todo',
     scalability: 'medium',
     shuffle: true,
+    needMetric: true,
     trueMetrics: true,
     build({metric, radius}) {
       return items => {
