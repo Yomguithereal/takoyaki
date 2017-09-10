@@ -7,12 +7,13 @@
 import CSV from 'papaparse';
 import {createReducer} from './helpers';
 
+import {GLOBAL_RESET} from './global';
+
 /**
  * Constants.
  */
 const UPLOAD_PARSING = '§Upload/Parsing';
 const UPLOAD_PARSED = '§Upload/PreviewParsed';
-const UPLOAD_RESET = '§Upload/Reset';
 
 /**
  * Default state.
@@ -43,7 +44,7 @@ export default createReducer(DEFAULT_STATE, {
     };
   },
 
-  [UPLOAD_RESET](state, action) {
+  [GLOBAL_RESET](state) {
     return {
       ...state,
       previewData: null,
@@ -74,9 +75,5 @@ export const actions = {
         }
       });
     };
-  },
-
-  reset() {
-    return {type: UPLOAD_RESET};
   }
 };

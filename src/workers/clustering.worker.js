@@ -6,7 +6,7 @@
  */
 import MultiMap from 'mnemonist/multi-map';
 import shuffleInPlace from 'pandemonium/shuffle-in-place';
-import preprocessors, {buildPreprocessorChain} from '../definitions/preprocessors';
+import {buildPreprocessorChain} from '../definitions/preprocessors';
 import clusterers from '../definitions/clusterers';
 import metrics from '../definitions/metrics';
 
@@ -19,18 +19,6 @@ function clusterComparator(a, b) {
   else if (a.rows.length < b.rows.length)
     return 1;
   return 0;
-}
-
-/**
- * Message listener.
- */
-function onMessage(data) {
-  const values = data.values,
-        recipe = data.recipe;
-
-  const clusters = performClustering(values, recipe);
-
-  return self.postMessage({clusters});
 }
 
 /**
@@ -85,6 +73,18 @@ function performClustering(values, recipe) {
   }
 
   return expandedClusters;
+}
+
+/**
+ * Message listener.
+ */
+function onMessage(data) {
+  const values = data.values,
+        recipe = data.recipe;
+
+  const clusters = performClustering(values, recipe);
+
+  return self.postMessage({clusters});
 }
 
 /**

@@ -120,9 +120,9 @@ export const actions = {
         recipe
       });
 
-      dispatch(changeRecipe(recipe.id));
+      dispatch(actions.changeRecipe(recipe.id));
 
-      return dispatch(changePage('recipe'));
+      return dispatch(actions.changePage('recipe'));
     };
   },
 

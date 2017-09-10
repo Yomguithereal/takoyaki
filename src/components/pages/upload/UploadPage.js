@@ -14,6 +14,7 @@ import DataTable from '../../DataTable';
 import Button from '../../Button';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
+import {actions as globalActions} from '../../../modules/global';
 import {actions as uploadActions} from '../../../modules/upload';
 import {actions as mainActions} from '../../../modules/main';
 
@@ -31,7 +32,8 @@ const connectToStore = connect(
     return {
       actions: {
         upload: bindActionCreators(uploadActions, dispatch),
-        main: bindActionCreators(mainActions, dispatch)
+        main: bindActionCreators(mainActions, dispatch),
+        global: bindActionCreators(globalActions, dispatch)
       }
     };
   }
@@ -80,7 +82,7 @@ class UploadPage extends Component {
       return;
 
     this.file = null;
-    this.props.actions.upload.reset();
+    this.props.actions.global.reset();
   }
 
   render() {

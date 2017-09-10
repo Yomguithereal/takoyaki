@@ -17,6 +17,7 @@ import DataTable from '../../DataTable';
 import {RecipeSelect} from '../../selectors';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
+import {actions as globalActions} from '../../../modules/global';
 import {actions as mainActions, selectors as mainSelectors} from '../../../modules/main';
 import {actions as uploadActions} from '../../../modules/upload';
 
@@ -41,7 +42,8 @@ const connectToStore = connect(
   dispatch => {
     return {
       actions: bindActionCreators(mainActions, dispatch),
-      uploadActions: bindActionCreators(uploadActions, dispatch)
+      uploadActions: bindActionCreators(uploadActions, dispatch),
+      globalActions: bindActionCreators(globalActions, dispatch)
     };
   }
 );
@@ -73,10 +75,9 @@ class UploadPage extends Component {
   }
 
   backToUpload() {
-    this.props.uploadActions.reset();
 
-    // TODO: also need to reset the data etc. Need a global constant
-    this.props.actions.changeStep('upload');
+    // TODO: modal warning that we will erase everything!
+    this.props.globalActions.reset();
   }
 
   render() {
@@ -116,6 +117,7 @@ class UploadPage extends Component {
                   onChange={this.selectRecipe} />
               </LevelItem>
               <LevelItem>
+                <Button disabled style={{marginRight: '5px'}}>Edit the recipe</Button>
                 <Button onClick={() => actions.changeStep('recipe')}>Create a custom recipe</Button>
               </LevelItem>
             </LevelLeft>

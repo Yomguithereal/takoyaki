@@ -10,6 +10,8 @@ import {createReducer} from './helpers';
 import CLUSTERERS from '../definitions/clusterers';
 import ClusteringWorker from '../workers/clustering.worker.js';
 
+import {GLOBAL_RESET} from './global';
+
 /**
  * Constants.
  */
@@ -163,6 +165,10 @@ export default createReducer(DEFAULT_STATE, {
       exploredCluster: action.cluster,
       step: 'exploration'
     };
+  },
+
+  [GLOBAL_RESET]() {
+    return DEFAULT_STATE;
   }
 });
 

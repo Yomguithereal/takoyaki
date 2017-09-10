@@ -15,7 +15,8 @@ export default function Button(props) {
     outlined = false,
     loading = false,
     onClick = Function.prototype,
-    className
+    className,
+    style = {}
   } = props;
 
   const classes = cls(
@@ -30,7 +31,8 @@ export default function Button(props) {
     <button
       className={classes}
       disabled={disabled}
-      onClick={onClick}>
+      onClick={onClick}
+      style={style}>
       {children}
     </button>
   );

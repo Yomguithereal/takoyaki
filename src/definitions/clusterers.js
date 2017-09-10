@@ -6,6 +6,7 @@
  */
 import keyCollision from 'talisman/clustering/record-linkage/key-collision';
 import naive from 'talisman/clustering/record-linkage/naive';
+import vpTree from 'talisman/clustering/record-linkage/vp-tree';
 
 export default {
   keyCollision: {
@@ -34,6 +35,21 @@ export default {
     },
     estimate(nb) {
       return (nb * (nb - 1)) / 2;
+    }
+  },
+  vpTree: {
+    label: 'Vantage Point Tree',
+    description: 'Todo',
+    scalability: 'medium',
+    shuffle: true,
+    trueMetrics: true,
+    build({metric, radius}) {
+      return items => {
+        return vpTree({distance: metric, radius}, items);
+      };
+    },
+    estimate(nb) {
+      return nb * Math.log2(nb);
     }
   }
 };

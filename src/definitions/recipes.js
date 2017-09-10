@@ -26,6 +26,13 @@ export default {
     clusterer: 'naive',
     metric: 'levenshtein'
   },
+  vpTreeLevenshtein: {
+    id: 'vpTreeLevenshtein',
+    label: 'Levenshtein VPTree',
+    description: 'Using the Levenshtein distance with a vantage point tree.',
+    clusterer: 'vpTree',
+    metric: 'levenshtein'
+  },
   donato: {
     id: 'donato',
     label: 'The Donato',
