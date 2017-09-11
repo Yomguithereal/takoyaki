@@ -25,6 +25,12 @@ function optionsFromStrings(strings) {
   });
 }
 
+const LINEBREAK_REGEX = /<br>/g;
+
+function displayLineBreaks(string) {
+  return replaceSingleCharacter(string, LINEBREAK_REGEX, key => <br key={key} />);
+}
+
 const RECIPE_SORT_VALUES = {
   low: 3,
   medium: 2,
@@ -122,7 +128,7 @@ function RecipeSelectOption(props) {
       <p><strong>{props.label}</strong>{recipe.addedByUser && <span> *</span>}</p>
       <div className="recipe-description">
         <p>{recipe.description}</p>
-        <p>{SCALABILITIES[clusterer.scalability]}</p>
+        <p style={{marginTop: '5px'}}>{SCALABILITIES[clusterer.scalability]}</p>
       </div>
     </div>
   );
@@ -172,8 +178,6 @@ const PREPROCESSOR_CATEGORIES = {
   stemmer: 'Stemmer'
 }
 
-const LINEBREAK_REGEX = /<br>/g;
-
 function PreprocessorSelectOption(props) {
   const preprocessor = props.preprocessor;
 
@@ -185,7 +189,7 @@ function PreprocessorSelectOption(props) {
         {preprocessor.language && <span className="preprocessor-language"> ({LANGUAGES[preprocessor.language]})</span>}
       </p>
       <div className="preprocessor-description">
-        <p>{replaceSingleCharacter(preprocessor.description, LINEBREAK_REGEX, key => <br key={key} />)}</p>
+        <p>{displayLineBreaks(preprocessor.description)}</p>
       </div>
     </div>
   );
