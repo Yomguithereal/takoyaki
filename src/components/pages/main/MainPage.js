@@ -137,7 +137,7 @@ class UploadPage extends Component {
           <DataTable
             headers={main.headers}
             data={main.data}
-            height={360}
+            height={300}
             onClickHeader={this.selectHeader}
             selectedHeader={main.selectedHeader} />
           <br />

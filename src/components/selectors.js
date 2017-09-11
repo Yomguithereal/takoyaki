@@ -159,7 +159,7 @@ export function RecipeSelect(props) {
         options={options}
         optionRenderer={RecipeSelectOption}
         valueRenderer={RecipeSelectValue}
-        placeholder="Recipe..."
+        placeholder="Select a recipe..."
         {...other} />
     </div>
   );
@@ -206,7 +206,7 @@ export function PreprocessorSelect(props) {
         openOnFocus={true}
         options={PREPROCESSOR_OPTIONS}
         optionRenderer={PreprocessorSelectOption}
-        placeholder="Functions..."
+        placeholder="Select a function to add..."
         {...other} />
     </div>
   );

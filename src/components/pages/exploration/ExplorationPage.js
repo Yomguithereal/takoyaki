@@ -63,7 +63,7 @@ class ExplorationPage extends Component {
       main
     } = this.props;
 
-    const cluster = main.clusters[main.exploredCluster];
+    const cluster = main.clusters.get(main.exploredCluster);
 
     const rows = collectRows(main.data, cluster.groups);
 

@@ -9,6 +9,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {format} from 'd3-format';
 
+import {AutoSizer, List} from 'react-virtualized';
 import ClusterInformation from './ClusterInformation';
 import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
@@ -62,21 +63,43 @@ class ClustersPage extends Component {
       );
     else
       workspace = (
-        <div>
+        <div style={{height: '100%'}}>
           <AffixTitle affix="1.">
             Check the <span className="highlight">{NUMBER_FORMAT(main.clusters.size)}</span> found clusters on
             column <span className="highlight">{main.clusteredHeader}</span>
           </AffixTitle>
-          {main.clusters.toJS().map(cluster => {
-            return (
-              <ClusterInformation
-                key={cluster.key}
-                number={cluster.key}
-                cluster={cluster}
-                explore={actions.explore}
-                updateHarmonizedValue={actions.updateHarmonizedValue} />
-            );
-          })}
+          <AutoSizer>
+            {({width, height}) => {
+
+              // NOTE: subtracting 51 to get action bar out of the way
+              return (
+                <List
+                  width={width}
+                  height={height - 51}
+                  rowCount={main.clusters.size}
+                  rowHeight={({index}) => {
+                    const cluster = main.clusters.get(index);
+
+                    // Estimated height in pixels
+                    return 145 + (cluster.groups.length * 24);
+                  }}
+                  rowRenderer={({index, style}) => {
+                    const cluster = main.clusters.get(index);
+
+                    return (
+                      <div key={cluster.key} style={style}>
+                        <ClusterInformation
+                          key={cluster.key}
+                          number={cluster.key}
+                          cluster={cluster}
+                          explore={actions.explore}
+                          updateHarmonizedValue={actions.updateHarmonizedValue} />
+                      </div>
+                    );
+                  }} />
+              );
+            }}
+          </AutoSizer>
         </div>
       );
 

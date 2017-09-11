@@ -188,6 +188,7 @@ export default createReducer(DEFAULT_STATE, {
 
   [MAIN_UPDATE_HARMONIZED_VALUE](state, action) {
 
+    // TODO: try mutating?
     const cluster = state.clusters.get(action.cluster);
     const newClusters = state.clusters.set(action.cluster, {
       ...cluster,
