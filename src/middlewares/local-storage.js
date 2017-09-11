@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 /**
  * Takoyaki Local Storage Redux Middleware
  * ========================================
@@ -29,7 +30,8 @@ export default function localStorageMiddleware(store) {
         const recipes = keyBy(JSON.parse(data), 'id');
         store.dispatch(actions.hydrate(recipes));
 
-      } catch (e) {
+      }
+      catch (e) {
         console.error(e);
       }
 

@@ -46,7 +46,7 @@ export default createReducer(DEFAULT_STATE, {
     };
   },
 
-  [GLOBAL_RESET](state) {
+  [GLOBAL_RESET]() {
     return {...DEFAULT_STATE};
   }
 });

@@ -8,9 +8,8 @@ import React, {Component} from 'react';
 import PREPROCESSORS, {buildPreprocessorChain} from '../../../definitions/preprocessors';
 
 import {PreprocessorSelect} from '../../selectors';
-import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
-import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
+import {Level, LevelLeft, LevelItem} from '../../levels';
 
 export default class StringPreprocessing extends Component {
   constructor(props, context) {
@@ -72,7 +71,7 @@ export default class StringPreprocessing extends Component {
             <thead>
               <tr>
                 <th>Function chain</th>
-                <th></th>
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -84,8 +83,6 @@ export default class StringPreprocessing extends Component {
                     <td style={{width: '50%'}}>
                       <p>
                         {preprocessor.label}
-                      </p>
-                      <p className="preprocessor-description">
                       </p>
                     </td>
                     <td style={{width: '50%'}}>
@@ -115,8 +112,8 @@ export default class StringPreprocessing extends Component {
                     <code className="show-whitespace">{value}</code>
                   </td>
                   <td>
-                    {[].concat(chain(value)).map((token, i) => {
-                      return <code key={i} className="show-whitespace token">{token}</code>
+                    {[].concat(chain(value)).map((token, j) => {
+                      return <code key={j} className="show-whitespace token">{token}</code>;
                     })}
                   </td>
                 </tr>

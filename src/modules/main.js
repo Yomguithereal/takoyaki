@@ -179,7 +179,7 @@ export default createReducer(DEFAULT_STATE, {
     };
   },
 
-  [MAIN_CANCEL_CLUSTERING](state, action) {
+  [MAIN_CANCEL_CLUSTERING](state) {
     return {
       ...state,
       clustering: false

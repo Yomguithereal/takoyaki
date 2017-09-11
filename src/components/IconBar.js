@@ -1,3 +1,4 @@
+/* eslint no-alert: 0 */
 /**
  * Takoyaki IconBar Component
  * ===========================

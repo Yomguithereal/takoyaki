@@ -9,9 +9,7 @@ import CLUSTERERS from '../../../definitions/clusterers';
 import {CLUSTERER_DESCRIPTIONS} from '../../../definitions/descriptions';
 
 import {ClustererSelect} from '../../selectors';
-import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
-import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 export default class Clusterer extends Component {
   constructor(props, context) {
@@ -26,7 +24,6 @@ export default class Clusterer extends Component {
 
   render() {
     const {
-      actions,
       recipe
     } = this.props;
 

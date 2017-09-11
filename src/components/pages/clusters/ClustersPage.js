@@ -49,8 +49,7 @@ class ClustersPage extends Component {
   render() {
     const {
       actions,
-      main,
-      state
+      main
     } = this.props;
 
     let workspace;

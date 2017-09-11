@@ -10,7 +10,6 @@ import {connect} from 'react-redux';
 import CLUSTERERS from '../../../definitions/clusterers';
 
 import Button from '../../Button';
-import AffixTitle from '../../AffixTitle';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 import StringPreprocessing from './StringPreprocessing';
 import Clusterer from './Clusterer';

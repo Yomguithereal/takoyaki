@@ -6,7 +6,7 @@
  */
 import uuid from 'uuid/v4';
 import omit from 'lodash/omit';
-import recipes from '../definitions/recipes';
+import RECIPES from '../definitions/recipes';
 import {createReducer} from './helpers';
 
 /**
@@ -35,7 +35,7 @@ export const RECIPE_DATA_CONSTANTS = new Set([
  * Default state.
  */
 const DEFAULT_STATE = {
-  recipes,
+  recipes: RECIPES,
   editedRecipe: null
 };
 

@@ -1,3 +1,4 @@
+/* eslint no-confusing-arrow: 0 */
 /**
  * Takoyaki Selector Components
  * =============================
@@ -11,7 +12,6 @@ import sortBy from 'lodash/sortBy';
 import {replaceSingleCharacter} from './helpers';
 import CLUSTERERS from '../definitions/clusterers';
 import PREPROCESSORS from '../definitions/preprocessors';
-import METRICS from '../definitions/metrics';
 
 /**
  * Helpers.
@@ -38,8 +38,6 @@ const RECIPE_SORT_VALUES = {
 };
 
 function optionsFromRecipes(recipes) {
-  const options = [];
-
   recipes = Object.keys(recipes).map(key => recipes[key]);
 
   recipes = sortBy(recipes, [
@@ -52,7 +50,7 @@ function optionsFromRecipes(recipes) {
     return {
       label: recipe.label,
       value: recipe.id,
-      recipe: recipe
+      recipe
     };
   });
 }
@@ -101,7 +99,7 @@ export function HeaderSelect(props) {
   return (
     <div style={{width: '250px'}}>
       <Select
-        openOnFocus={true}
+        openOnFocus
         className={cls(up && 'drop-up')}
         options={options}
         placeholder="Target column..."
@@ -154,7 +152,7 @@ export function RecipeSelect(props) {
   return (
     <div style={{width: '400px'}} className="recipe-selector">
       <Select
-        openOnFocus={true}
+        openOnFocus
         className={cls(up && 'drop-up')}
         options={options}
         optionRenderer={RecipeSelectOption}
@@ -176,7 +174,7 @@ const PREPROCESSOR_CATEGORIES = {
   normalizer: 'Normalizer',
   phonetics: 'Phonetic encoding',
   stemmer: 'Stemmer'
-}
+};
 
 function PreprocessorSelectOption(props) {
   const preprocessor = props.preprocessor;
@@ -203,7 +201,7 @@ export function PreprocessorSelect(props) {
   return (
     <div style={{width: '600px'}} className="preprocessor-selector">
       <Select
-        openOnFocus={true}
+        openOnFocus
         options={PREPROCESSOR_OPTIONS}
         optionRenderer={PreprocessorSelectOption}
         placeholder="Select a function to add..."
@@ -239,7 +237,7 @@ export function ClustererSelect(props) {
   return (
     <div style={{width: '600px'}} className="clusterer-selector">
       <Select
-        openOnFocus={true}
+        openOnFocus
         clearable={false}
         className={cls(up && 'drop-up')}
         options={CLUSTERER_OPTIONS}

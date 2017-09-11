@@ -80,31 +80,31 @@ class UploadPage extends Component {
   createRecipe() {
     const {
       actions,
-      recipesActions
+      recipesActions: recipes
     } = this.props;
 
-    recipesActions.create();
+    recipes.create();
     actions.changeStep('recipe');
   }
 
   editRecipe() {
     const {
       actions,
-      recipesActions
+      recipesActions: recipes
     } = this.props;
 
-    recipesActions.select(this.props.main.selectedRecipe);
+    recipes.select(this.props.main.selectedRecipe);
     actions.changeStep('recipe');
   }
 
   deleteRecipe() {
     const {
       actions,
-      recipesActions
+      recipesActions: recipes
     } = this.props;
 
     actions.selectRecipe(null);
-    recipesActions.delete(this.props.main.selectedRecipe);
+    recipes.delete(this.props.main.selectedRecipe);
   }
 
   backToUpload() {
