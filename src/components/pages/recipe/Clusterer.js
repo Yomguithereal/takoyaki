@@ -6,6 +6,7 @@
  */
 import React, {Component} from 'react';
 import CLUSTERERS from '../../../definitions/clusterers';
+import {CLUSTERER_DESCRIPTIONS} from '../../../definitions/descriptions';
 
 import {ClustererSelect} from '../../selectors';
 import Button from '../../Button';
@@ -32,7 +33,7 @@ export default class Clusterer extends Component {
     const clusterer = CLUSTERERS[recipe.clusterer];
 
     return (
-      <div className="string-preprocessing">
+      <div className="clusterer">
         <AffixTitle affix="2.">
           Clustering algorithm
         </AffixTitle>
@@ -45,14 +46,13 @@ export default class Clusterer extends Component {
           value={recipe.clusterer}
           onChange={this.handleChange} />
         <br />
-        <p>
-          <em>{clusterer.description}</em>
-        </p>
-        <br />
+        <div className="clusterer-description content">
+          {CLUSTERER_DESCRIPTIONS[recipe.clusterer]}
+        </div>
         {clusterer.needMetric && (
           <p>
             <strong>Note:</strong> this algorithm requires you to choose
-            a similarity metric below ▼.
+            a similarity metric below.
           </p>
         )}
         <br />

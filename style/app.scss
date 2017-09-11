@@ -322,7 +322,7 @@ $aside-width: 44px;
   .recipe-title {
     font-size: 1.5rem;
     font-family: $family-titles;
-    width: 250px;
+    width: 450px;
     border: none;
     border-bottom: 1px solid $grey-lighter;
 
@@ -339,7 +339,7 @@ $aside-width: 44px;
     font-style: italic;
     margin-top: 20px;
     margin-bottom: 20px;
-    width: 500px;
+    width: 600px;
     height: 70px;
     border: none;
     border-bottom: 1px solid $grey-lighter;
@@ -368,6 +368,13 @@ $aside-width: 44px;
       th, td {
         padding-right: 20px;
       }
+    }
+  }
+
+  .clusterer {
+
+    .clusterer-description {
+      width: 800px;
     }
   }
 }
