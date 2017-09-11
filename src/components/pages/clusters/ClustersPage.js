@@ -8,6 +8,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {format} from 'd3-format';
+import cls from 'classnames';
 
 import {AutoSizer, List} from 'react-virtualized';
 import ClusterInformation from './ClusterInformation';
@@ -49,7 +50,8 @@ class ClustersPage extends Component {
   render() {
     const {
       actions,
-      main
+      main,
+      hidden = false
     } = this.props;
 
     let workspace;
@@ -103,7 +105,7 @@ class ClustersPage extends Component {
       );
 
     return (
-      <div className="full-height">
+      <div className={cls('full-height', hidden && 'hidden')}>
         <section className="workspace">
           {workspace}
         </section>

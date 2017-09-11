@@ -28,8 +28,9 @@ const router = step => {
   if (step === 'main')
     return MainPage;
 
+  // NOTE: the clusters page remains in the DOM to keep scroll state
   if (step === 'clusters')
-    return ClustersPage;
+    return null;
 
   if (step === 'exploration')
     return ExplorationPage;
@@ -87,7 +88,8 @@ export default connectToStore(function Application(props) {
             onClick={handleTitleClick}>
             Takoyaki
           </h1>
-          <RoutedComponent />
+          {RoutedComponent && <RoutedComponent />}
+          <ClustersPage hidden={step !== 'clusters'} />
         </section>
       </div>
       <Tooltip id="icons" effect="solid" place="right" />
