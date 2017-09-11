@@ -43,6 +43,10 @@ $radius-small: 0px;
 $radius: 0px;
 $radius-large: 0px;
 
+.level-item {
+  margin-right: 5px !important;
+}
+
 /**
  * React Select variables override.
  */
@@ -182,6 +186,10 @@ $aside-width: 44px;
   cursor: pointer;
 }
 
+.show-whitespace {
+  white-space: pre;
+}
+
 .download-button {
   margin-left: 5px;
 
@@ -194,20 +202,27 @@ $aside-width: 44px;
  * Selectors.
  */
 .recipe-selector,
-.preprocessor-selector {
+.preprocessor-selector,
+.clusterer-selector {
   .Select-control {
 
   }
 
   .recipe-description,
-  .preprocessor-description {
+  .preprocessor-description,
+  .clusterer-addendum {
     font-size: 0.7em;
     font-style: italic;
   }
 
   .preprocessor-language,
-  .preprocessor-category {
+  .preprocessor-category,
+  .clusterer-complexity {
     font-size: 0.8em;
+  }
+
+  svg {
+    fill: $black;
   }
 }
 
@@ -288,10 +303,16 @@ $aside-width: 44px;
       margin-left: 5px;
       width: 300px;
       font-family: $family-monospace;
+      font-size: 1.1em;
+      border: none;
+      border-bottom: 1px solid $grey-lighter;
 
       &:focus {
-        outline: 1px solid $grey-lighter;
+        outline: none;
+        border-bottom: 1px solid $grey;
       }
+
+      transition: border 0.4s;
     }
   }
 }
@@ -329,5 +350,28 @@ $aside-width: 44px;
     }
 
     transition: border 0.4s;
+  }
+
+  .string-preprocessing {
+
+    .remove-link {
+      text-decoration: underline;
+    }
+
+    .token {
+      margin-right: 5px;
+    }
+
+    table {
+      font-size: 0.9em;
+
+      th {
+        padding-bottom: 5px;
+      }
+
+      th, td {
+        padding-right: 20px;
+      }
+    }
   }
 }

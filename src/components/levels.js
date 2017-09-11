@@ -18,6 +18,6 @@ export function LevelRight({children}) {
   return <div className="level-right">{children}</div>;
 }
 
-export function LevelItem({children}) {
-  return <div className="level-item">{children}</div>;
+export function LevelItem({children, ...other}) {
+  return <div className="level-item" {...other}>{children}</div>;
 }

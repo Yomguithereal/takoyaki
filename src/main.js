@@ -11,6 +11,8 @@ import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import Application from './components/Application';
 import reducer from './modules';
+import localStorageMiddleware from './middlewares/local-storage';
+import {actions as globalActions} from './modules/global';
 
 // Requiring style
 import '../style/app.scss';
@@ -21,9 +23,11 @@ const MOUNT_NODE = document.getElementById('app');
 // Creating redux store
 const STORE = createStore(
   reducer,
-  applyMiddleware(thunk)
+  applyMiddleware(thunk, localStorageMiddleware)
 );
 window.STORE = STORE;
+
+STORE.dispatch(globalActions.init());
 
 // Function rendering the application
 function renderApplication(Component) {

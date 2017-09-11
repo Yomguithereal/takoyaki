@@ -7,6 +7,8 @@
 import React from 'react';
 import Select from 'react-select';
 import cls from 'classnames';
+import sortBy from 'lodash/sortBy';
+import {replaceSingleCharacter} from './helpers';
 import CLUSTERERS from '../definitions/clusterers';
 import PREPROCESSORS from '../definitions/preprocessors';
 import METRICS from '../definitions/metrics';
@@ -23,18 +25,30 @@ function optionsFromStrings(strings) {
   });
 }
 
+const RECIPE_SORT_VALUES = {
+  low: 3,
+  medium: 2,
+  high: 1
+};
+
 function optionsFromRecipes(recipes) {
   const options = [];
 
-  for (const k in recipes) {
-    options.push({
-      label: recipes[k].label,
-      value: recipes[k].id,
-      recipe: recipes[k]
-    });
-  }
+  recipes = Object.keys(recipes).map(key => recipes[key]);
 
-  return options;
+  recipes = sortBy(recipes, [
+    recipe => RECIPE_SORT_VALUES[CLUSTERERS[recipe.clusterer].scalability],
+    recipe => recipe.addedByUser ? 1 : 0,
+    recipe => recipe.label
+  ]);
+
+  return recipes.map(recipe => {
+    return {
+      label: recipe.label,
+      value: recipe.id,
+      recipe: recipe
+    };
+  });
 }
 
 function optionsFromPreprocessors() {
@@ -50,7 +64,21 @@ function optionsFromPreprocessors() {
   return options;
 }
 
-const PREPROCESSOR_OPTIONS = optionsFromPreprocessors();
+function optionsFromClusterers() {
+  const options = [];
+
+  for (const k in CLUSTERERS)
+    options.push({
+      label: CLUSTERERS[k].label,
+      value: k,
+      clusterer: CLUSTERERS[k]
+    });
+
+  return options;
+}
+
+const PREPROCESSOR_OPTIONS = optionsFromPreprocessors(),
+      CLUSTERER_OPTIONS = optionsFromClusterers();
 
 /**
  * Headers selector.
@@ -67,6 +95,7 @@ export function HeaderSelect(props) {
   return (
     <div style={{width: '250px'}}>
       <Select
+        openOnFocus={true}
         className={cls(up && 'drop-up')}
         options={options}
         placeholder="Target column..."
@@ -90,7 +119,7 @@ function RecipeSelectOption(props) {
 
   return (
     <div className="recipe-option">
-      <p><strong>{props.label}</strong></p>
+      <p><strong>{props.label}</strong>{recipe.addedByUser && <span> *</span>}</p>
       <div className="recipe-description">
         <p>{recipe.description}</p>
         <p>{SCALABILITIES[clusterer.scalability]}</p>
@@ -111,9 +140,11 @@ export function RecipeSelect(props) {
   return (
     <div style={{width: '400px'}} className="recipe-selector">
       <Select
+        openOnFocus={true}
         className={cls(up && 'drop-up')}
         options={options}
         optionRenderer={RecipeSelectOption}
+        valueRenderer={RecipeSelectOption}
         placeholder="Recipe..."
         {...other} />
     </div>
@@ -133,6 +164,8 @@ const PREPROCESSOR_CATEGORIES = {
   stemmer: 'Stemmer'
 }
 
+const LINEBREAK_REGEX = /<br>/g;
+
 function PreprocessorSelectOption(props) {
   const preprocessor = props.preprocessor;
 
@@ -144,7 +177,7 @@ function PreprocessorSelectOption(props) {
         {preprocessor.language && <span className="preprocessor-language"> ({LANGUAGES[preprocessor.language]})</span>}
       </p>
       <div className="preprocessor-description">
-        <p>{preprocessor.description}</p>
+        <p>{replaceSingleCharacter(preprocessor.description, LINEBREAK_REGEX, key => <br key={key} />)}</p>
       </div>
     </div>
   );
@@ -158,9 +191,48 @@ export function PreprocessorSelect(props) {
   return (
     <div style={{width: '600px'}} className="preprocessor-selector">
       <Select
+        openOnFocus={true}
         options={PREPROCESSOR_OPTIONS}
         optionRenderer={PreprocessorSelectOption}
         placeholder="Functions..."
+        {...other} />
+    </div>
+  );
+}
+
+/**
+ * Clusterers selector.
+ */
+function ClustererSelectOption(props) {
+  const clusterer = props.clusterer;
+
+  return (
+    <div className="clusterer-option">
+      <p>
+        <strong>{props.label}</strong>
+      </p>
+      <p className="clusterer-addendum">
+        {SCALABILITIES[clusterer.scalability]} - {clusterer.complexity}
+      </p>
+    </div>
+  );
+}
+
+export function ClustererSelect(props) {
+  const {
+    up = false,
+    ...other
+  } = props;
+
+  return (
+    <div style={{width: '600px'}} className="clusterer-selector">
+      <Select
+        openOnFocus={true}
+        clearable={false}
+        className={cls(up && 'drop-up')}
+        options={CLUSTERER_OPTIONS}
+        optionRenderer={ClustererSelectOption}
+        placeholder="Algorithms..."
         {...other} />
     </div>
   );

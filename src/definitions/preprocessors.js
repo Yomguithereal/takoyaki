@@ -10,6 +10,7 @@ import fingerprint from 'talisman/keyers/fingerprint';
 
 // Phonetics
 import metaphone from 'talisman/phonetics/metaphone';
+import doubleMetaphone from 'talisman/phonetics/double-metaphone';
 
 // Stemmers
 import carry from 'talisman/stemmers/french/carry';
@@ -20,7 +21,7 @@ const preprocessors = {
     label: 'String fingerprint',
     description: `
       Computes the fingerprint of the given string by removing anything
-      superfluous to its meaning. This includes trimming, lowercasing, dropping
+      superfluous to its meaning.<br><br>This includes trimming, lowercasing, dropping
       punctation & control characters, splitting the string into word tokens,
       dropping duplicate words, sorting the tokens alphabetically to finally
       re-join them with spacing as well as dropping the accents.
@@ -34,8 +35,20 @@ const preprocessors = {
     label: 'Metaphone',
     description: 'Computes the metaphone code (i.e. symbolic phonetic representation) of the given string.',
     category: 'phonetics',
+    tokenizer: true,
     build() {
       return metaphone;
+    }
+  },
+  doubleMetaphone: {
+    label: 'Double Metaphone',
+    description: `
+      An improvement of the original metaphone algorithm yielding two possible
+      encodings.<br><br>Note that it won't produce codes longer that 4 characters.
+    `,
+    category: 'phonetics',
+    build() {
+      return doubleMetaphone;
     }
   },
   carry: {
@@ -60,8 +73,12 @@ export function buildPreprocessorChain(list, ...args) {
 
   return value => {
 
-    for (let i = 0, l = fns.length; i < l; i++)
-      value = fns[i](value);
+    for (let i = 0, l = fns.length; i < l; i++) {
+      if (Array.isArray(value))
+        value = value.map(v => fns[i](v));
+      else
+        value = fns[i](value);
+    }
 
     return value;
   };

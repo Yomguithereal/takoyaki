@@ -21,8 +21,7 @@ import {actions as mainActions} from '../../../modules/main';
 const connectToStore = connect(
   state => {
     return {
-      main: state.main,
-      recipes: state.recipes
+      main: state.main
     };
   },
   dispatch => {
@@ -43,12 +42,21 @@ class ClustersPage extends Component {
   render() {
     const {
       actions,
-      main
+      main,
+      state
     } = this.props;
 
-    return (
-      <div className="full-height">
-        <section className="workspace">
+    let workspace;
+
+    if (!main.clusters || !main.clusters.length)
+      workspace = (
+        <h2 className="title is-4">
+          Sorry, no clusters were found :(
+        </h2>
+      );
+    else
+      workspace = (
+        <div>
           <AffixTitle affix="1.">
             Check the <span className="highlight">{main.clusters.length}</span> found clusters on
             column <span className="highlight">{main.clusteredHeader}</span>
@@ -62,6 +70,15 @@ class ClustersPage extends Component {
                 explore={actions.explore} />
             );
           })}
+        </div>
+      );
+
+
+
+    return (
+      <div className="full-height">
+        <section className="workspace">
+          {workspace}
         </section>
         <Level className="action-bar">
           <LevelLeft>

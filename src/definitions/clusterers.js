@@ -11,8 +11,9 @@ import vpTree from 'talisman/clustering/record-linkage/vp-tree';
 export default {
   keyCollision: {
     label: 'Key Collision',
-    description: 'Colliding keys go into the same cluster.',
+    description: 'TODO: description',
     scalability: 'high',
+    complexity: 'O(n)',
     shuffle: false,
     needMetric: false,
     build({preprocessor}) {
@@ -24,25 +25,11 @@ export default {
       return nb;
     }
   },
-  naive: {
-    label: 'Naive',
-    description: 'Naive O(n^2) clusterer.',
-    scalability: 'low',
-    shuffle: false,
-    needMetric: true,
-    build({metric, radius}) {
-      return items => {
-        return naive({distance: metric, radius}, items);
-      };
-    },
-    estimate(nb) {
-      return (nb * (nb - 1)) / 2;
-    }
-  },
   vpTree: {
     label: 'Vantage Point Tree',
-    description: 'Todo',
+    description: 'TODO: description',
     scalability: 'medium',
+    complexity: 'O(n log(n))',
     shuffle: true,
     needMetric: true,
     trueMetrics: true,
@@ -53,6 +40,22 @@ export default {
     },
     estimate(nb) {
       return nb * Math.log2(nb);
+    }
+  },
+  naive: {
+    label: 'Naive',
+    description: 'TODO: description',
+    scalability: 'low',
+    complexity: 'O(n²)',
+    shuffle: false,
+    needMetric: true,
+    build({metric, radius}) {
+      return items => {
+        return naive({distance: metric, radius}, items);
+      };
+    },
+    estimate(nb) {
+      return (nb * (nb - 1)) / 2;
     }
   }
 };

@@ -5,6 +5,7 @@
  * Module in charge of handling the various recipes.
  */
 import uuid from 'uuid/v4';
+import omit from 'lodash/omit';
 import recipes from '../definitions/recipes';
 import {createReducer} from './helpers';
 
@@ -12,8 +13,23 @@ import {createReducer} from './helpers';
  * Constants.
  */
 const RECIPES_CREATE = '§Recipes/Create';
+const RECIPES_SELECT = '§Recipes/Select';
+const RECIPES_HYDRATE = '§Recipes/Hydrate';
+const RECIPES_DELETE = '§Recipes/Delete';
 const RECIPES_UPDATE_TITLE = '§Recipes/UpdateTitle';
 const RECIPES_UPDATE_DESCRIPTION = '§Recipes/UpdateDescription';
+const RECIPES_ADD_PREPROCESSOR = '§Recipes/AddPreprocessor';
+const RECIPES_REMOVE_PREPROCESSOR = '§Recipes/RemovePreprocessor';
+const RECIPES_SELECT_CLUSTERER = '§Recipes/SelectClusterer';
+
+export const RECIPE_DATA_CONSTANTS = new Set([
+  RECIPES_CREATE,
+  RECIPES_DELETE,
+  RECIPES_UPDATE_TITLE,
+  RECIPES_UPDATE_DESCRIPTION,
+  RECIPES_ADD_PREPROCESSOR,
+  RECIPES_REMOVE_PREPROCESSOR
+]);
 
 /**
  * Default state.
@@ -49,6 +65,33 @@ export default createReducer(DEFAULT_STATE, {
     };
   },
 
+  // When a recipe is selected
+  [RECIPES_SELECT](state, action) {
+    return {
+      ...state,
+      editedRecipe: action.recipe
+    };
+  },
+
+  // When loading user recipes from a persistent source
+  [RECIPES_HYDRATE](state, action) {
+    return {
+      ...state,
+      recipes: {
+        ...action.recipes,
+        ...state.recipes
+      }
+    };
+  },
+
+  // When a recipe is deleted
+  [RECIPES_DELETE](state, action) {
+    return {
+      ...state,
+      recipes: omit(state.recipes, [action.recipe])
+    };
+  },
+
   // When the edited recipe title is updated
   [RECIPES_UPDATE_TITLE](state, action) {
     return {
@@ -75,6 +118,54 @@ export default createReducer(DEFAULT_STATE, {
         }
       }
     };
+  },
+
+  // When adding a preprocessor to the edited recipe's chain
+  [RECIPES_ADD_PREPROCESSOR](state, action) {
+    return {
+      ...state,
+      recipes: {
+        ...state.recipes,
+        [state.editedRecipe]: {
+          ...state.recipes[state.editedRecipe],
+          preprocessor: state
+            .recipes[state.editedRecipe]
+            .preprocessor
+            .concat(action.preprocessor)
+        }
+      }
+    };
+  },
+
+  // When removing a preprocessor to the edited recipe's chain
+  [RECIPES_REMOVE_PREPROCESSOR](state, action) {
+    return {
+      ...state,
+      recipes: {
+        ...state.recipes,
+        [state.editedRecipe]: {
+          ...state.recipes[state.editedRecipe],
+          preprocessor: state
+            .recipes[state.editedRecipe]
+            .preprocessor
+            .filter((_, i) => i !== action.index)
+        }
+      }
+    };
+  },
+
+  // When selecting the edited recipe's clusterer
+  [RECIPES_SELECT_CLUSTERER](state, action) {
+    return {
+      ...state,
+      recipes: {
+        ...state.recipes,
+        [state.editedRecipe]: {
+          ...state.recipes[state.editedRecipe],
+          clusterer: action.clusterer
+        }
+      }
+    };
   }
 });
 
@@ -82,7 +173,7 @@ export default createReducer(DEFAULT_STATE, {
  * Actions.
  */
 export const actions = {
-  createRecipe() {
+  create() {
     const recipe = {
       id: uuid(),
       addedByUser: true,
@@ -96,11 +187,35 @@ export const actions = {
     return {type: RECIPES_CREATE, recipe};
   },
 
+  select(recipe) {
+    return {type: RECIPES_SELECT, recipe};
+  },
+
+  hydrate(recipes) {
+    return {type: RECIPES_HYDRATE, recipes};
+  },
+
+  delete(recipe) {
+    return {type: RECIPES_DELETE, recipe};
+  },
+
   updateTitle(title) {
     return {type: RECIPES_UPDATE_TITLE, title};
   },
 
   updateDescription(description) {
     return {type: RECIPES_UPDATE_DESCRIPTION, description};
+  },
+
+  addPreprocessor(preprocessor) {
+    return {type: RECIPES_ADD_PREPROCESSOR, preprocessor};
+  },
+
+  removePreprocessor(index) {
+    return {type: RECIPES_REMOVE_PREPROCESSOR, index};
+  },
+
+  selectClusterer(clusterer) {
+    return {type: RECIPES_SELECT_CLUSTERER, clusterer};
   }
 };

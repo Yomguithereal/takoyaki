@@ -100,7 +100,7 @@ class UploadPage extends Component {
           {!upload.previewData && (
             <Dropzone
               className="dropzone"
-              children="Click or drop your file here..."
+              children="Click here to choose your file or drop it here..."
               onDrop={this.onDrop} />
           )}
           {upload.previewData && (

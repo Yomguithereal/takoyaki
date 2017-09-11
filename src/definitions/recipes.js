@@ -29,15 +29,8 @@ export default {
   vpTreeLevenshtein: {
     id: 'vpTreeLevenshtein',
     label: 'Levenshtein VPTree',
-    description: 'Using the Levenshtein distance with a vantage point tree.',
+    description: 'Leveraging a vantage point tree to perform a clustering using the Levenshtein distance.',
     clusterer: 'vpTree',
     metric: 'levenshtein'
-  },
-  donato: {
-    id: 'donato',
-    label: 'The Donato',
-    description: 'Apply the Carry stemmer to strings before colliding them.',
-    preprocessor: ['carry'],
-    clusterer: 'keyCollision'
   }
 };

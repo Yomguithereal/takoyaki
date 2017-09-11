@@ -58,6 +58,8 @@ class UploadPage extends Component {
     this.selectHeader = this.selectHeader.bind(this);
     this.selectRecipe = this.selectRecipe.bind(this);
     this.createRecipe = this.createRecipe.bind(this);
+    this.editRecipe = this.editRecipe.bind(this);
+    this.deleteRecipe = this.deleteRecipe.bind(this);
     this.backToUpload = this.backToUpload.bind(this);
   }
 
@@ -81,8 +83,28 @@ class UploadPage extends Component {
       recipesActions
     } = this.props;
 
-    recipesActions.createRecipe();
+    recipesActions.create();
     actions.changeStep('recipe');
+  }
+
+  editRecipe() {
+    const {
+      actions,
+      recipesActions
+    } = this.props;
+
+    recipesActions.select(this.props.main.selectedRecipe);
+    actions.changeStep('recipe');
+  }
+
+  deleteRecipe() {
+    const {
+      actions,
+      recipesActions
+    } = this.props;
+
+    actions.selectRecipe(null);
+    recipesActions.delete(this.props.main.selectedRecipe);
   }
 
   backToUpload() {
@@ -101,6 +123,10 @@ class UploadPage extends Component {
     } = this.props;
 
     const canCluster = main.selectedRecipe && main.selectedHeader;
+
+    const selectedRecipeData = main.selectedRecipe && recipes.recipes[main.selectedRecipe];
+
+    const canEditRecipe = selectedRecipeData && selectedRecipeData.addedByUser;
 
     return (
       <div className="full-height">
@@ -128,7 +154,12 @@ class UploadPage extends Component {
                   onChange={this.selectRecipe} />
               </LevelItem>
               <LevelItem>
-                <Button disabled style={{marginRight: '5px'}}>Edit the recipe</Button>
+                <Button disabled={!canEditRecipe} onClick={this.editRecipe}>Edit the recipe</Button>
+              </LevelItem>
+              <LevelItem>
+                <Button disabled={!canEditRecipe} onClick={this.deleteRecipe}>Delete the recipe</Button>
+              </LevelItem>
+              <LevelItem>
                 <Button onClick={this.createRecipe}>Create a custom recipe</Button>
               </LevelItem>
             </LevelLeft>

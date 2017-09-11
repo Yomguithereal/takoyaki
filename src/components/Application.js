@@ -77,7 +77,7 @@ export default connectToStore(function Application(props) {
 
   return (
     <main>
-      <div className="columns app-wrapper">
+      <div className="columns app-wrapper" style={{marginBottom: '0px'}}>
         <aside className="app-aside">
           <IconBar step={step} />
         </aside>
@@ -90,7 +90,8 @@ export default connectToStore(function Application(props) {
           <RoutedComponent />
         </section>
       </div>
-      <Tooltip effect="solid" place="right" />
+      <Tooltip id="icons" effect="solid" place="right" />
+      <Tooltip id="disabled-buttons" effect="solid" place="top" />
     </main>
   );
 });
