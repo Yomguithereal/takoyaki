@@ -70,6 +70,9 @@ class ExplorationPage extends Component {
 
     const rows = collectRows(main.data, cluster);
 
+    // TODO: use a radix sort
+    rows.sort((a, b) => a - b);
+
     const data = rows.map(row => main.data[row]);
 
     return (
