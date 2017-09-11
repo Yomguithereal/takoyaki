@@ -69,6 +69,7 @@ export default function ClusterInformation(props) {
         <input
           type="text"
           className="cluster-harmonized-value"
+          spellCheck={false}
           value={data[0].value} />
       </div>
     </div>

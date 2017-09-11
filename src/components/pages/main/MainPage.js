@@ -164,6 +164,10 @@ class UploadPage extends Component {
               </LevelItem>
             </LevelLeft>
           </Level>
+          {main.selectedRecipe && (
+            <p><em>{selectedRecipeData.description}</em></p>
+          )}
+          <br />
           {main.selectedRecipe && main.selectedHeader && (
             <p>
               Applying this recipe on <span className="highlight">{NUMBER_FORMAT(nbDistinctSelectedValues)}</span> distinct values requires

@@ -96,6 +96,10 @@ html, body, main, #app {
   height: 100%;
 }
 
+a {
+  text-decoration: underline;
+}
+
 $aside-width: 44px;
 
 .app-wrapper {
@@ -273,10 +277,6 @@ $aside-width: 44px;
 .cluster-information {
   margin-bottom: 35px;
 
-  .explore-link {
-    text-decoration: underline;
-  }
-
   .cluster-value-list {
     margin-top: 10px;
     padding-left: 25px;
@@ -301,7 +301,7 @@ $aside-width: 44px;
 
     .cluster-harmonized-value {
       margin-left: 5px;
-      width: 300px;
+      width: 400px;
       font-family: $family-monospace;
       font-size: 1.1em;
       border: none;
@@ -353,10 +353,6 @@ $aside-width: 44px;
   }
 
   .string-preprocessing {
-
-    .remove-link {
-      text-decoration: underline;
-    }
 
     .token {
       margin-right: 5px;

@@ -81,6 +81,7 @@ class UploadPage extends Component {
               <input
                 className="recipe-title"
                 placeholder="Recipe title..."
+                spellCheck={false}
                 type="text"
                 value={recipe.label}
                 onChange={e => actions.recipe.updateTitle(e.target.value)} />
@@ -89,6 +90,7 @@ class UploadPage extends Component {
               <textarea
                 className="recipe-description"
                 placeholder="Recipe description..."
+                spellCheck={false}
                 value={recipe.description}
                 onChange={e => actions.recipe.updateDescription(e.target.value)} />
             </div>

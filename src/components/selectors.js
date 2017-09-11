@@ -128,6 +128,14 @@ function RecipeSelectOption(props) {
   );
 }
 
+function RecipeSelectValue(props) {
+  const recipe = props.recipe;
+
+  return (
+    <div>{props.label}{recipe.addedByUser && <span> *</span>}</div>
+  );
+}
+
 export function RecipeSelect(props) {
   const {
     recipes,
@@ -144,7 +152,7 @@ export function RecipeSelect(props) {
         className={cls(up && 'drop-up')}
         options={options}
         optionRenderer={RecipeSelectOption}
-        valueRenderer={RecipeSelectOption}
+        valueRenderer={RecipeSelectValue}
         placeholder="Recipe..."
         {...other} />
     </div>

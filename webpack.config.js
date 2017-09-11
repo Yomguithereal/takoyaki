@@ -25,6 +25,10 @@ module.exports = {
       {
         test: /\.woff2?$/,
         use: 'file-loader'
+      },
+      {
+        test: /\.csv$/,
+        use: 'raw-loader'
       }
     ]
   },

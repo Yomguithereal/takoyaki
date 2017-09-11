@@ -9,6 +9,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Dropzone from 'react-dropzone';
 
+import EXAMPLE_DATA from '../../../../data/figshare.csv';
+
 import AffixTitle from '../../AffixTitle';
 import DataTable from '../../DataTable';
 import Button from '../../Button';
@@ -46,15 +48,16 @@ class UploadPage extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.onDrop = this.onDrop.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.loadExampleFile = this.loadExampleFile.bind(this);
     this.reset = this.reset.bind(this);
 
     // Keeping track of the uploaded file
     this.file = null;
   }
 
-  onDrop(acceptedFiles) {
+  handleDrop(acceptedFiles) {
     const actions = this.props.actions;
 
     if (!acceptedFiles || !acceptedFiles.length)
@@ -66,7 +69,7 @@ class UploadPage extends Component {
     actions.upload.previewData(file);
   }
 
-  onSubmit() {
+  handleSubmit() {
     if (!this.file)
       return;
 
@@ -75,6 +78,14 @@ class UploadPage extends Component {
     actions.main.parseData(this.file);
 
     this.file = null;
+  }
+
+  loadExampleFile() {
+    const actions = this.props.actions;
+
+    this.file = null;
+
+    actions.main.parseData(EXAMPLE_DATA);
   }
 
   reset() {
@@ -98,10 +109,16 @@ class UploadPage extends Component {
             Upload a CSV file
           </AffixTitle>
           {!upload.previewData && (
-            <Dropzone
-              className="dropzone"
-              children="Click here to choose your file or drop it here..."
-              onDrop={this.onDrop} />
+            <div>
+              <p>
+              Or <a onClick={this.loadExampleFile}>load</a> our example of a messy file.
+              </p>
+              <br />
+              <Dropzone
+                className="dropzone"
+                children="Click here to choose your file or drop it here..."
+                onDrop={this.handleDrop} />
+            </div>
           )}
           {upload.previewData && (
             <div>
@@ -135,7 +152,7 @@ class UploadPage extends Component {
               <LevelItem>
                 <Button
                   loading={main.parsing}
-                  onClick={this.onSubmit}>
+                  onClick={this.handleSubmit}>
                   Parse the whole file
                 </Button>
               </LevelItem>
