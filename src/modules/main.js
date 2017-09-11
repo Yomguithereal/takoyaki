@@ -5,6 +5,7 @@
  * Top-level module.
  */
 import CSV from 'papaparse';
+import naiveSample from 'pandemonium/naive-sample';
 import {createSelector} from 'reselect';
 import {createReducer} from './helpers';
 import CLUSTERERS from '../definitions/clusterers';
@@ -38,7 +39,9 @@ const DEFAULT_STATE = {
   clustering: false,
   clusters: null,
   clusteredHeader: null,
-  exploredCluster: null
+  exploredCluster: null,
+  preprocessingSample: null,
+  metricSample: null
 };
 
 /**
@@ -119,12 +122,23 @@ export default createReducer(DEFAULT_STATE, {
   },
 
   [MAIN_PARSED](state, action) {
+    const size = action.data.length;
+
+    // Computing samples
+    const preprocessingSample = naiveSample(20, size),
+          metricSample = [
+            naiveSample(20, size),
+            naiveSample(20, size)
+          ];
+
     return {
       ...state,
       parsing: false,
       data: action.data,
       headers: action.headers,
-      step: 'main'
+      step: 'main',
+      preprocessingSample,
+      metricSample
     };
   },
 

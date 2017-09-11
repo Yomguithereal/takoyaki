@@ -45,10 +45,50 @@ class UploadPage extends Component {
 
     return (
       <div className="full-height">
-        <section className="workspace">
-          <AffixTitle affix="1.">
-            String preprocessing
-          </AffixTitle>
+        <section className="workspace recipe-editor">
+          <div className="recipe-info">
+            <div>
+              <input
+                className="recipe-title"
+                placeholder="Recipe title..."
+                type="text"
+                value="My custom recipe" />
+            </div>
+            <div>
+              <textarea
+                className="recipe-description"
+                placeholder="Recipe description..."
+                value="Description of my custom clustering recipe" />
+            </div>
+          </div>
+          <div className="string-preprocessing">
+            <AffixTitle affix="1.">
+              String preprocessing
+            </AffixTitle>
+            <p>
+              First, you need to indicate how you want to preprocess your strings
+              or even tokenize them.
+            </p>
+            <br />
+          </div>
+          <div className="clusterer">
+            <AffixTitle affix="2.">
+              Clustering algorithm
+            </AffixTitle>
+            <p>
+              Then you need to select a clustering algorithm to use.
+            </p>
+            <br />
+          </div>
+          <div className="metric">
+            <AffixTitle affix="3.">
+              Metric
+            </AffixTitle>
+            <p>
+              Some clustering algorithms need you to select a similarity
+              metric.
+            </p>
+          </div>
         </section>
         <Level className="action-bar">
           <LevelLeft>

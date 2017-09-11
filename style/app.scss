@@ -207,6 +207,8 @@ $aside-width: 44px;
 /**
  * Components.
  */
+
+// Dropzone
 .dropzone {
   width: 100%;
   height: 200px;
@@ -216,6 +218,7 @@ $aside-width: 44px;
   font-style: italic;
 }
 
+// DataTable
 .table-cell {
   display: inline-block;
   max-width: 100%;
@@ -244,6 +247,7 @@ $aside-width: 44px;
   }
 }
 
+// ClustersPage
 .cluster-information {
   margin-bottom: 35px;
 
@@ -282,5 +286,41 @@ $aside-width: 44px;
         outline: 1px solid $grey-lighter;
       }
     }
+  }
+}
+
+// RecipePage
+.recipe-editor {
+  .recipe-title {
+    font-size: 1.5rem;
+    font-family: $family-titles;
+    width: 250px;
+    border: none;
+    border-bottom: 1px solid $grey-lighter;
+
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid $grey;
+    }
+
+    transition: border 0.4s;
+  }
+
+  .recipe-description {
+    font-size: 1em;
+    font-style: italic;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 500px;
+    height: 70px;
+    border: none;
+    border-bottom: 1px solid $grey-lighter;
+
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid $grey;
+    }
+
+    transition: border 0.4s;
   }
 }

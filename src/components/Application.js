@@ -7,6 +7,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import Tooltip from 'react-tooltip';
 
 import IconBar from './IconBar';
 import UploadPage from './pages/upload/UploadPage';
@@ -89,6 +90,7 @@ export default connectToStore(function Application(props) {
           <RoutedComponent />
         </section>
       </div>
+      <Tooltip effect="solid" place="right" />
     </main>
   );
 });

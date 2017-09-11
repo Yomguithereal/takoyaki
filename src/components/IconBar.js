@@ -20,19 +20,29 @@ export default function IconBar(props) {
 
   return (
     <ul className="icon-bar">
-      <li className={cls('icon-item', step === 'upload' && 'active')}>
+      <li
+        data-tip="Upload a file"
+        className={cls('icon-item', step === 'upload' && 'active')}>
         <UploadIcon width={26} height={26} />
       </li>
-      <li className={cls('icon-item', step === 'main' && 'active')}>
+      <li
+        data-tip="Choose a recipe"
+        className={cls('icon-item', step === 'main' && 'active')}>
         <ViewHeadlineIcon width={26} height={26} />
       </li>
-      <li className={cls('icon-item', step === 'clusters' && 'active')}>
+      <li
+        data-tip="Check found clusters"
+        className={cls('icon-item', step === 'clusters' && 'active')}>
         <UngroupIcon width={26} height={26} />
       </li>
-      <li className={cls('icon-item', step === 'exploration' && 'active')}>
+      <li
+        data-tip="Explore a single cluster"
+        className={cls('icon-item', step === 'exploration' && 'active')}>
         <EyeIcon width={26} height={26} />
       </li>
-      <li className={cls('icon-item', step === 'recipe' && 'active')}>
+      <li
+        data-tip="Create or edit a recipe"
+        className={cls('icon-item', step === 'recipe' && 'active')}>
         <TableEditIcon width={26} height={26} />
       </li>
     </ul>
