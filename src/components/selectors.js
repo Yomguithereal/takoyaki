@@ -8,6 +8,8 @@ import React from 'react';
 import Select from 'react-select';
 import cls from 'classnames';
 import CLUSTERERS from '../definitions/clusterers';
+import PREPROCESSORS from '../definitions/preprocessors';
+import METRICS from '../definitions/metrics';
 
 /**
  * Helpers.
@@ -34,6 +36,21 @@ function optionsFromRecipes(recipes) {
 
   return options;
 }
+
+function optionsFromPreprocessors() {
+  const options = [];
+
+  for (const k in PREPROCESSORS)
+    options.push({
+      label: PREPROCESSORS[k].label,
+      value: k,
+      preprocessor: PREPROCESSORS[k]
+    });
+
+  return options;
+}
+
+const PREPROCESSOR_OPTIONS = optionsFromPreprocessors();
 
 /**
  * Headers selector.
@@ -98,6 +115,52 @@ export function RecipeSelect(props) {
         options={options}
         optionRenderer={RecipeSelectOption}
         placeholder="Recipe..."
+        {...other} />
+    </div>
+  );
+}
+
+/**
+ * Preprocessors selector.
+ */
+const LANGUAGES = {
+  fr: 'French'
+};
+
+const PREPROCESSOR_CATEGORIES = {
+  normalizer: 'Normalizer',
+  phonetics: 'Phonetic encoding',
+  stemmer: 'Stemmer'
+}
+
+function PreprocessorSelectOption(props) {
+  const preprocessor = props.preprocessor;
+
+  return (
+    <div className="preprocessor-option">
+      <p>
+        <strong>{props.label}</strong>
+        <span className="preprocessor-category"> - {PREPROCESSOR_CATEGORIES[preprocessor.category]}</span>
+        {preprocessor.language && <span className="preprocessor-language"> ({LANGUAGES[preprocessor.language]})</span>}
+      </p>
+      <div className="preprocessor-description">
+        <p>{preprocessor.description}</p>
+      </div>
+    </div>
+  );
+}
+
+export function PreprocessorSelect(props) {
+  const {
+    ...other
+  } = props;
+
+  return (
+    <div style={{width: '600px'}} className="preprocessor-selector">
+      <Select
+        options={PREPROCESSOR_OPTIONS}
+        optionRenderer={PreprocessorSelectOption}
+        placeholder="Functions..."
         {...other} />
     </div>
   );

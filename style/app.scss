@@ -193,14 +193,21 @@ $aside-width: 44px;
 /**
  * Selectors.
  */
-.recipe-selector {
+.recipe-selector,
+.preprocessor-selector {
   .Select-control {
 
   }
 
-  .recipe-description {
-    font-size: 0.8em;
+  .recipe-description,
+  .preprocessor-description {
+    font-size: 0.7em;
     font-style: italic;
+  }
+
+  .preprocessor-language,
+  .preprocessor-category {
+    font-size: 0.8em;
   }
 }
 

@@ -18,7 +18,13 @@ import carry from 'talisman/stemmers/french/carry';
 const preprocessors = {
   fingerprint: {
     label: 'String fingerprint',
-    description: 'Normalize the string.',
+    description: `
+      Computes the fingerprint of the given string by removing anything
+      superfluous to its meaning. This includes trimming, lowercasing, dropping
+      punctation & control characters, splitting the string into word tokens,
+      dropping duplicate words, sorting the tokens alphabetically to finally
+      re-join them with spacing as well as dropping the accents.
+    `,
     category: 'normalizer',
     build() {
       return fingerprint;
@@ -26,7 +32,7 @@ const preprocessors = {
   },
   metaphone: {
     label: 'Metaphone',
-    description: 'Phonetic encoding.',
+    description: 'Computes the metaphone code (i.e. symbolic phonetic representation) of the given string.',
     category: 'phonetics',
     build() {
       return metaphone;
@@ -34,8 +40,9 @@ const preprocessors = {
   },
   carry: {
     label: 'Carry',
-    description: 'Carry stemmer for the French language.',
+    description: 'Carry is a French version of the famous Porter stemmer.',
     category: 'stemmer',
+    language: 'fr',
     build() {
       return carry;
     }

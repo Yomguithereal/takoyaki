@@ -12,10 +12,8 @@ import {createReducer} from './helpers';
  * Constants.
  */
 const RECIPES_CREATE = '§Recipes/Create';
-const RECIPES_STEP = '§Recipes/Step';
-const RECIPES_ADD_PREPROCESSOR = '§Recipes/AddPreprocessor';
-const RECIPES_CHANGE_CLUSTERER = '§Recipes/ChangeClusterer';
-const RECIPES_CHANGE_METRIC = '§Recipes/ChangeMetric';
+const RECIPES_UPDATE_TITLE = '§Recipes/UpdateTitle';
+const RECIPES_UPDATE_DESCRIPTION = '§Recipes/UpdateDescription';
 
 /**
  * Default state.
@@ -23,6 +21,15 @@ const RECIPES_CHANGE_METRIC = '§Recipes/ChangeMetric';
 const DEFAULT_STATE = {
   recipes,
   editedRecipe: null
+};
+
+/**
+ * Selectors.
+ */
+export const selectors = {
+  editedRecipe(state) {
+    return state.recipes.recipes[state.recipes.editedRecipe];
+  }
 };
 
 /**
@@ -37,61 +44,34 @@ export default createReducer(DEFAULT_STATE, {
       recipes: {
         ...state.recipes,
         [action.recipe.id]: action.recipe
-      }
+      },
+      editedRecipe: action.recipe.id
     };
   },
 
-  // When step is changed
-  [RECIPES_STEP](state, action) {
-    return {
-      ...state,
-      step: action.step
-    };
-  },
-
-  // When a preprocessor is added
-  [RECIPES_ADD_PREPROCESSOR](state, action) {
-    const recipe = state.recipes[action.id];
-
+  // When the edited recipe title is updated
+  [RECIPES_UPDATE_TITLE](state, action) {
     return {
       ...state,
       recipes: {
         ...state.recipes,
-        [action.id]: {
-          ...recipe,
-          preprocessor: recipe.preprocessor.concat(action.preprocessor)
+        [state.editedRecipe]: {
+          ...state.recipes[state.editedRecipe],
+          label: action.title
         }
       }
     };
   },
 
-  // When the clustering method is changed
-  [RECIPES_CHANGE_CLUSTERER](state, action) {
-    const recipe = state.recipes[action.id];
-
+  // When the edited recipe description is updated
+  [RECIPES_UPDATE_DESCRIPTION](state, action) {
     return {
       ...state,
       recipes: {
         ...state.recipes,
-        [action.id]: {
-          ...recipe,
-          clusterer: action.clusterer
-        }
-      }
-    };
-  },
-
-  // When the metric is changed
-  [RECIPES_CHANGE_METRIC](state, action) {
-    const recipe = state.recipes[action.id];
-
-    return {
-      ...state,
-      recipes: {
-        ...state.recipes,
-        [action.id]: {
-          ...recipe,
-          metric: action.metric
+        [state.editedRecipe]: {
+          ...state.recipes[state.editedRecipe],
+          description: action.description
         }
       }
     };
@@ -103,54 +83,24 @@ export default createReducer(DEFAULT_STATE, {
  */
 export const actions = {
   createRecipe() {
-    return dispatch => {
-
-      const recipe = {
-        id: uuid(),
-        addedByUser: true,
-        label: 'New clustering recipe',
-        description: 'My incredible clustering recipe.',
-        preprocessor: [],
-        clusterer: null,
-        distance: null
-      };
-
-      dispatch({
-        type: RECIPES_CREATE,
-        recipe
-      });
-
-      dispatch(actions.changeRecipe(recipe.id));
-
-      return dispatch(actions.changePage('recipe'));
+    const recipe = {
+      id: uuid(),
+      addedByUser: true,
+      label: 'My custom recipe',
+      description: 'Description of my custom clustering recipe.',
+      preprocessor: [],
+      clusterer: 'keyCollision',
+      metric: null
     };
+
+    return {type: RECIPES_CREATE, recipe};
   },
 
-  changeStep(step) {
-    return {type: RECIPES_STEP, step};
+  updateTitle(title) {
+    return {type: RECIPES_UPDATE_TITLE, title};
   },
 
-  addPreprocessor(id, preprocessor) {
-    return {
-      type: RECIPES_ADD_PREPROCESSOR,
-      id,
-      preprocessor
-    };
-  },
-
-  changeClusterer(id, clusterer) {
-    return {
-      type: RECIPES_CHANGE_CLUSTERER,
-      id,
-      clusterer
-    };
-  },
-
-  changeMetric(id, metric) {
-    return {
-      type: RECIPES_CHANGE_METRIC,
-      id,
-      metric
-    };
+  updateDescription(description) {
+    return {type: RECIPES_UPDATE_DESCRIPTION, description};
   }
 };

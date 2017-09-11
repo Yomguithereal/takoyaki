@@ -11,8 +11,10 @@ import {connect} from 'react-redux';
 import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
+import StringPreprocessing from './StringPreprocessing';
 
 import {actions as mainActions} from '../../../modules/main';
+import {actions as recipeActions, selectors as recipeSelectors} from '../../../modules/recipes';
 
 /**
  * Connection to store.
@@ -20,12 +22,16 @@ import {actions as mainActions} from '../../../modules/main';
 const connectToStore = connect(
   state => {
     return {
-      main: state.main
+      main: state.main,
+      recipe: recipeSelectors.editedRecipe(state)
     };
   },
   dispatch => {
     return {
-      actions: bindActionCreators(mainActions, dispatch)
+      actions: {
+        main: bindActionCreators(mainActions, dispatch),
+        recipe: bindActionCreators(recipeActions, dispatch)
+      }
     };
   }
 );
@@ -40,7 +46,8 @@ class UploadPage extends Component {
 
   render() {
     const {
-      actions
+      actions,
+      recipe
     } = this.props;
 
     return (
@@ -52,25 +59,18 @@ class UploadPage extends Component {
                 className="recipe-title"
                 placeholder="Recipe title..."
                 type="text"
-                value="My custom recipe" />
+                value={recipe.label}
+                onChange={e => actions.recipe.updateTitle(e.target.value)} />
             </div>
             <div>
               <textarea
                 className="recipe-description"
                 placeholder="Recipe description..."
-                value="Description of my custom clustering recipe" />
+                value={recipe.description}
+                onChange={e => actions.recipe.updateDescription(e.target.value)} />
             </div>
           </div>
-          <div className="string-preprocessing">
-            <AffixTitle affix="1.">
-              String preprocessing
-            </AffixTitle>
-            <p>
-              First, you need to indicate how you want to preprocess your strings
-              or even tokenize them.
-            </p>
-            <br />
-          </div>
+          <StringPreprocessing />
           <div className="clusterer">
             <AffixTitle affix="2.">
               Clustering algorithm
@@ -85,7 +85,7 @@ class UploadPage extends Component {
               Metric
             </AffixTitle>
             <p>
-              Some clustering algorithms need you to select a similarity
+              Some clustering algorithms require you to select a similarity
               metric.
             </p>
           </div>
@@ -95,7 +95,7 @@ class UploadPage extends Component {
             <LevelItem>
               <Button
                 outlined
-                onClick={() => actions.changeStep('main')}>
+                onClick={() => actions.main.changeStep('main')}>
                 Back
               </Button>
             </LevelItem>

@@ -19,7 +19,7 @@ import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as globalActions} from '../../../modules/global';
 import {actions as mainActions, selectors as mainSelectors} from '../../../modules/main';
-import {actions as uploadActions} from '../../../modules/upload';
+import {actions as recipesActions} from '../../../modules/recipes';
 
 /**
  * Formats.
@@ -42,8 +42,8 @@ const connectToStore = connect(
   dispatch => {
     return {
       actions: bindActionCreators(mainActions, dispatch),
-      uploadActions: bindActionCreators(uploadActions, dispatch),
-      globalActions: bindActionCreators(globalActions, dispatch)
+      globalActions: bindActionCreators(globalActions, dispatch),
+      recipesActions: bindActionCreators(recipesActions, dispatch)
     };
   }
 );
@@ -57,6 +57,7 @@ class UploadPage extends Component {
 
     this.selectHeader = this.selectHeader.bind(this);
     this.selectRecipe = this.selectRecipe.bind(this);
+    this.createRecipe = this.createRecipe.bind(this);
     this.backToUpload = this.backToUpload.bind(this);
   }
 
@@ -72,6 +73,16 @@ class UploadPage extends Component {
       return this.props.actions.selectRecipe(null);
 
     this.props.actions.selectRecipe(option.value);
+  }
+
+  createRecipe() {
+    const {
+      actions,
+      recipesActions
+    } = this.props;
+
+    recipesActions.createRecipe();
+    actions.changeStep('recipe');
   }
 
   backToUpload() {
@@ -118,7 +129,7 @@ class UploadPage extends Component {
               </LevelItem>
               <LevelItem>
                 <Button disabled style={{marginRight: '5px'}}>Edit the recipe</Button>
-                <Button onClick={() => actions.changeStep('recipe')}>Create a custom recipe</Button>
+                <Button onClick={this.createRecipe}>Create a custom recipe</Button>
               </LevelItem>
             </LevelLeft>
           </Level>
