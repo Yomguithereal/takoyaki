@@ -61,15 +61,28 @@ function performClustering(values, recipe) {
 
   for (let i = 0, l = clusters.length; i < l; i++) {
     const cluster = clusters[i],
-          rows = [];
+          groups = [];
 
-    for (let j = 0, m = cluster.length; j < m; j++)
-      rows.push({
+    let totalNbRows = 0;
+
+    for (let j = 0, m = cluster.length; j < m; j++) {
+      const rows = map.get(cluster[j]);
+
+      groups.push({
         value: cluster[j],
-        rows: map.get(cluster[j])
+        rows
       });
 
-    expandedClusters[i] = rows.sort(clusterComparator);
+      totalNbRows += rows.length;
+    }
+
+    expandedClusters[i] = {
+      key: i,
+      groups: groups.sort(clusterComparator),
+      nbRows: totalNbRows,
+      harmonized: false,
+      harmonizedValue: groups[0].value
+    };
   }
 
   return expandedClusters;

@@ -27,6 +27,7 @@ export default class Metric extends Component {
         <AffixTitle affix="3.">
           Similarity metric
         </AffixTitle>
+        TODO
         <br />
       </div>
     );

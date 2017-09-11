@@ -21,7 +21,8 @@ const UPLOAD_PARSED = '§Upload/PreviewParsed';
 const DEFAULT_STATE = {
   parsing: false,
   previewData: null,
-  previewHeaders: null
+  previewHeaders: null,
+  delimiter: ','
 };
 
 /**
@@ -40,16 +41,13 @@ export default createReducer(DEFAULT_STATE, {
       ...state,
       parsing: false,
       previewData: action.data,
-      previewHeaders: action.headers
+      previewHeaders: action.headers,
+      delimiter: action.delimiter
     };
   },
 
   [GLOBAL_RESET](state) {
-    return {
-      ...state,
-      previewData: null,
-      previewHeaders: null
-    };
+    return {...DEFAULT_STATE};
   }
 });
 
@@ -70,7 +68,8 @@ export const actions = {
           return dispatch({
             type: UPLOAD_PARSED,
             data: results.data,
-            headers: results.meta.fields
+            headers: results.meta.fields,
+            delimiter: results.meta.delimiter
           });
         }
       });

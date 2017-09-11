@@ -7,6 +7,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {format} from 'd3-format';
 
 import ClusterInformation from './ClusterInformation';
 import Button from '../../Button';
@@ -14,6 +15,11 @@ import AffixTitle from '../../AffixTitle';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as mainActions} from '../../../modules/main';
+
+/**
+ * Formats.
+ */
+const NUMBER_FORMAT = format(',');
 
 /**
  * Connection to store.
@@ -48,7 +54,7 @@ class ClustersPage extends Component {
 
     let workspace;
 
-    if (!main.clusters || !main.clusters.length)
+    if (!main.clusters || !main.clusters.size)
       workspace = (
         <h2 className="title is-4">
           Sorry, no clusters were found :(
@@ -58,22 +64,21 @@ class ClustersPage extends Component {
       workspace = (
         <div>
           <AffixTitle affix="1.">
-            Check the <span className="highlight">{main.clusters.length}</span> found clusters on
+            Check the <span className="highlight">{NUMBER_FORMAT(main.clusters.size)}</span> found clusters on
             column <span className="highlight">{main.clusteredHeader}</span>
           </AffixTitle>
-          {main.clusters.map((data, i) => {
+          {main.clusters.toJS().map(cluster => {
             return (
               <ClusterInformation
-                key={i}
-                number={i}
-                data={data}
-                explore={actions.explore} />
+                key={cluster.key}
+                number={cluster.key}
+                cluster={cluster}
+                explore={actions.explore}
+                updateHarmonizedValue={actions.updateHarmonizedValue} />
             );
           })}
         </div>
       );
-
-
 
     return (
       <div className="full-height">

@@ -7,7 +7,6 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import sumBy from 'lodash/fp/sumBy';
 import {format} from 'd3-format';
 
 import Button from '../../Button';
@@ -66,9 +65,7 @@ class ExplorationPage extends Component {
 
     const cluster = main.clusters[main.exploredCluster];
 
-    const nbRows = sumBy(group => group.rows.length, cluster);
-
-    const rows = collectRows(main.data, cluster);
+    const rows = collectRows(main.data, cluster.groups);
 
     // TODO: use a radix sort
     rows.sort((a, b) => a - b);
@@ -79,9 +76,9 @@ class ExplorationPage extends Component {
       <div className="full-height">
         <section className="workspace">
           <AffixTitle affix="1.">
-            Explore cluster n°{main.exploredCluster + 1} containing <span className="highlight">{NUMBER_FORMAT(cluster.length)}</span>
+            Explore cluster n°{main.exploredCluster + 1} containing <span className="highlight">{NUMBER_FORMAT(cluster.groups.length)}</span>
             &nbsp;distinct values for <span className="highlight">{main.selectedHeader}</span>
-            &nbsp;over <span className="highlight">{NUMBER_FORMAT(nbRows)}</span> rows:
+            &nbsp;over <span className="highlight">{NUMBER_FORMAT(cluster.nbRows)}</span> rows:
           </AffixTitle>
           <DataTable
             headers={main.headers}

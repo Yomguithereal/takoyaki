@@ -5,6 +5,8 @@
  * Top-level module.
  */
 import CSV from 'papaparse';
+import Immutable from 'immutable';
+import {saveAs} from 'file-saver';
 import naiveSample from 'pandemonium/naive-sample';
 import {createSelector} from 'reselect';
 import {createReducer} from './helpers';
@@ -23,9 +25,11 @@ const MAIN_SELECT_HEADER = '§Main/SelectHeader';
 const MAIN_SELECT_RECIPE = '§Main/SelectRecipe';
 const MAIN_CLUSTERING = '§Main/Clustering';
 const MAIN_CLUSTERED = '§Main/Clustered';
+const MAIN_CANCEL_CLUSTERING = '§Main/CancelClustering';
+const MAIN_UPDATE_HARMONIZED_VALUE = '§Main/UpdateHarmonizedValue';
 const MAIN_EXPLORE = '§Main/Explore';
 
-const CLUSTERING_WORKER = new ClusteringWorker();
+let CLUSTERING_WORKER = new ClusteringWorker();
 
 /**
  * Default state.
@@ -34,6 +38,7 @@ const DEFAULT_STATE = {
   step: 'upload',
   data: null,
   headers: null,
+  delimiter: ',',
   selectedHeader: null,
   selectedRecipe: 'fingerprint',
   clustering: false,
@@ -136,6 +141,7 @@ export default createReducer(DEFAULT_STATE, {
       parsing: false,
       data: action.data,
       headers: action.headers,
+      delimiter: action.delimiter,
       step: 'main',
       preprocessingSample,
       metricSample
@@ -170,6 +176,27 @@ export default createReducer(DEFAULT_STATE, {
       step: 'clusters',
       clusters: action.clusters,
       clusteredHeader: action.header
+    };
+  },
+
+  [MAIN_CANCEL_CLUSTERING](state, action) {
+    return {
+      ...state,
+      clustering: false
+    };
+  },
+
+  [MAIN_UPDATE_HARMONIZED_VALUE](state, action) {
+
+    const cluster = state.clusters.get(action.cluster);
+    const newClusters = state.clusters.set(action.cluster, {
+      ...cluster,
+      harmonizedValue: action.value
+    });
+
+    return {
+      ...state,
+      clusters: newClusters
     };
   },
 
@@ -208,7 +235,8 @@ export const actions = {
           return dispatch({
             type: MAIN_PARSED,
             data: results.data,
-            headers: results.meta.fields
+            headers: results.meta.fields,
+            delimiter: results.meta.delimiter
           });
         }
       });
@@ -242,7 +270,11 @@ export const actions = {
       CLUSTERING_WORKER.onmessage = message => {
         const {clusters} = message.data;
 
-        return dispatch({type: MAIN_CLUSTERED, clusters, header});
+        return dispatch({
+          type: MAIN_CLUSTERED,
+          clusters: new Immutable.List(clusters),
+          header
+        });
       };
 
       // Asking worker to perform task
@@ -250,8 +282,45 @@ export const actions = {
     };
   },
 
+  // Cancelling the current clustering task if it takes too long
+  cancel() {
+    return dispatch => {
+      CLUSTERING_WORKER.onmessage = Function.prototype;
+      CLUSTERING_WORKER.terminate();
+      CLUSTERING_WORKER = new ClusteringWorker();
+
+      dispatch({type: MAIN_CANCEL_CLUSTERING});
+    };
+  },
+
+  // Updating harmonized value for a cluster
+  updateHarmonizedValue(cluster, value) {
+    return {type: MAIN_UPDATE_HARMONIZED_VALUE, cluster, value};
+  },
+
   // Exploring a cluster
   explore(cluster) {
     return {type: MAIN_EXPLORE, cluster};
+  },
+
+  // Downloading the corrected file back
+  download() {
+    return (dispatch, getState) => {
+      const main = getState().main;
+
+      const csvString = CSV.unparse(main.data, {
+        delimiter: main.delimiter,
+        newline: '\n'
+      });
+
+      // TODO: might need to improve performance here some day
+      const file = new File(
+        [csvString],
+        'harmonized-data.csv',
+        {type: 'text/csv;charset=utf-8'}
+      );
+
+      saveAs(file);
+    };
   }
 };

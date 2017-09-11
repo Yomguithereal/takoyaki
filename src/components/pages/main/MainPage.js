@@ -154,13 +154,13 @@ class UploadPage extends Component {
                   onChange={this.selectRecipe} />
               </LevelItem>
               <LevelItem>
-                <Button disabled={!canEditRecipe} onClick={this.editRecipe}>Edit the recipe</Button>
+                <Button disabled={!canEditRecipe} onClick={this.editRecipe}>Edit</Button>
               </LevelItem>
               <LevelItem>
-                <Button disabled={!canEditRecipe} onClick={this.deleteRecipe}>Delete the recipe</Button>
+                <Button disabled={!canEditRecipe} onClick={this.deleteRecipe}>Delete</Button>
               </LevelItem>
               <LevelItem>
-                <Button onClick={this.createRecipe}>Create a custom recipe</Button>
+                <Button onClick={this.createRecipe}>Create</Button>
               </LevelItem>
             </LevelLeft>
           </Level>
@@ -184,6 +184,13 @@ class UploadPage extends Component {
             </Button>
           </LevelLeft>
           <LevelRight>
+            {main.clustering && (
+              <LevelItem>
+                <Button outlined onClick={() => actions.cancel()}>
+                  Cancel
+                </Button>
+              </LevelItem>
+            )}
             <LevelItem>
               <Button
                 disabled={!canCluster}
@@ -191,7 +198,7 @@ class UploadPage extends Component {
                 onClick={actions.runRecipe}>
                 Cluster & Edit
               </Button>
-              <DownloadButton />
+              <DownloadButton onClick={actions.download} />
             </LevelItem>
           </LevelRight>
         </Level>
