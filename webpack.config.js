@@ -4,6 +4,8 @@ const path = require('path'),
 module.exports = {
   entry: './src/main.js',
   output: {
+    path: path.join(__dirname, 'build'),
+    publicPath: '/build/',
     filename: 'bundle.js'
   },
   devtool: 'source-map',
@@ -20,7 +22,7 @@ module.exports = {
       },
       {
         test: /\.worker\.js$/,
-        use: ['worker-loader']
+        use: ['worker-loader', 'babel-loader']
       },
       {
         test: /\.woff2?$/,

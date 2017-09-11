@@ -4,6 +4,7 @@
   "description": "Fuzzy clustering interface prototype.",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --progress --colors -p --devtool none",
     "lint": "eslint src/* --ext js --ext jsx",
     "dev": "webpack-dev-server -d --progress --colors --hot --hot-only"
   },
