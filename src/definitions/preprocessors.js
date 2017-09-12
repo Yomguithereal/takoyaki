@@ -7,6 +7,9 @@
 
 // Normalizers
 import fingerprint from 'talisman/keyers/fingerprint';
+import normalize from 'talisman/keyers/normalize';
+import omission from 'talisman/keyers/omission';
+import skeleton from 'talisman/keyers/skeleton';
 
 // Phonetics
 import metaphone from 'talisman/phonetics/metaphone';
@@ -17,6 +20,10 @@ import carry from 'talisman/stemmers/french/carry';
 
 // Definitions
 const preprocessors = {
+
+  /**
+   * Normalizers
+   */
   fingerprint: {
     label: 'String fingerprint',
     description: `
@@ -31,6 +38,44 @@ const preprocessors = {
       return fingerprint;
     }
   },
+  normalizer: {
+    label: 'String normalizer',
+    description: `
+      String normalization is a simple process consisting in harmonizing the
+      problematic characters (e.g. double quotes) of the given string so that
+      direct comparison becomes possible.
+    `,
+    category: 'normalizer',
+    build() {
+      return normalize;
+    }
+  },
+  omission: {
+    label: 'Omission key',
+    description: `
+      The omission key is a way to represent a string by concatenating the
+      consonants of the string in order with a set of its vowels.
+    `,
+    category: 'normalizer',
+    build() {
+      return omission;
+    }
+  },
+  skeleton: {
+    label: 'Skeleton key',
+    description: `
+      The skeleton key is a way to represent a string by concatenating its
+      first letter to the set of its consonants and then the set of its vowels.
+    `,
+    category: 'normalizer',
+    build() {
+      return skeleton;
+    }
+  },
+
+  /**
+   * Phonetics.
+   */
   metaphone: {
     label: 'Metaphone',
     description: 'Computes the metaphone code (i.e. symbolic phonetic representation) of the given string.',
@@ -51,6 +96,10 @@ const preprocessors = {
       return doubleMetaphone;
     }
   },
+
+  /**
+   * Stemmers.
+   */
   carry: {
     label: 'Carry',
     description: 'Carry is a French version of the famous Porter stemmer.',
