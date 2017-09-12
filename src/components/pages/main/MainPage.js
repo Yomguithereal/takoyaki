@@ -171,7 +171,7 @@ class UploadPage extends Component {
           {main.selectedRecipe && main.selectedHeader && (
             <p>
               Applying this recipe on <span className="highlight">{NUMBER_FORMAT(nbDistinctSelectedValues)}</span> distinct values requires
-              running ~<span className="highlight">{SI_FORMAT(estimate)}</span> computations.
+              running ~<span className="highlight">{SI_FORMAT(estimate)}</span> operations.
             </p>
           )}
         </section>
