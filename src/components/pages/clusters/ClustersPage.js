@@ -72,7 +72,13 @@ class ClustersPage extends Component {
 
     let workspace;
 
-    if (!main.clusters || !main.clusters.size)
+    if (main.clustering)
+      workspace = (
+        <h2 className="title is-4">
+          Finding clusters...
+        </h2>
+      );
+    else if (!main.clusters || !main.clusters.size)
       workspace = (
         <h2 className="title is-4">
           Sorry, no clusters were found :(
@@ -113,7 +119,8 @@ class ClustersPage extends Component {
                           explore={actions.explore}
                           updateHarmonizedValue={actions.updateHarmonizedValue}
                           harmonizeCluster={actions.harmonizeCluster}
-                          dropCluster={actions.dropCluster} />
+                          dropCluster={actions.dropCluster}
+                          removeValueFromCluster={actions.removeValueFromCluster} />
                       </div>
                     );
                   }} />

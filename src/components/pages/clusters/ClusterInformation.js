@@ -23,9 +23,13 @@ function ClusterValue(props) {
         {NUMBER_FORMAT(props.rows.length)}
       </td>
       <td>
-        <code className="cluster-value" onClick={() => props.update(props.index, props.value)}>
+        <code className="cluster-value" onClick={() => props.update(props.clusterIndex, props.value)}>
           {props.value}
         </code>
+        &nbsp;
+        <a
+          style={{fontSize: '0.7em'}}
+          onClick={() => props.remove(props.clusterIndex, props.index)}>remove</a>
       </td>
     </tr>
   );
@@ -47,7 +51,8 @@ export default class ClusterInformation extends Component {
       explore,
       updateHarmonizedValue,
       harmonizeCluster,
-      dropCluster
+      dropCluster,
+      removeValueFromCluster
     } = this.props;
 
     return (
@@ -66,11 +71,13 @@ export default class ClusterInformation extends Component {
               return (
                 <ClusterValue
                   key={i}
-                  index={index}
+                  clusterIndex={index}
+                  index={i}
                   cluster={cluster.key}
                   value={group.value}
                   rows={group.rows}
-                  update={updateHarmonizedValue} />
+                  update={updateHarmonizedValue}
+                  remove={removeValueFromCluster} />
               );
             })}
           </tbody>

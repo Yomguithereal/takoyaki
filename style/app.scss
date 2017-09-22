@@ -125,18 +125,18 @@ $aside-width: 44px;
           fill: $black;
         }
 
+        &.muted {
+
+          svg {
+            fill: $grey-lighter;
+          }
+        }
+
         &.active {
           background-color: $black;
 
           svg {
             fill: white;
-          }
-        }
-
-        &.muted {
-
-          svg {
-            fill: $grey-lighter;
           }
         }
       }
@@ -159,6 +159,7 @@ $aside-width: 44px;
 }
 
 .action-bar {
+  border-top: 1px solid $light-background;
   padding-top: 15px;
 }
 

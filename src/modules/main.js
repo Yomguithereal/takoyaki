@@ -30,6 +30,7 @@ const MAIN_CANCEL_CLUSTERING = '§Main/CancelClustering';
 const MAIN_UPDATE_HARMONIZED_VALUE = '§Main/UpdateHarmonizedValue';
 const MAIN_HARMONIZE_CLUSTER = '§Main/HarmonizeCluster';
 const MAIN_DROP_CLUSTER = '§Main/DropCluster';
+const MAIN_REMOVE_VALUE_FROM_CLUSTER = '§Main/RemoveValueFromCluster';
 const MAIN_RESAMPLE_PREPROCESSING = '§Main/ResamplePreprocessing';
 const MAIN_EXPLORE = '§Main/Explore';
 
@@ -275,6 +276,32 @@ export default createReducer(DEFAULT_STATE, {
     };
   },
 
+  [MAIN_REMOVE_VALUE_FROM_CLUSTER](state, action) {
+    let cluster = state.clusters.get(action.cluster);
+
+    // If the cluster has only 2 values, we drop it
+    if (cluster.groups.length <= 2) {
+      return {
+        ...state,
+        clusters: state.clusters.delete(action.cluster)
+      };
+    }
+
+    cluster = {
+      ...cluster,
+      groups: cluster.groups.slice()
+    };
+
+    cluster.groups.splice(action.group, 1);
+
+    const newClusters = state.clusters.set(action.cluster, cluster);
+
+    return {
+      ...state,
+      clusters: newClusters
+    };
+  },
+
   [MAIN_EXPLORE](state, action) {
     return {
       ...state,
@@ -387,6 +414,11 @@ export const actions = {
   // Dropping an irrelevant cluster
   dropCluster(cluster) {
     return {type: MAIN_DROP_CLUSTER, cluster};
+  },
+
+  // Removing a value from a cluster
+  removeValueFromCluster(cluster, group) {
+    return {type: MAIN_REMOVE_VALUE_FROM_CLUSTER, cluster, group};
   },
 
   // Exploring a cluster
