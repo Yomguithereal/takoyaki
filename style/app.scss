@@ -132,6 +132,13 @@ $aside-width: 44px;
             fill: white;
           }
         }
+
+        &.muted {
+
+          svg {
+            fill: $grey-lighter;
+          }
+        }
       }
     }
   }

@@ -66,8 +66,8 @@ class ClustersPage extends Component {
       workspace = (
         <div style={{height: '100%'}}>
           <AffixTitle affix="1.">
-            Check the <span className="highlight">{NUMBER_FORMAT(main.clusters.size)}</span> found clusters on
-            column <span className="highlight">{main.clusteredHeader}</span>
+            Check the <span className="highlight">{NUMBER_FORMAT(main.clusters.size)}</span> remaining clusters on
+            the <span className="highlight">{main.clusteredHeader}</span> column
           </AffixTitle>
           <AutoSizer>
             {({width, height}) => {
@@ -90,7 +90,7 @@ class ClustersPage extends Component {
                     return (
                       <div key={cluster.key} style={style}>
                         <ClusterInformation
-                          key={cluster.key}
+                          key={index}
                           index={index}
                           cluster={cluster}
                           explore={actions.explore}

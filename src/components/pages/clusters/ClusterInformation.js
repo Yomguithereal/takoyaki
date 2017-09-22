@@ -52,8 +52,8 @@ export default class ClusterInformation extends Component {
 
     return (
       <div className="cluster-information">
-        Cluster n°<strong>{index + 1}</strong> containing <span className="highlight">{NUMBER_FORMAT(cluster.groups.length)}</span> distinct values
-        over <span className="highlight">{NUMBER_FORMAT(cluster.nbRows)}</span> rows (<a className="explore-link" onClick={() => explore(number)}>explore</a>):
+        Cluster n°<strong>{cluster.key + 1}</strong> containing <span className="highlight">{NUMBER_FORMAT(cluster.groups.length)}</span> distinct values
+        over <span className="highlight">{NUMBER_FORMAT(cluster.nbRows)}</span> rows (<a className="explore-link" onClick={() => explore(index)}>explore</a>):
         <table className="cluster-value-list">
           <thead>
             <tr>
@@ -84,7 +84,7 @@ export default class ClusterInformation extends Component {
                   className="cluster-harmonized-value"
                   spellCheck={false}
                   value={cluster.harmonizedValue}
-                  onChange={e => updateHarmonizedValue(index, e.target.value)} />
+                  onChange={e => updateHarmonizedValue(cluster.key, e.target.value)} />
               </td>
             </tr>
           </tbody>

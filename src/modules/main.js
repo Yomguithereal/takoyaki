@@ -115,6 +115,13 @@ selectors.estimate = createSelector(
  */
 export default createReducer(DEFAULT_STATE, {
   [MAIN_CHANGE_STEP](state, action) {
+    if (action.step === 'exploration' && !state.exploredCluster)
+      return {
+        ...state,
+        step: action.step,
+        exploredCluster: 0
+      };
+
     return {
       ...state,
       step: action.step

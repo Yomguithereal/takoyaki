@@ -45,7 +45,7 @@ const router = step => {
 const connectToStore = connect(
   state => {
     return {
-      step: state.main.step
+      main: state.main
     };
   },
   dispatch => {
@@ -60,9 +60,13 @@ const connectToStore = connect(
  */
 export default connectToStore(function Application(props) {
   const {
-    step,
+    main,
     actions
   } = props;
+
+  const {
+    step
+  } = main;
 
   const RoutedComponent = router(step);
 
@@ -80,7 +84,7 @@ export default connectToStore(function Application(props) {
     <main>
       <div className="columns app-wrapper" style={{marginBottom: '0px'}}>
         <aside className="app-aside">
-          <IconBar step={step} />
+          <IconBar actions={actions} main={main} />
         </aside>
         <section className="app-section">
           <h1
