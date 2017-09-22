@@ -7,7 +7,7 @@
 import React, {Component} from 'react';
 import PREPROCESSORS, {buildPreprocessorChain} from '../../../definitions/preprocessors';
 
-import {PreprocessorSelect} from '../../selectors';
+import {PreprocessorSelect, HeaderSelect} from '../../selectors';
 import AffixTitle from '../../AffixTitle';
 import {Level, LevelLeft, LevelItem} from '../../levels';
 
@@ -41,8 +41,12 @@ export default class StringPreprocessing extends Component {
   render() {
     const {
       actions,
+      headers,
+      selectHeader,
+      selectedHeader,
       recipe,
-      sample
+      sample,
+      resample
     } = this.props;
 
     const chain = buildPreprocessorChain(recipe.preprocessor);
@@ -96,6 +100,22 @@ export default class StringPreprocessing extends Component {
             </tbody>
           </table>
         )}
+        <br />
+        <div>
+          <Level>
+            <LevelLeft>
+              <LevelItem>
+                <HeaderSelect
+                  headers={headers}
+                  onChange={option => selectHeader(option && option.value)}
+                  value={selectedHeader} />
+              </LevelItem>
+              <LevelItem>
+                &nbsp;<a onClick={resample}>resample</a>
+              </LevelItem>
+            </LevelLeft>
+          </Level>
+        </div>
         <br />
         <table className="sample">
           <thead>

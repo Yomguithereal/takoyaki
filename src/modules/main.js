@@ -30,6 +30,7 @@ const MAIN_CANCEL_CLUSTERING = '§Main/CancelClustering';
 const MAIN_UPDATE_HARMONIZED_VALUE = '§Main/UpdateHarmonizedValue';
 const MAIN_HARMONIZE_CLUSTER = '§Main/HarmonizeCluster';
 const MAIN_DROP_CLUSTER = '§Main/DropCluster';
+const MAIN_RESAMPLE_PREPROCESSING = '§Main/ResamplePreprocessing';
 const MAIN_EXPLORE = '§Main/Explore';
 
 let CLUSTERING_WORKER = new ClusteringWorker();
@@ -179,6 +180,15 @@ export default createReducer(DEFAULT_STATE, {
     };
   },
 
+  [MAIN_RESAMPLE_PREPROCESSING](state) {
+    const preprocessingSample = naiveSample(20, state.data.length);
+
+    return {
+      ...state,
+      preprocessingSample
+    };
+  },
+
   [MAIN_SELECT_HEADER](state, action) {
     return {
       ...state,
@@ -306,6 +316,11 @@ export const actions = {
         }
       });
     };
+  },
+
+  // Resample preprocessing data
+  resamplePreprocessing() {
+    return {type: MAIN_RESAMPLE_PREPROCESSING};
   },
 
   // Selecting a header to work with

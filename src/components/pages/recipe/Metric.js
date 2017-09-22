@@ -9,6 +9,7 @@ import METRICS from '../../../definitions/metrics';
 
 import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
+// import {MetricSelect} from '../../selectors';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 export default class Metric extends Component {

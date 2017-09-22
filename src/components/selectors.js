@@ -84,7 +84,7 @@ export function HeaderSelect(props) {
   const options = optionsFromStrings(headers);
 
   return (
-    <div style={{width: '250px'}}>
+    <div style={{width: '400px'}} className="header-selector">
       <Select
         openOnFocus
         className={cls(up && 'drop-up')}

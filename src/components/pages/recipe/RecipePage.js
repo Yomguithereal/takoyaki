@@ -97,9 +97,13 @@ class UploadPage extends Component {
             </div>
           </div>
           <StringPreprocessing
+            headers={main.headers}
             recipe={recipe}
             actions={actions.recipe}
-            sample={preprocessingSample} />
+            selectedHeader={main.selectedHeader}
+            selectHeader={actions.main.selectHeader}
+            sample={preprocessingSample}
+            resample={actions.main.resamplePreprocessing} />
           <Clusterer
             recipe={recipe}
             actions={actions.recipe} />
