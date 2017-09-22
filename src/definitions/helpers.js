@@ -1,3 +1,4 @@
+/* eslint no-confusing-arrow: 0 */
 /**
  * Takoyaki Definition Helpers
  * ============================

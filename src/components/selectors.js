@@ -1,4 +1,3 @@
-/* eslint no-confusing-arrow: 0 */
 /**
  * Takoyaki Selector Components
  * =============================
