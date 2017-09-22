@@ -6,6 +6,7 @@
  */
 import React, {Component} from 'react';
 import {format} from 'd3-format';
+import Button from '../../Button';
 
 /**
  * Formats.
@@ -41,15 +42,17 @@ export default class ClusterInformation extends Component {
 
   render() {
     const {
-      number,
+      index,
       cluster,
       explore,
-      updateHarmonizedValue
+      updateHarmonizedValue,
+      harmonizeCluster,
+      dropCluster
     } = this.props;
 
     return (
       <div className="cluster-information">
-        Cluster n°<strong>{number + 1}</strong> containing <span className="highlight">{NUMBER_FORMAT(cluster.groups.length)}</span> distinct values
+        Cluster n°<strong>{index + 1}</strong> containing <span className="highlight">{NUMBER_FORMAT(cluster.groups.length)}</span> distinct values
         over <span className="highlight">{NUMBER_FORMAT(cluster.nbRows)}</span> rows (<a className="explore-link" onClick={() => explore(number)}>explore</a>):
         <table className="cluster-value-list">
           <thead>
@@ -71,16 +74,35 @@ export default class ClusterInformation extends Component {
             })}
           </tbody>
         </table>
-        <div className="cluster-merger">
-          <label className="checkbox">
-            <input type="checkbox" value={cluster.harmonized} /> Harmonize this cluster as:
-          </label>
-          <input
-            type="text"
-            className="cluster-harmonized-value"
-            spellCheck={false}
-            value={cluster.harmonizedValue}
-            onChange={e => updateHarmonizedValue(cluster.key, e.target.value)} />
+        <table className="cluster-value-list">
+          <tbody>
+            <tr className="cluster-merger">
+              <td className="cluster-value-rows" />
+              <td>
+                <input
+                  type="text"
+                  className="cluster-harmonized-value"
+                  spellCheck={false}
+                  value={cluster.harmonizedValue}
+                  onChange={e => updateHarmonizedValue(index, e.target.value)} />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br />
+        <div>
+          <Button
+            size="small"
+            onClick={() => harmonizeCluster(index)}>
+            Harmonize
+          </Button>
+          &nbsp;
+          <Button
+            outlined
+            size="small"
+            onClick={() => dropCluster(index)}>
+            Drop
+          </Button>
         </div>
       </div>
     );

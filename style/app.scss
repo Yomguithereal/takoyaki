@@ -285,6 +285,7 @@ $aside-width: 44px;
   .cluster-value-list {
     margin-top: 10px;
     padding-left: 25px;
+    width: 100%;
 
     .cluster-value {
       white-space: pre;
@@ -306,7 +307,7 @@ $aside-width: 44px;
 
     .cluster-harmonized-value {
       margin-left: 5px;
-      width: 400px;
+      width: 600px;
       font-family: $family-monospace;
       font-size: 1.1em;
       border: none;

@@ -27,6 +27,8 @@ const MAIN_CLUSTERING = '§Main/Clustering';
 const MAIN_CLUSTERED = '§Main/Clustered';
 const MAIN_CANCEL_CLUSTERING = '§Main/CancelClustering';
 const MAIN_UPDATE_HARMONIZED_VALUE = '§Main/UpdateHarmonizedValue';
+const MAIN_HARMONIZE_CLUSTER = '§Main/HarmonizeCluster';
+const MAIN_DROP_CLUSTER = '§Main/DropCluster';
 const MAIN_EXPLORE = '§Main/Explore';
 
 let CLUSTERING_WORKER = new ClusteringWorker();
@@ -201,6 +203,35 @@ export default createReducer(DEFAULT_STATE, {
     };
   },
 
+  [MAIN_HARMONIZE_CLUSTER](state, action) {
+    const harmonizedCluster = state.clusters.get(action.cluster);
+
+    const newClusters = state.clusters.delete(action.cluster);
+
+    // Updating data
+    harmonizedCluster.groups.forEach(group => {
+
+      // NOTE: here, we are mutating
+      group.rows.forEach(row => {
+        state.data[row][state.clusteredHeader] = harmonizedCluster.harmonizedValue;
+      });
+    });
+
+    return {
+      ...state,
+      clusters: newClusters
+    };
+  },
+
+  [MAIN_DROP_CLUSTER](state, action) {
+    const newClusters = state.clusters.delete(action.cluster);
+
+    return {
+      ...state,
+      clusters: newClusters
+    };
+  },
+
   [MAIN_EXPLORE](state, action) {
     return {
       ...state,
@@ -297,6 +328,16 @@ export const actions = {
   // Updating harmonized value for a cluster
   updateHarmonizedValue(cluster, value) {
     return {type: MAIN_UPDATE_HARMONIZED_VALUE, cluster, value};
+  },
+
+  // Harmonizing a cluster
+  harmonizeCluster(cluster) {
+    return {type: MAIN_HARMONIZE_CLUSTER, cluster};
+  },
+
+  // Dropping an irrelevant cluster
+  dropCluster(cluster) {
+    return {type: MAIN_DROP_CLUSTER, cluster};
   },
 
   // Exploring a cluster

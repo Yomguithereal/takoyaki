@@ -80,7 +80,6 @@ function performClustering(values, recipe) {
       key: i,
       groups: groups.sort(clusterComparator),
       nbRows: totalNbRows,
-      harmonized: false,
       harmonizedValue: groups[0].value
     };
   }

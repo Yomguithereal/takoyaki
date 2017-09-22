@@ -82,7 +82,7 @@ class ClustersPage extends Component {
                     const cluster = main.clusters.get(index);
 
                     // Estimated height in pixels
-                    return 145 + (cluster.groups.length * 24);
+                    return 188 + (cluster.groups.length * 24);
                   }}
                   rowRenderer={({index, style}) => {
                     const cluster = main.clusters.get(index);
@@ -91,10 +91,12 @@ class ClustersPage extends Component {
                       <div key={cluster.key} style={style}>
                         <ClusterInformation
                           key={cluster.key}
-                          number={cluster.key}
+                          index={index}
                           cluster={cluster}
                           explore={actions.explore}
-                          updateHarmonizedValue={actions.updateHarmonizedValue} />
+                          updateHarmonizedValue={actions.updateHarmonizedValue}
+                          harmonizeCluster={actions.harmonizeCluster}
+                          dropCluster={actions.dropCluster} />
                       </div>
                     );
                   }} />

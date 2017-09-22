@@ -11,6 +11,7 @@ export default function Button(props) {
   const {
     children,
     level = 'primary',
+    size = null,
     disabled = false,
     outlined = false,
     loading = false,
@@ -22,6 +23,7 @@ export default function Button(props) {
   const classes = cls(
     'button',
     `is-${level}`,
+    size && `is-${size}`,
     outlined && 'is-outlined',
     loading && 'is-loading',
     className
