@@ -15,6 +15,8 @@ import skeleton from 'talisman/keyers/skeleton';
 import metaphone from 'talisman/phonetics/metaphone';
 import doubleMetaphone from 'talisman/phonetics/double-metaphone';
 
+import cologne from 'talisman/phonetics/german/cologne';
+
 // Stemmers
 import carry from 'talisman/stemmers/french/carry';
 
@@ -94,6 +96,14 @@ const preprocessors = {
     category: 'phonetics',
     build() {
       return doubleMetaphone;
+    }
+  },
+  cologne: {
+    label: 'Cologne phonetic',
+    description: 'A phonetic algorithm tailored for German names.',
+    category: 'phonetics',
+    build() {
+      return cologne;
     }
   },
 

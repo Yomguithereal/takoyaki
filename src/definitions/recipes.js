@@ -26,6 +26,17 @@ export default {
     preprocessor: ['metaphone'],
     clusterer: 'keyCollision'
   },
+  cologne: {
+    id: 'cologne',
+    label: 'Cologne Collision',
+    description: `
+      This recipe will compute clusters of strings having the same Cologne
+      phonetic code. While this seems to be useful only for German names, it
+      actually tend to work quite well on large arrays of strings.
+    `,
+    preprocessor: ['cologne'],
+    clusterer: 'keyCollision'
+  },
   naiveLevenshtein: {
     id: 'naiveLevenshtein',
     label: 'Levenshtein Naive',
