@@ -23,7 +23,7 @@ function ClusterValue(props) {
         {NUMBER_FORMAT(props.rows.length)}
       </td>
       <td>
-        <code className="cluster-value" onClick={() => props.update(props.cluster, props.value)}>
+        <code className="cluster-value" onClick={() => props.update(props.index, props.value)}>
           {props.value}
         </code>
       </td>
@@ -66,6 +66,7 @@ export default class ClusterInformation extends Component {
               return (
                 <ClusterValue
                   key={i}
+                  index={index}
                   cluster={cluster.key}
                   value={group.value}
                   rows={group.rows}
@@ -84,7 +85,7 @@ export default class ClusterInformation extends Component {
                   className="cluster-harmonized-value"
                   spellCheck={false}
                   value={cluster.harmonizedValue}
-                  onChange={e => updateHarmonizedValue(cluster.key, e.target.value)} />
+                  onChange={e => updateHarmonizedValue(index, e.target.value)} />
               </td>
             </tr>
           </tbody>

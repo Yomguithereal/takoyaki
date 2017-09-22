@@ -8,8 +8,8 @@
 import React from 'react';
 import Select from 'react-select';
 import cls from 'classnames';
-import sortBy from 'lodash/sortBy';
 import {replaceSingleCharacter} from './helpers';
+import {sortedRecipes} from '../definitions/helpers';
 import CLUSTERERS from '../definitions/clusterers';
 import PREPROCESSORS from '../definitions/preprocessors';
 
@@ -31,20 +31,8 @@ function displayLineBreaks(string) {
   return replaceSingleCharacter(string, LINEBREAK_REGEX, key => <br key={key} />);
 }
 
-const RECIPE_SORT_VALUES = {
-  low: 3,
-  medium: 2,
-  high: 1
-};
-
 function optionsFromRecipes(recipes) {
-  recipes = Object.keys(recipes).map(key => recipes[key]);
-
-  recipes = sortBy(recipes, [
-    recipe => RECIPE_SORT_VALUES[CLUSTERERS[recipe.clusterer].scalability],
-    recipe => recipe.addedByUser ? 1 : 0,
-    recipe => recipe.label
-  ]);
+  recipes = sortedRecipes(recipes);
 
   return recipes.map(recipe => {
     return {

@@ -16,7 +16,7 @@ import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
-import {actions as mainActions} from '../../../modules/main';
+import {actions as mainActions, selectors as mainSelectors} from '../../../modules/main';
 
 /**
  * Formats.
@@ -29,7 +29,9 @@ const NUMBER_FORMAT = format(',');
 const connectToStore = connect(
   state => {
     return {
-      main: state.main
+      main: state.main,
+      recipe: mainSelectors.clusteredRecipeData(state),
+      nextRecipe: mainSelectors.nextRecipeData(state)
     };
   },
   dispatch => {
@@ -45,12 +47,26 @@ const connectToStore = connect(
 class ClustersPage extends Component {
   constructor(props, context) {
     super(props, context);
+
+    this.runNextRecipe = this.runNextRecipe.bind(this);
+  }
+
+  runNextRecipe() {
+    const {
+      actions,
+      nextRecipe
+    } = this.props;
+
+    actions.selectRecipe(nextRecipe.id);
+    actions.runRecipe();
   }
 
   render() {
     const {
       actions,
       main,
+      recipe,
+      nextRecipe,
       hidden = false
     } = this.props;
 
@@ -66,7 +82,8 @@ class ClustersPage extends Component {
       workspace = (
         <div style={{height: '100%'}}>
           <AffixTitle affix="1.">
-            Check the <span className="highlight">{NUMBER_FORMAT(main.clusters.size)}</span> remaining clusters on
+            Check the <span className="highlight">{NUMBER_FORMAT(main.clusters.size)}</span> clusters found
+            by the <span className="highlight">{recipe.label}</span> recipe on
             the <span className="highlight">{main.clusteredHeader}</span> column
           </AffixTitle>
           <AutoSizer>
@@ -117,16 +134,32 @@ class ClustersPage extends Component {
               <Button
                 outlined
                 onClick={() => actions.changeStep('main')}>
-                Change recipe
+                Back
               </Button>
             </LevelItem>
           </LevelLeft>
           <LevelRight>
             <LevelItem>
               <Button
-                disabled>
-                Harmonize & Re-cluster
+                loading={main.clustering}
+                onClick={actions.runRecipe}>
+                Re-cluster
               </Button>
+            </LevelItem>
+            <LevelItem>
+              {nextRecipe ?
+                (
+                  <Button
+                    onClick={this.runNextRecipe}>
+                    Next recipe: "<em>{nextRecipe.label}</em>"
+                  </Button>
+                ) :
+                (
+                  <Button disabled>
+                    No next recipe
+                  </Button>
+                )
+              }
             </LevelItem>
           </LevelRight>
         </Level>

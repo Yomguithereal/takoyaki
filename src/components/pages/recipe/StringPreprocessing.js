@@ -101,6 +101,7 @@ export default class StringPreprocessing extends Component {
           <thead>
             <tr>
               <th>Before</th>
+              <th />
               <th>After</th>
             </tr>
           </thead>
@@ -112,6 +113,9 @@ export default class StringPreprocessing extends Component {
                     <code className="show-whitespace">{value}</code>
                   </td>
                   <td>
+                    ↣
+                  </td>
+                  <td className="after">
                     {[].concat(chain(value)).map((token, j) => {
                       return <code key={j} className="show-whitespace token">{token}</code>;
                     })}

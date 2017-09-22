@@ -70,7 +70,9 @@ class UploadPage extends Component {
 
     const clusterer = CLUSTERERS[recipe.clusterer];
 
-    const canSave = clusterer.needMetric === !!recipe.metric;
+    const canSave = clusterer.needMetric ?
+      !!recipe.metric :
+      true;
 
     return (
       <div className="full-height">

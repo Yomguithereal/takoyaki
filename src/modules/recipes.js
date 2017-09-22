@@ -181,7 +181,7 @@ export const actions = {
       description: 'Description of my custom clustering recipe.',
       preprocessor: [],
       clusterer: 'keyCollision',
-      metric: null
+      metric: 'levenshtein'
     };
 
     return {type: RECIPES_CREATE, recipe};

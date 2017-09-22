@@ -10,6 +10,7 @@ import {saveAs} from 'file-saver';
 import naiveSample from 'pandemonium/naive-sample';
 import {createSelector} from 'reselect';
 import {createReducer} from './helpers';
+import {sortedRecipes} from '../definitions/helpers';
 import CLUSTERERS from '../definitions/clusterers';
 import ClusteringWorker from '../workers/clustering.worker.js';
 
@@ -46,6 +47,7 @@ const DEFAULT_STATE = {
   clustering: false,
   clusters: null,
   clusteredHeader: null,
+  clusteredRecipe: null,
   exploredCluster: null,
   preprocessingSample: null,
   metricSample: null
@@ -56,11 +58,31 @@ const DEFAULT_STATE = {
  */
 export const selectors = {
 
-  // Get data from the recipe
-  recipeData(state) {
+  // Get data from the selected recipe
+  selectedRecipeData(state) {
     const recipes = state.recipes;
 
     return recipes.recipes[state.main.selectedRecipe];
+  },
+
+  // Get data from the clustered recipe
+  clusteredRecipeData(state) {
+    const recipes = state.recipes;
+
+    return recipes.recipes[state.main.clusteredRecipe];
+  },
+
+  // Getting the next recipe
+  nextRecipeData(state) {
+    const recipes = sortedRecipes(state.recipes.recipes),
+          currentRecipe = state.main.clusteredRecipe;
+
+    const index = recipes.findIndex(recipe => recipe.id === currentRecipe);
+
+    if (index === -1 || index >= recipes.length - 1)
+      return;
+
+    return recipes[index + 1];
   },
 
   // Extract the values to cluster
@@ -98,7 +120,7 @@ export const selectors = {
 
 // Get the approx nb of computations to apply the chosen clusterer
 selectors.estimate = createSelector(
-  selectors.recipeData,
+  selectors.selectedRecipeData,
   selectors.nbDistinctSelectedValues,
   (recipe, nb) => {
     if (!recipe || nb === null)
@@ -184,7 +206,8 @@ export default createReducer(DEFAULT_STATE, {
       clustering: false,
       step: 'clusters',
       clusters: action.clusters,
-      clusteredHeader: action.header
+      clusteredHeader: action.header,
+      clusteredRecipe: action.recipe
     };
   },
 
@@ -299,7 +322,7 @@ export const actions = {
       // TODO: this should not use getState!
       const state = getState();
 
-      const recipe = selectors.recipeData(state),
+      const recipe = selectors.selectedRecipeData(state),
             values = selectors.valuesToCluster(state),
             header = state.main.selectedHeader;
 
@@ -312,7 +335,8 @@ export const actions = {
         return dispatch({
           type: MAIN_CLUSTERED,
           clusters: new Immutable.List(clusters),
-          header
+          header,
+          recipe: recipe.id
         });
       };
 

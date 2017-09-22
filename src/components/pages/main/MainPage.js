@@ -132,7 +132,7 @@ class UploadPage extends Component {
       <div className="full-height">
         <section className="workspace">
           <AffixTitle affix="1.">
-            Inspect your data (<span className="highlight">{NUMBER_FORMAT(main.data.length)}</span> rows) & select a column to work with
+            Select a column to work with & inspect your data (<span className="highlight">{NUMBER_FORMAT(main.data.length)}</span> rows)
           </AffixTitle>
           <DataTable
             headers={main.headers}

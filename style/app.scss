@@ -367,6 +367,12 @@ $aside-width: 44px;
 
   .string-preprocessing {
 
+    .after {
+      code {
+        color: $green;
+      }
+    }
+
     .token {
       margin-right: 5px;
     }

@@ -4,6 +4,8 @@
  *
  * Basic recipes known to work well on common cases.
  */
+import sortBy from 'lodash/sortBy';
+
 export default {
   fingerprint: {
     id: 'fingerprint',
