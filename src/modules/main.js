@@ -196,7 +196,10 @@ export default createReducer(DEFAULT_STATE, {
   [MAIN_CLUSTERING](state) {
     return {
       ...state,
-      clustering: true
+      clustering: true,
+      clusters: null,
+      clusteredHeader: null,
+      clusteredRecipe: null
     };
   },
 
