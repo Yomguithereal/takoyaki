@@ -232,13 +232,13 @@ export default createReducer(DEFAULT_STATE, {
     };
   },
 
-  [MAIN_CLUSTERING](state) {
+  [MAIN_CLUSTERING](state, action) {
     return {
       ...state,
       clustering: true,
       clusters: null,
-      clusteredHeader: null,
-      clusteredRecipe: null
+      clusteredHeader: action.header,
+      clusteredRecipe: action.recipe
     };
   },
 
@@ -251,16 +251,15 @@ export default createReducer(DEFAULT_STATE, {
       clustersSorting: {
         order: 'asc',
         by: 'number'
-      },
-      clusteredHeader: action.header,
-      clusteredRecipe: action.recipe
+      }
     };
   },
 
   [MAIN_CANCEL_CLUSTERING](state) {
     return {
       ...state,
-      clustering: false
+      clustering: false,
+      clusteredRecipe: null
     };
   },
 
@@ -431,7 +430,7 @@ export const actions = {
             values = selectors.valuesToCluster(state),
             header = state.main.selectedHeader;
 
-      dispatch({type: MAIN_CLUSTERING});
+      dispatch({type: MAIN_CLUSTERING, recipe: recipe.id, header});
 
       // Hooking on response
       CLUSTERING_WORKER.onmessage = message => {
@@ -439,9 +438,7 @@ export const actions = {
 
         return dispatch({
           type: MAIN_CLUSTERED,
-          clusters: new Immutable.List(clusters),
-          header,
-          recipe: recipe.id
+          clusters: new Immutable.List(clusters)
         });
       };
 

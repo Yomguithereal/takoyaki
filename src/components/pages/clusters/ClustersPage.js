@@ -64,7 +64,7 @@ function ClustersPageSortingOptions(props) {
   } = props;
 
   return (
-    <div>
+    <div className="clusters-sorting-options">
       Sort clusters by:&nbsp;
       <a onClick={() => sort('number')}>number</a>{` ${getArrow(sorting, 'number')}`},&nbsp;
       <a onClick={() => sort('values')}>distinct values</a>{` ${getArrow(sorting, 'values')}`},&nbsp;
@@ -139,11 +139,25 @@ class ClustersPage extends Component {
 
     let workspace;
 
+    const inlineRecipeSelector = recipe && (
+      <InlineRecipeSelect
+        recipes={availableRecipes}
+        value={recipe.id}
+        onChange={this.runSelectedRecipe} />
+    );
+
     if (main.clustering) {
       workspace = (
-        <h2 className="title is-4">
-          Finding clusters<Waiter />
-        </h2>
+        <div>
+          <AffixTitle affix="1." style={{marginBottom: '10px'}}>
+              Check the <span className="highlight">?</span> clusters found
+              by the {inlineRecipeSelector} recipe on
+              the <span className="highlight">{main.clusteredHeader}</span> column
+            </AffixTitle>
+          <p>
+            Running the recipe to find yummy clusters<Waiter />
+          </p>
+        </div>
       );
     }
     else if (!main.clusters || !main.clusters.size) {
@@ -154,14 +168,6 @@ class ClustersPage extends Component {
       );
     }
     else {
-
-      const inlineRecipeSelector = (
-        <InlineRecipeSelect
-          recipes={availableRecipes}
-          value={recipe.id}
-          onChange={this.runSelectedRecipe} />
-      );
-
       workspace = (
         <div style={{height: '100%'}}>
           <div className="clusters-description">
@@ -177,11 +183,11 @@ class ClustersPage extends Component {
           <AutoSizer>
             {({width, height}) => {
 
-              // NOTE: subtracting 86 to get top bar out of the way
+              // NOTE: subtracting 96 to get top bar out of the way
               return (
                 <List
                   width={width}
-                  height={height - 86}
+                  height={height - 96}
                   rowCount={main.clusters.size}
                   rowHeight={({index}) => {
                     const cluster = main.clusters.get(index);
@@ -195,7 +201,6 @@ class ClustersPage extends Component {
                     return (
                       <div key={cluster.key} style={style}>
                         <ClusterInformation
-                          key={index}
                           index={index}
                           cluster={cluster}
                           explore={actions.explore}

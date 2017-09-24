@@ -306,8 +306,12 @@ $aside-width: 44px;
 
 // ClustersPage
 .clusters-description {
-  padding-bottom: 10px;
+
+}
+
+.clusters-sorting-options {
   border-bottom: 1px solid $light-background;
+  padding-bottom: 20px;
 }
 
 .cluster-information {
