@@ -32,7 +32,10 @@ const MAIN_HARMONIZE_CLUSTER = '§Main/HarmonizeCluster';
 const MAIN_DROP_CLUSTER = '§Main/DropCluster';
 const MAIN_REMOVE_VALUE_FROM_CLUSTER = '§Main/RemoveValueFromCluster';
 const MAIN_RESAMPLE_PREPROCESSING = '§Main/ResamplePreprocessing';
+const MAIN_RESAMPLE_METRIC = '§Main/ResampleMetric';
 const MAIN_EXPLORE = '§Main/Explore';
+
+const SAMPLE_SIZE = 20;
 
 let CLUSTERING_WORKER = new ClusteringWorker();
 
@@ -163,10 +166,10 @@ export default createReducer(DEFAULT_STATE, {
     const size = action.data.length;
 
     // Computing samples
-    const preprocessingSample = naiveSample(20, size),
+    const preprocessingSample = naiveSample(SAMPLE_SIZE, size),
           metricSample = [
-            naiveSample(20, size),
-            naiveSample(20, size)
+            naiveSample(SAMPLE_SIZE, size),
+            naiveSample(SAMPLE_SIZE, size)
           ];
 
     return {
@@ -182,12 +185,26 @@ export default createReducer(DEFAULT_STATE, {
   },
 
   [MAIN_RESAMPLE_PREPROCESSING](state) {
-    const preprocessingSample = naiveSample(20, state.data.length);
+    const preprocessingSample = naiveSample(SAMPLE_SIZE, state.data.length);
 
     return {
       ...state,
       preprocessingSample
     };
+  },
+
+  [MAIN_RESAMPLE_METRIC](state) {
+    const size = state.data.length;
+
+    const metricSample = [
+      naiveSample(SAMPLE_SIZE, size),
+      naiveSample(SAMPLE_SIZE, size)
+    ];
+
+    return {
+      ...state,
+      metricSample
+    }
   },
 
   [MAIN_SELECT_HEADER](state, action) {
@@ -348,6 +365,11 @@ export const actions = {
   // Resample preprocessing data
   resamplePreprocessing() {
     return {type: MAIN_RESAMPLE_PREPROCESSING};
+  },
+
+  // Resample metric data
+  resampleMetric() {
+    return {type: MAIN_RESAMPLE_METRIC};
   },
 
   // Selecting a header to work with

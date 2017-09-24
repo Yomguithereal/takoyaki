@@ -68,6 +68,12 @@ class UploadPage extends Component {
       return main.data[row][selectedHeader];
     });
 
+    const metricSample = main.metricSample.map(column => {
+      return column.map(row => {
+        return main.data[row][selectedHeader];
+      });
+    });
+
     const clusterer = CLUSTERERS[recipe.clusterer];
 
     const canSave = clusterer.needMetric ?
@@ -108,7 +114,14 @@ class UploadPage extends Component {
             recipe={recipe}
             actions={actions.recipe} />
           {clusterer.needMetric && (
-            <Metric />
+            <Metric
+              headers={main.headers}
+              recipe={recipe}
+              actions={actions.recipe}
+              selectedHeader={main.selectedHeader}
+              selectHeader={actions.main.selectHeader}
+              sample={metricSample}
+              resample={actions.main.resampleMetric} />
           )}
         </section>
         <Level className="action-bar">

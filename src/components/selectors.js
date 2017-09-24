@@ -11,6 +11,7 @@ import {replaceSingleCharacter} from './helpers';
 import {sortedRecipes} from '../definitions/helpers';
 import CLUSTERERS from '../definitions/clusterers';
 import PREPROCESSORS from '../definitions/preprocessors';
+import METRICS from '../definitions/metrics';
 
 /**
  * Helpers.
@@ -68,8 +69,29 @@ function optionsFromClusterers() {
   return options;
 }
 
+function optionsFromMetrics(metrics, predicate) {
+  const options = [];
+
+  for (const k in metrics) {
+
+    // Filtering
+    if (predicate && !predicate(metrics[k]))
+      continue;
+
+    options.push({
+      label: metrics[k].label,
+      value: k,
+      metric: metrics[k]
+    });
+  }
+
+  return options;
+}
+
 const PREPROCESSOR_OPTIONS = optionsFromPreprocessors(),
-      CLUSTERER_OPTIONS = optionsFromClusterers();
+      CLUSTERER_OPTIONS = optionsFromClusterers(),
+      METRIC_OPTIONS = optionsFromMetrics(METRICS),
+      TRUE_METRIC_OPTIONS = optionsFromMetrics(METRICS, m => m.trueMetric);
 
 /**
  * Headers selector.
@@ -230,6 +252,47 @@ export function ClustererSelect(props) {
         options={CLUSTERER_OPTIONS}
         optionRenderer={ClustererSelectOption}
         placeholder="Algorithms..."
+        {...other} />
+    </div>
+  );
+}
+
+/**
+ * Metrics selector.
+ */
+function MetricSelectOption(props) {
+  const metric = props.metric;
+
+  return (
+    <div className="metric-option">
+      <p>
+        <strong>{props.label}</strong>
+      </p>
+      <p className="metric-addendum">
+        {props.description}
+      </p>
+    </div>
+  );
+}
+
+export function MetricSelect(props) {
+  const {
+    up = false,
+    trueMetrics = false,
+    ...other
+  } = props;
+
+  let options = trueMetrics ? TRUE_METRIC_OPTIONS : METRIC_OPTIONS;
+
+  return (
+    <div style={{width: '600px'}} className="metric-selector">
+      <Select
+        openOnFocus
+        clearable={false}
+        className={cls(up && 'drop-up')}
+        options={options}
+        optionRenderer={MetricSelectOption}
+        placeholder="Metrics..."
         {...other} />
     </div>
   );

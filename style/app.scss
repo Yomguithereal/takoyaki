@@ -397,4 +397,19 @@ $aside-width: 44px;
       width: 800px;
     }
   }
+
+  .metric {
+
+    table {
+      font-size: 0.9em;
+
+      th {
+        padding-bottom: 5px;
+      }
+
+      th, td {
+        padding-right: 20px;
+      }
+    }
+  }
 }

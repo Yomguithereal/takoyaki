@@ -21,6 +21,7 @@ const RECIPES_UPDATE_DESCRIPTION = '§Recipes/UpdateDescription';
 const RECIPES_ADD_PREPROCESSOR = '§Recipes/AddPreprocessor';
 const RECIPES_REMOVE_PREPROCESSOR = '§Recipes/RemovePreprocessor';
 const RECIPES_SELECT_CLUSTERER = '§Recipes/SelectClusterer';
+const RECIPES_SELECT_METRIC = '§Recipes/SelectMetric';
 
 export const RECIPE_DATA_CONSTANTS = new Set([
   RECIPES_CREATE,
@@ -166,6 +167,20 @@ export default createReducer(DEFAULT_STATE, {
         }
       }
     };
+  },
+
+  // When selecting the edited recipe's metric
+  [RECIPES_SELECT_METRIC](state, action) {
+    return {
+      ...state,
+      recipes: {
+        ...state.recipes,
+        [state.editedRecipe]: {
+          ...state.recipes[state.editedRecipe],
+          metric: action.metric
+        }
+      }
+    };
   }
 });
 
@@ -217,5 +232,9 @@ export const actions = {
 
   selectClusterer(clusterer) {
     return {type: RECIPES_SELECT_CLUSTERER, clusterer};
+  },
+
+  selectMetric(metric) {
+    return {type: RECIPES_SELECT_METRIC, metric};
   }
 };
