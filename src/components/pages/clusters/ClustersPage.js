@@ -16,6 +16,7 @@ import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
 import {InlineRecipeSelect} from '../../selectors';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
+import Waiter from '../../Waiter';
 
 import {actions as mainActions, selectors as mainSelectors} from '../../../modules/main';
 
@@ -92,7 +93,7 @@ class ClustersPage extends Component {
     if (main.clustering) {
       workspace = (
         <h2 className="title is-4">
-          Finding clusters...
+          Finding clusters<Waiter />
         </h2>
       );
     }
@@ -122,7 +123,7 @@ class ClustersPage extends Component {
           <AutoSizer>
             {({width, height}) => {
 
-              // NOTE: subtracting 51 to get action bar out of the way
+              // NOTE: subtracting 60 to get top bar out of the way
               return (
                 <List
                   width={width}
