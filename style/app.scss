@@ -247,7 +247,7 @@ $aside-width: 44px;
 
 .inline-recipe-selector {
   display: inline-block;
-  min-width: 300px;
+  font-family: $family-monospace;
   height: 30px;
   vertical-align: bottom;
 
@@ -257,7 +257,6 @@ $aside-width: 44px;
 
   .Select, .Select-control {
     border: none;
-    min-width: 300px;
   }
 }
 

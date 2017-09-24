@@ -193,8 +193,12 @@ export function InlineRecipeSelect(props) {
 
   const options = optionsFromRecipes(recipes);
 
+  const value = props.value;
+
+  const label = options.find(option => option.value === value).label;
+
   return (
-    <div className="inline-recipe-selector">
+    <div className="inline-recipe-selector" style={{width: `${label.length + 3}ch`}}>
       <Select
         openOnFocus
         className={cls(up && 'drop-up')}
