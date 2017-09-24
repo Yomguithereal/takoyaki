@@ -34,8 +34,17 @@ export default {
     needMetric: true,
     trueMetrics: true,
     build({metric, radius}) {
+      const options = {
+        radius: radius ? radius : metric.defaultRadius
+      };
+
+      if (metric.similarity)
+        options.similarity = metric.build();
+      else
+        options.distance = metric.build();
+
       return items => {
-        return vpTree({distance: metric, radius}, items);
+        return vpTree(options, items);
       };
     },
     estimate(nb) {
@@ -50,8 +59,17 @@ export default {
     shuffle: false,
     needMetric: true,
     build({metric, radius}) {
+      const options = {
+        radius: radius ? radius : metric.defaultRadius
+      };
+
+      if (metric.similarity)
+        options.similarity = metric.build();
+      else
+        options.distance = metric.build();
+
       return items => {
-        return naive({distance: metric, radius}, items);
+        return naive(options, items);
       };
     },
     estimate(nb) {

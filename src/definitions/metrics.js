@@ -17,6 +17,7 @@ export default {
     trueMetric: true,
     complexity: 'O(mn)',
     scalability: 'low',
+    defaultRadius: 2,
     build() {
       return levenshtein;
     }
@@ -30,6 +31,7 @@ export default {
     similarity: true,
     complexity: 'O(n)',
     scalability: 'medium',
+    defaultRadius: 0.7,
     build() {
       return jaccard;
     }

@@ -49,9 +49,8 @@ function performClustering(values, recipe) {
 
   //-- 3) Building clusterer & computing the clusters
   const clusterer = clustererDefinition.build({
-    metric,
-    preprocessor,
-    radius: 2
+    metric: metricDefinition,
+    preprocessor
   });
 
   const clusters = clusterer(items);
