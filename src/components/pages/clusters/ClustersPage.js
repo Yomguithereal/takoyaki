@@ -14,6 +14,7 @@ import {AutoSizer, List} from 'react-virtualized';
 import ClusterInformation from './ClusterInformation';
 import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
+import {InlineRecipeSelect} from '../../selectors';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as mainActions, selectors as mainSelectors} from '../../../modules/main';
@@ -30,6 +31,7 @@ const connectToStore = connect(
   state => {
     return {
       main: state.main,
+      availableRecipes: state.recipes.recipes,
       recipe: mainSelectors.clusteredRecipeData(state),
       nextRecipe: mainSelectors.nextRecipeData(state)
     };
@@ -49,6 +51,7 @@ class ClustersPage extends Component {
     super(props, context);
 
     this.runNextRecipe = this.runNextRecipe.bind(this);
+    this.runSelectedRecipe = this.runSelectedRecipe.bind(this);
   }
 
   runNextRecipe() {
@@ -61,10 +64,24 @@ class ClustersPage extends Component {
     actions.runRecipe();
   }
 
+  runSelectedRecipe(option) {
+    const {
+      actions,
+      recipe,
+    } = this.props;
+
+    if (option.value === recipe.id)
+      return;
+
+    actions.selectRecipe(option.value);
+    actions.runRecipe();
+  }
+
   render() {
     const {
       actions,
       main,
+      availableRecipes,
       recipe,
       nextRecipe,
       hidden = false
@@ -72,24 +89,34 @@ class ClustersPage extends Component {
 
     let workspace;
 
-    if (main.clustering)
+    if (main.clustering) {
       workspace = (
         <h2 className="title is-4">
           Finding clusters...
         </h2>
       );
-    else if (!main.clusters || !main.clusters.size)
+    }
+    else if (!main.clusters || !main.clusters.size) {
       workspace = (
         <h2 className="title is-4">
           Sorry, no clusters were found :(
         </h2>
       );
-    else
+    }
+    else {
+
+      const inlineRecipeSelector = (
+        <InlineRecipeSelect
+          recipes={availableRecipes}
+          value={recipe.id}
+          onChange={this.runSelectedRecipe} />
+      );
+
       workspace = (
         <div style={{height: '100%'}}>
           <AffixTitle affix="1.">
             Check the <span className="highlight">{NUMBER_FORMAT(main.clusters.size)}</span> clusters found
-            by the <span className="highlight">{recipe.label}</span> recipe on
+            by the {inlineRecipeSelector} recipe on
             the <span className="highlight">{main.clusteredHeader}</span> column
           </AffixTitle>
           <AutoSizer>
@@ -99,7 +126,7 @@ class ClustersPage extends Component {
               return (
                 <List
                   width={width}
-                  height={height - 51}
+                  height={height - 60}
                   rowCount={main.clusters.size}
                   rowHeight={({index}) => {
                     const cluster = main.clusters.get(index);
@@ -129,6 +156,7 @@ class ClustersPage extends Component {
           </AutoSizer>
         </div>
       );
+    }
 
     return (
       <div className={cls('full-height', hidden && 'hidden')}>

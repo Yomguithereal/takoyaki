@@ -386,7 +386,12 @@ export const actions = {
   runRecipe() {
     return (dispatch, getState) => {
 
-      // TODO: this should not use getState!
+      // First we need to cancel an ongoing clustering
+      CLUSTERING_WORKER.onmessage = Function.prototype;
+      CLUSTERING_WORKER.terminate();
+      CLUSTERING_WORKER = new ClusteringWorker();
+
+      // Then we need to actually perform the clustering
       const state = getState();
 
       const recipe = selectors.selectedRecipeData(state),

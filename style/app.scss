@@ -245,6 +245,22 @@ $aside-width: 44px;
   }
 }
 
+.inline-recipe-selector {
+  display: inline-block;
+  min-width: 300px;
+  height: 30px;
+  vertical-align: bottom;
+
+  .Select-input > input {
+    padding: 0;
+  }
+
+  .Select, .Select-control {
+    border: none;
+    min-width: 300px;
+  }
+}
+
 /**
  * Components.
  */

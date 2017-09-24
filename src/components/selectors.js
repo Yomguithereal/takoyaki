@@ -172,6 +172,41 @@ export function RecipeSelect(props) {
   );
 }
 
+function InlineRecipeSelectOption(props) {
+  return (
+    <span className="highlight">{props.label}</span>
+  );
+}
+
+function InlineRecipeSelectValue(props) {
+  return (
+    <span className="highlight">{props.label}</span>
+  );
+}
+
+export function InlineRecipeSelect(props) {
+  const {
+    recipes,
+    up = false,
+    ...other
+  } = props;
+
+  const options = optionsFromRecipes(recipes);
+
+  return (
+    <div className="inline-recipe-selector">
+      <Select
+        openOnFocus
+        className={cls(up && 'drop-up')}
+        options={options}
+        optionRenderer={InlineRecipeSelectOption}
+        valueRenderer={InlineRecipeSelectValue}
+        clearable={false}
+        {...other} />
+    </div>
+  );
+}
+
 /**
  * Preprocessors selector.
  */
