@@ -13,6 +13,12 @@ import Button from '../../Button';
  */
 const NUMBER_FORMAT = format(',');
 
+const LINEBREAK_REGEX = /\n/g;
+
+const VALUE_FORMAT = string => {
+  return string.replace(LINEBREAK_REGEX, '\\n');
+};
+
 /**
  * Component displaying a single value.
  */
@@ -24,7 +30,7 @@ function ClusterValue(props) {
       </td>
       <td>
         <code className="cluster-value" onClick={() => props.update(props.clusterIndex, props.value)}>
-          {props.value}
+          {VALUE_FORMAT(props.value)}
         </code>
         &nbsp;
         <a

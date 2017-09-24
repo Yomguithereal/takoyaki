@@ -30,12 +30,19 @@ const MAIN_CANCEL_CLUSTERING = '§Main/CancelClustering';
 const MAIN_UPDATE_HARMONIZED_VALUE = '§Main/UpdateHarmonizedValue';
 const MAIN_HARMONIZE_CLUSTER = '§Main/HarmonizeCluster';
 const MAIN_DROP_CLUSTER = '§Main/DropCluster';
+const MAIN_SORT_CLUSTERS = '§Main/SortClusters';
 const MAIN_REMOVE_VALUE_FROM_CLUSTER = '§Main/RemoveValueFromCluster';
 const MAIN_RESAMPLE_PREPROCESSING = '§Main/ResamplePreprocessing';
 const MAIN_RESAMPLE_METRIC = '§Main/ResampleMetric';
 const MAIN_EXPLORE = '§Main/Explore';
 
 const SAMPLE_SIZE = 20;
+
+const SORT = {
+  number: cluster => cluster.key,
+  values: cluster => cluster.groups.length,
+  rows: cluster => cluster.nbRows
+};
 
 let CLUSTERING_WORKER = new ClusteringWorker();
 
@@ -51,6 +58,10 @@ const DEFAULT_STATE = {
   selectedRecipe: 'fingerprint',
   clustering: false,
   clusters: null,
+  clustersSorting: {
+    order: 'asc',
+    by: 'number'
+  },
   clusteredHeader: null,
   clusteredRecipe: null,
   exploredCluster: null,
@@ -237,6 +248,10 @@ export default createReducer(DEFAULT_STATE, {
       clustering: false,
       step: 'clusters',
       clusters: action.clusters,
+      clustersSorting: {
+        order: 'asc',
+        by: 'number'
+      },
       clusteredHeader: action.header,
       clusteredRecipe: action.recipe
     };
@@ -290,6 +305,24 @@ export default createReducer(DEFAULT_STATE, {
     return {
       ...state,
       clusters: newClusters
+    };
+  },
+
+  [MAIN_SORT_CLUSTERS](state, action) {
+    const order = action.order === 'asc' ? 1 : -1,
+          sorter = SORT[action.by];
+
+    const newClusters = state.clusters.sortBy(cluster => {
+      return sorter(cluster) * order;
+    });
+
+    return {
+      ...state,
+      clusters: newClusters,
+      clustersSorting: {
+        order: action.order,
+        by: action.by
+      }
     };
   },
 
@@ -446,6 +479,11 @@ export const actions = {
   // Removing a value from a cluster
   removeValueFromCluster(cluster, group) {
     return {type: MAIN_REMOVE_VALUE_FROM_CLUSTER, cluster, group};
+  },
+
+  // Sorting the clusters
+  sortClusters(by, order = 'desc') {
+    return {type: MAIN_SORT_CLUSTERS, by, order};
   },
 
   // Exploring a cluster

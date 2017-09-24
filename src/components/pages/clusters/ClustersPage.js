@@ -25,6 +25,9 @@ import {actions as mainActions, selectors as mainSelectors} from '../../../modul
  */
 const NUMBER_FORMAT = format(',');
 
+const ARROW_UP = '↑',
+      ARROW_DOWN = '↓';
+
 /**
  * Connection to store.
  */
@@ -45,14 +48,60 @@ const connectToStore = connect(
 );
 
 /**
+ * Sorting options.
+ */
+function getArrow(sorting, by) {
+  if (sorting.by !== by)
+    return ' ';
+
+  return sorting.order === 'asc' ? ARROW_UP : ARROW_DOWN;
+}
+
+function ClustersPageSortingOptions(props) {
+  const {
+    sorting,
+    sort
+  } = props;
+
+  return (
+    <div>
+      Sort clusters by:&nbsp;
+      <a onClick={() => sort('number')}>number</a>{` ${getArrow(sorting, 'number')}`},&nbsp;
+      <a onClick={() => sort('values')}>distinct values</a>{` ${getArrow(sorting, 'values')}`},&nbsp;
+      <a onClick={() => sort('rows')}>affected rows</a>{` ${getArrow(sorting, 'rows')}`}
+    </div>
+  );
+}
+
+/**
  * Main component.
  */
 class ClustersPage extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.sortClusters = this.sortClusters.bind(this);
     this.runNextRecipe = this.runNextRecipe.bind(this);
     this.runSelectedRecipe = this.runSelectedRecipe.bind(this);
+  }
+
+  sortClusters(by) {
+    const {
+      actions,
+      main
+    } = this.props;
+
+    const currentSorting = main.clustersSorting;
+
+    if (currentSorting.by === by)
+      return actions.sortClusters(by, currentSorting.order === 'asc' ? 'desc' : 'asc');
+
+    let order = 'asc';
+
+    if (by === 'rows')
+      order = 'desc';
+
+    return actions.sortClusters(by, order);
   }
 
   runNextRecipe() {
@@ -115,19 +164,24 @@ class ClustersPage extends Component {
 
       workspace = (
         <div style={{height: '100%'}}>
-          <AffixTitle affix="1.">
-            Check the <span className="highlight">{NUMBER_FORMAT(main.clusters.size)}</span> clusters found
-            by the {inlineRecipeSelector} recipe on
-            the <span className="highlight">{main.clusteredHeader}</span> column
-          </AffixTitle>
+          <div className="clusters-description">
+            <AffixTitle affix="1." style={{marginBottom: '10px'}}>
+              Check the <span className="highlight">{NUMBER_FORMAT(main.clusters.size)}</span> clusters found
+              by the {inlineRecipeSelector} recipe on
+              the <span className="highlight">{main.clusteredHeader}</span> column
+            </AffixTitle>
+            <ClustersPageSortingOptions
+              sort={this.sortClusters}
+              sorting={main.clustersSorting} />
+          </div>
           <AutoSizer>
             {({width, height}) => {
 
-              // NOTE: subtracting 60 to get top bar out of the way
+              // NOTE: subtracting 86 to get top bar out of the way
               return (
                 <List
                   width={width}
-                  height={height - 60}
+                  height={height - 86}
                   rowCount={main.clusters.size}
                   rowHeight={({index}) => {
                     const cluster = main.clusters.get(index);

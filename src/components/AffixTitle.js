@@ -6,9 +6,9 @@
  */
 import React from 'react';
 
-export default function AffixTitle({affix, children}) {
+export default function AffixTitle({affix, style, children}) {
   return (
-    <h2 className="title is-4">
+    <h2 style={style} className="title is-4">
       <span className="affix">{affix}</span>
       {children}
     </h2>
