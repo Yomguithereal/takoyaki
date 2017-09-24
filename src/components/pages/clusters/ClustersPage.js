@@ -86,16 +86,16 @@ class ClustersPage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const prev = prevProps.main.clusters,
-          next = this.props.main.clusters;
+    const prev = prevProps.main.clustersSorting,
+          next = this.props.main.clustersSorting;
 
-    // Recomputing row heights when needed
+    // Recomputing row heights when sorting the list
     if (
       this.list &&
-      prev &&
-      next &&
-      (prev.size === next.size) &&
-      (prev !== next)
+      (
+        prev.by !== next.by ||
+        prev.order !== next.order
+      )
     ) {
       this.list.recomputeRowHeights();
       this.list.scrollToPosition(0);
