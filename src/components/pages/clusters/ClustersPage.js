@@ -217,7 +217,7 @@ class ClustersPage extends Component {
                     const cluster = main.clusters.get(index);
 
                     return (
-                      <div key={cluster.key} style={style}>
+                      <div key={`${cluster.key}§${index}`} style={style}>
                         <ClusterInformation
                           index={index}
                           cluster={cluster}
