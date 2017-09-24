@@ -282,7 +282,7 @@ export function MetricSelect(props) {
     ...other
   } = props;
 
-  let options = trueMetrics ? TRUE_METRIC_OPTIONS : METRIC_OPTIONS;
+  const options = trueMetrics ? TRUE_METRIC_OPTIONS : METRIC_OPTIONS;
 
   return (
     <div style={{width: '600px'}} className="metric-selector">

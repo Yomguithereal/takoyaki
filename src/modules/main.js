@@ -204,7 +204,7 @@ export default createReducer(DEFAULT_STATE, {
     return {
       ...state,
       metricSample
-    }
+    };
   },
 
   [MAIN_SELECT_HEADER](state, action) {

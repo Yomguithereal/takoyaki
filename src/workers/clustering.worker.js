@@ -29,8 +29,6 @@ function performClustering(values, recipe) {
         metricDefinition = metrics[recipe.metric];
 
   //-- 1) Preprocessing & mapping unique values
-  const metric = metricDefinition && metricDefinition.build();
-
   let preprocessor;
 
   if (recipe.preprocessor)

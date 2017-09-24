@@ -7,10 +7,9 @@
 import React, {Component} from 'react';
 import METRICS from '../../../definitions/metrics';
 
-import Button from '../../Button';
 import AffixTitle from '../../AffixTitle';
 import {MetricSelect, HeaderSelect} from '../../selectors';
-import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
+import {Level, LevelLeft, LevelItem} from '../../levels';
 
 /**
  * Formats.
@@ -18,7 +17,7 @@ import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 const DECIMAL_REGEX = /\./;
 
 const DISTANCE_FORMAT = number => {
-  let string = '' + number;
+  const string = '' + number;
 
   if (DECIMAL_REGEX.test(string))
     return '' + (number.toFixed(2));
