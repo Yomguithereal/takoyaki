@@ -85,6 +85,23 @@ class ClustersPage extends Component {
     this.runSelectedRecipe = this.runSelectedRecipe.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    const prev = prevProps.main.clusters,
+          next = this.props.main.clusters;
+
+    // Recomputing row heights when needed
+    if (
+      this.list &&
+      prev &&
+      next &&
+      (prev.size === next.size) &&
+      (prev !== next)
+    ) {
+      this.list.recomputeRowHeights();
+      this.list.scrollToPosition(0);
+    }
+  }
+
   sortClusters(by) {
     const {
       actions,
@@ -186,6 +203,7 @@ class ClustersPage extends Component {
               // NOTE: subtracting 96 to get top bar out of the way
               return (
                 <List
+                  ref={list => (this.list = list)}
                   width={width}
                   height={height - 96}
                   rowCount={main.clusters.size}
