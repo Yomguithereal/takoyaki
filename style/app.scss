@@ -220,14 +220,16 @@ $aside-width: 44px;
  */
 .recipe-selector,
 .preprocessor-selector,
-.clusterer-selector {
+.clusterer-selector,
+.metric-selector {
   .Select-control {
 
   }
 
   .recipe-description,
   .preprocessor-description,
-  .clusterer-addendum {
+  .clusterer-addendum,
+  .metric-addendum {
     font-size: 0.7em;
     font-style: italic;
   }

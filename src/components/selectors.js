@@ -269,7 +269,7 @@ function MetricSelectOption(props) {
         <strong>{props.label}</strong>
       </p>
       <p className="metric-addendum">
-        {props.description}
+        {metric.description}
       </p>
     </div>
   );
