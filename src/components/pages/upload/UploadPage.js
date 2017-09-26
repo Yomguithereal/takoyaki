@@ -111,7 +111,7 @@ class UploadPage extends Component {
           {!upload.previewData && (
             <div>
               <p>
-              Or <a onClick={this.loadExampleFile}>load</a> our example of a messy file.
+              Or load <a onClick={this.loadExampleFile}>our example</a> of a messy file.
               </p>
               <br />
               <Dropzone
@@ -153,7 +153,7 @@ class UploadPage extends Component {
                 <Button
                   loading={main.parsing}
                   onClick={this.handleSubmit}>
-                  Parse the whole file
+                  My file is correctly parsed
                 </Button>
               </LevelItem>
             )}
