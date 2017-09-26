@@ -117,34 +117,8 @@ export const selectors = {
       values[i] = data[i][selectedHeader];
 
     return values;
-  },
-
-  // Get the number of distinct values from the selected column
-  nbDistinctSelectedValues: createSelector(
-    state => state.main.selectedHeader,
-    state => state.main.values,
-    (header, values) => {
-      if (!header || !values)
-        return null;
-
-      return values[header].dimension;
-    }
-  )
-};
-
-// Get the approx nb of computations to apply the chosen clusterer
-selectors.estimate = createSelector(
-  selectors.selectedRecipeData,
-  selectors.nbDistinctSelectedValues,
-  (recipe, nb) => {
-    if (!recipe || nb === null)
-      return;
-
-    const clustererDefinition = CLUSTERERS[recipe.clusterer];
-
-    return clustererDefinition.estimate(nb);
   }
-);
+};
 
 /**
  * Main reducer.

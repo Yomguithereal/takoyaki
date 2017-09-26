@@ -14,7 +14,8 @@ export default {
       and usually produces very good results.
     `,
     preprocessor: ['fingerprint'],
-    clusterer: 'keyCollision'
+    clusterer: 'keyCollision',
+    orderOverride: 1
   },
   metaphone: {
     id: 'metaphone',

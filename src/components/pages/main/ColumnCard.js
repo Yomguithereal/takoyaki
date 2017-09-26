@@ -33,7 +33,7 @@ export default class ColumnCard extends Component {
         <div className="card">
           <header className="card-header">
             <p className="card-header-title" style={{display: 'block'}}>
-              {index + 1}. {header} - <span className="highlight">{NUMBER_FORMAT(values.length)}</span> values
+              {index + 1}. {header} (<span className="highlight">{NUMBER_FORMAT(values.length)}</span> values)
             </p>
           </header>
           <div className="card-content">

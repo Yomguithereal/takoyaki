@@ -18,6 +18,7 @@ export function sortedRecipes(recipes) {
   recipes = Object.keys(recipes).map(key => recipes[key]);
 
   return sortBy(recipes, [
+    recipe => -(recipe.orderOverride || 0),
     recipe => RECIPE_SORT_VALUES[CLUSTERERS[recipe.clusterer].scalability],
     recipe => recipe.addedByUser ? 1 : 0,
     recipe => recipe.label

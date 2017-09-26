@@ -8,6 +8,7 @@ import uuid from 'uuid/v4';
 import omit from 'lodash/omit';
 import RECIPES from '../definitions/recipes';
 import {createReducer} from './helpers';
+import {sortedRecipes} from '../definitions/helpers';
 
 /**
  * Constants.
@@ -46,6 +47,10 @@ const DEFAULT_STATE = {
 export const selectors = {
   editedRecipe(state) {
     return state.recipes.recipes[state.recipes.editedRecipe];
+  },
+
+  sortedRecipes(state) {
+    return sortedRecipes(state.recipes.recipes);
   }
 };
 

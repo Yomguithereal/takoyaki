@@ -449,6 +449,42 @@ $aside-width: 44px;
   }
 }
 
+.recipe-list {
+  height: calc(100% - 10px);
+  overflow-y: auto;
+
+  .recipe {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid $grey-lighter;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    h6 {
+      margin-bottom: 0.5rem;
+    }
+
+    .recipe-description {
+      font-size: 0.6em;
+      font-style: italic;
+    }
+
+    &.selected {
+      background-color: $light-background;
+      // background-image: repeating-linear-gradient(-45deg, $light-background, $light-background 10px, transparent 10px, transparent 20px);
+    }
+  }
+}
+
+.cluster-list {
+  height: calc(100% - 10px);
+  overflow-y: auto;
+
+  padding: 0px 10px;
+}
+
 // RecipePage
 .recipe-editor {
   .recipe-title {
