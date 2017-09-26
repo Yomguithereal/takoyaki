@@ -465,6 +465,8 @@ export const actions = {
       };
 
       // Asking worker to perform task
+      // TODO: row multimap should be built here to avoid copying too much
+      // data to the worker
       CLUSTERING_WORKER.postMessage({recipe, values});
     };
   },

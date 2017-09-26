@@ -9,7 +9,6 @@ import React, {Component} from 'react';
 import {format} from 'd3-format';
 import {AutoSizer, Table, Column} from 'react-virtualized';
 import {replaceSingleCharacter} from '../../helpers';
-import Button from '../../Button';
 
 /**
  * Formats.
@@ -25,6 +24,7 @@ export default class ColumnCard extends Component {
     const {
       index,
       header,
+      select,
       values
     } = this.props;
 
@@ -42,12 +42,12 @@ export default class ColumnCard extends Component {
                 return (
                   <Table
                     width={width}
-                    height={240}
+                    height={280}
                     headerHeight={20}
                     disableHeader
                     rowHeight={20}
                     rowCount={values.length}
-                    rowGetter={({index}) => values[index]}>
+                    rowGetter={({index: i}) => values[i]}>
                     <Column
                       label="Value"
                       dataKey="0"
@@ -83,9 +83,9 @@ export default class ColumnCard extends Component {
                       dataKey="1"
                       cellRenderer={({cellData}) => {
                         return (
-                          <span className="column-card-value-count">
+                          <div className="column-card-value-count">
                             {NUMBER_FORMAT(cellData)}
-                          </span>
+                          </div>
                         );
                       }}
                       width={70} />
@@ -95,7 +95,9 @@ export default class ColumnCard extends Component {
             </AutoSizer>
           </div>
           <footer className="card-footer">
-            <a className="card-footer-item card-footer-item-button">
+            <a
+              className="card-footer-item card-footer-item-button"
+              onClick={() => select(header)}>
               Cluster & Edit
             </a>
           </footer>

@@ -7,25 +7,15 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {format} from 'd3-format';
 
 import ColumnCard from './ColumnCard';
 import Button from '../../Button';
 import DownloadButton from '../../DownloadButton';
 import AffixTitle from '../../AffixTitle';
-import DataTable from '../../DataTable';
-import {RecipeSelect} from '../../selectors';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as globalActions} from '../../../modules/global';
-import {actions as mainActions, selectors as mainSelectors} from '../../../modules/main';
-import {actions as recipesActions} from '../../../modules/recipes';
-
-/**
- * Formats.
- */
-const NUMBER_FORMAT = format(',');
-const SI_FORMAT = format(',.0s');
+import {actions as mainActions} from '../../../modules/main';
 
 /**
  * Connection to store.
@@ -33,15 +23,13 @@ const SI_FORMAT = format(',.0s');
 const connectToStore = connect(
   state => {
     return {
-      main: state.main,
-      recipes: state.recipes
+      main: state.main
     };
   },
   dispatch => {
     return {
       actions: bindActionCreators(mainActions, dispatch),
-      globalActions: bindActionCreators(globalActions, dispatch),
-      recipesActions: bindActionCreators(recipesActions, dispatch)
+      globalActions: bindActionCreators(globalActions, dispatch)
     };
   }
 );
@@ -62,10 +50,13 @@ class UploadPage extends Component {
   }
 
   selectHeader(header) {
-    if (!header)
-      return;
+    const {
+      actions
+    } = this.props;
 
-    this.props.actions.selectHeader(header);
+    actions.selectHeader(header);
+    actions.runRecipe();
+    actions.changeStep('clusters');
   }
 
   // selectRecipe(option) {
@@ -113,6 +104,7 @@ class UploadPage extends Component {
 
   render() {
     const {
+      actions,
       main
     } = this.props;
 
@@ -130,6 +122,7 @@ class UploadPage extends Component {
                     key={i}
                     index={i}
                     header={header}
+                    select={this.selectHeader}
                     values={main.values[header]} />
                 );
               })
@@ -144,6 +137,11 @@ class UploadPage extends Component {
               Upload another file
             </Button>
           </LevelLeft>
+          <LevelRight>
+            <LevelItem>
+              <DownloadButton onClick={actions.download} />
+            </LevelItem>
+          </LevelRight>
         </Level>
       </div>
     );

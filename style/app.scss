@@ -363,13 +363,24 @@ $aside-width: 44px;
   padding: 10px;
   width: 50%;
 
+  @media screen and (min-width: 1300px) {
+    width: 33%;
+  }
+
   .column-card-value {
     font-family: $family-monospace;
     font-size: 0.9em;
   }
 
   .column-card-value-count {
+    color: $grey;
+    font-family: $family-monospace;
     font-size: 0.9em;
+    text-align: right;
+  }
+
+  .card-footer {
+    border-top: none;
   }
 }
 
