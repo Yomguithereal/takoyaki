@@ -7,6 +7,7 @@
 import CSV from 'papaparse';
 import Immutable from 'immutable';
 import MultiSet from 'mnemonist/multi-set';
+import sortBy from 'lodash/sortBy';
 import {saveAs} from 'file-saver';
 import naiveSample from 'pandemonium/naive-sample';
 import {createSelector} from 'reselect';
@@ -196,7 +197,11 @@ export default createReducer(DEFAULT_STATE, {
       for (let j = 0, m = data.length; j < m; j++)
         set.add(data[j][header]);
 
-      values[header] = set;
+      values[header] = Array.from(set.multiplicities());
+      values[header] = sortBy(values[header], [
+        v => -v[1],
+        v => v[0]
+      ]);
     }
 
     return {

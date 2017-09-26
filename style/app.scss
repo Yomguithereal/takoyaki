@@ -65,6 +65,55 @@ $select-input-border-focus: $grey-lighter !default;
 /**
  * React Virtualized override.
  */
+.ReactVirtualized__Table__headerRow {
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.ReactVirtualized__Table__row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ReactVirtualized__Table__headerTruncatedText {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.ReactVirtualized__Table__headerColumn,
+.ReactVirtualized__Table__rowColumn {
+  margin-right: 10px;
+  min-width: 0px;
+}
+.ReactVirtualized__Table__rowColumn {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ReactVirtualized__Table__headerColumn:first-of-type,
+.ReactVirtualized__Table__rowColumn:first-of-type {
+  margin-left: 10px;
+}
+.ReactVirtualized__Table__sortableHeaderColumn {
+  cursor: pointer;
+}
+
+.ReactVirtualized__Table__sortableHeaderIconContainer {
+  display: flex;
+  align-items: center;
+}
+.ReactVirtualized__Table__sortableHeaderIcon {
+  flex: 0 0 24px;
+  height: 1em;
+  width: 1em;
+  fill: currentColor;
+}
+
 .ReactVirtualized__Grid:focus {
   outline: none;
 }
@@ -199,6 +248,12 @@ $aside-width: 44px;
   text-align: right;
 }
 
+.flex-layout {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -300,6 +355,32 @@ $aside-width: 44px;
 
   &.selected {
     background-color: $sand;
+  }
+}
+
+// MainPage
+.column-card {
+  padding: 10px;
+  width: 50%;
+
+  .column-card-value {
+    font-family: $family-monospace;
+    font-size: 0.9em;
+  }
+
+  .column-card-value-count {
+    font-size: 0.9em;
+  }
+}
+
+.card-footer-item-button {
+  background-color: $primary;
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    background-color: darken($primary, 2.5%);
+    color: white;
   }
 }
 
