@@ -400,11 +400,6 @@ $aside-width: 44px;
 
 }
 
-.clusters-sorting-options {
-  border-bottom: 1px solid $light-background;
-  padding-bottom: 20px;
-}
-
 .cluster-information {
   margin-bottom: 35px;
 
@@ -483,6 +478,26 @@ $aside-width: 44px;
   overflow-y: auto;
 
   padding: 0px 10px;
+
+  .clusters-sorting-options {
+    font-size: 0.8em;
+    border-bottom: 1px solid $light-background;
+    padding-bottom: 5px;
+  }
+
+  .cluster {
+
+    padding-left: 30px;
+    margin-bottom: 25px;
+    margin-top: 10px;
+
+    .cluster-value {
+      margin-bottom: 5px;
+      font-size: 1.1em;
+      white-space: pre;
+      cursor: pointer;
+    }
+  }
 }
 
 // RecipePage

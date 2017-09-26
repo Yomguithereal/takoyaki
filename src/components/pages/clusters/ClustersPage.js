@@ -43,6 +43,7 @@ class ClustersPage extends Component {
     super(props, context);
 
     this.runSelectedRecipe = this.runSelectedRecipe.bind(this);
+    this.sortClusters = this.sortClusters.bind(this);
   }
 
   runSelectedRecipe(recipeId) {
@@ -56,6 +57,25 @@ class ClustersPage extends Component {
 
     actions.selectRecipe(recipeId);
     actions.runRecipe();
+  }
+
+  sortClusters(by) {
+    const {
+      actions,
+      main
+    } = this.props;
+
+    const currentSorting = main.clustersSorting;
+
+    if (currentSorting.by === by)
+      return actions.sortClusters(by, currentSorting.order === 'asc' ? 'desc' : 'asc');
+
+    let order = 'asc';
+
+    if (by === 'rows')
+      order = 'desc';
+
+    return actions.sortClusters(by, order);
   }
 
   render() {
@@ -86,7 +106,9 @@ class ClustersPage extends Component {
               <ClusterList
                 header={main.clusteredHeader}
                 selectedRecipe={recipe}
-                clusters={main.clusters} />
+                clusters={main.clusters}
+                sort={this.sortClusters}
+                sorting={main.clustersSorting} />
             </div>
           </div>
         </section>

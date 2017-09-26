@@ -10,7 +10,7 @@ export default {
     label: 'Fingerprint Collision',
     description: `
       Computing clusters of strings whose fingerprints are the same. This
-      is definitely the first recipe you want to try since it is really cheap
+      is definitely the first recipe you want to try since it is really performant
       and usually produces very good results.
     `,
     preprocessor: ['fingerprint'],
