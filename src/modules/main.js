@@ -6,6 +6,7 @@
  */
 import CSV from 'papaparse';
 import Immutable from 'immutable';
+import MultiSet from 'mnemonist/multi-set';
 import {saveAs} from 'file-saver';
 import naiveSample from 'pandemonium/naive-sample';
 import {createSelector} from 'reselect';
@@ -52,6 +53,7 @@ let CLUSTERING_WORKER = new ClusteringWorker();
 const DEFAULT_STATE = {
   step: 'upload',
   data: null,
+  values: null,
   headers: null,
   delimiter: ',',
   selectedHeader: null,
@@ -119,17 +121,12 @@ export const selectors = {
   // Get the number of distinct values from the selected column
   nbDistinctSelectedValues: createSelector(
     state => state.main.selectedHeader,
-    state => state.main.data,
-    (header, data) => {
-      if (!header || !data)
+    state => state.main.values,
+    (header, values) => {
+      if (!header || !values)
         return null;
 
-      const values = new Set();
-
-      for (let i = 0, l = data.length; i < l; i++)
-        values.add(data[i][header]);
-
-      return values.size;
+      return values[header].dimension;
     }
   )
 };
@@ -183,11 +180,31 @@ export default createReducer(DEFAULT_STATE, {
             naiveSample(SAMPLE_SIZE, size)
           ];
 
+    const {
+      data,
+      headers
+    } = action;
+
+    const values = {};
+
+    // Grabbing unique values
+    for (let i = 0, l = headers.length; i < l; i++) {
+      const header = headers[i];
+
+      const set = new MultiSet();
+
+      for (let j = 0, m = data.length; j < m; j++)
+        set.add(data[j][header]);
+
+      values[header] = set;
+    }
+
     return {
       ...state,
       parsing: false,
-      data: action.data,
-      headers: action.headers,
+      data,
+      headers,
+      values,
       delimiter: action.delimiter,
       step: 'main',
       preprocessingSample,
