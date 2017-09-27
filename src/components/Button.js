@@ -14,6 +14,7 @@ export default function Button(props) {
     size = null,
     disabled = false,
     outlined = false,
+    inverted = false,
     loading = false,
     onClick = Function.prototype,
     className,
@@ -25,6 +26,7 @@ export default function Button(props) {
     `is-${level}`,
     size && `is-${size}`,
     outlined && 'is-outlined',
+    inverted && 'is-inverted',
     loading && 'is-loading',
     className
   );

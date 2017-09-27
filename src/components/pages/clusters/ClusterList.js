@@ -8,6 +8,8 @@ import React, {Component} from 'react';
 import {AutoSizer, List} from 'react-virtualized';
 import {format} from 'd3-format';
 
+import Button from '../../Button';
+
 /**
  * Formats.
  */
@@ -49,21 +51,72 @@ function ClusterListSortingOptions(props) {
  */
 function Cluster(props) {
   const {
-    data
+    number,
+    data,
+    width
   } = props;
 
   return (
-    <ul className="cluster">
-      {data.groups.map((group, i) => {
-        const sanitizedValue = group.value.replace(LINEBREAK_REGEX, '\\n');
+    <table className="cluster" style={{width: '100%'}}>
+      <tbody>
+        <tr>
+          <td>
+            <table style={{width: '100%'}}>
+              <tbody>
+                {data.groups.map((group, i) => {
+                  const sanitizedValue = group.value.replace(LINEBREAK_REGEX, '\\n');
 
-        return (
-          <li key={i} className="cluster-value">
-            <code>{sanitizedValue}</code>
-          </li>
-        );
-      })}
-    </ul>
+                  const adjustedWidth = width - 105 - 60 - 10;
+
+                  return (
+                    <tr key={i}>
+                      <td className="cluster-rowcount">
+                        {NUMBER_FORMAT(group.rows.length)}
+                      </td>
+                      <td className="cluster-value" style={{width: `${adjustedWidth}px`}}>
+                        <code style={{maxWidth: `${adjustedWidth}px`}}>{sanitizedValue}</code>
+                      </td>
+                      <td className="cluster-remove-value">
+                        <div data-for="help" data-tip="Remove">
+                          <a>-</a>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+                <tr>
+                  <td className="cluster-rowcount" />
+                  <td>
+                    {ARROW_DOWN}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="cluster-rowcount" />
+                  <td>
+                    <input
+                      className="cluster-harmonized-value"
+                      spellCheck={false}
+                      type="text"
+                      value={data.harmonizedValue} />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td className="cluster-actions" style={{width: '105px'}}>
+            <div style={{marginBottom: '5px'}}>
+              <Button size="small" outlined>Harmonize</Button>
+            </div>
+            <div style={{marginBottom: '20px'}}>
+              <Button size="small" inverted>Drop</Button>
+            </div>
+            <div>
+              <Button size="small" inverted>Explore</Button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 }
 
@@ -122,14 +175,14 @@ s
                   const cluster = clusters.get(index);
 
                   // Estimated height in pixels
-                  return 35 + (cluster.groups.length * 31);
+                  return 40 + (24 * 2) + (cluster.groups.length * 45);
                 }}
                 rowRenderer={({index, style}) => {
                   const cluster = clusters.get(index);
 
                   return (
                     <div key={`${cluster.key}§${index}`} style={style}>
-                      <Cluster data={cluster} />
+                      <Cluster number={index} data={cluster} width={width} />
                     </div>
                   );
                 }} />

@@ -477,7 +477,7 @@ $aside-width: 44px;
   height: calc(100% - 10px);
   overflow-y: auto;
 
-  padding: 0px 10px;
+  padding-left: 20px;
 
   .clusters-sorting-options {
     font-size: 0.8em;
@@ -488,14 +488,50 @@ $aside-width: 44px;
   .cluster {
 
     padding-left: 30px;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     margin-top: 10px;
 
+    .cluster-rowcount {
+      width: 60px;
+      min-width: 60px;
+      color: $grey;
+      font-size: 0.875em;
+      padding: 0.25em 0.5em 0.25em;
+      vertical-align: top;
+    }
+
     .cluster-value {
-      margin-bottom: 5px;
-      font-size: 1.1em;
-      white-space: pre;
       cursor: pointer;
+
+      code {
+        display: inline-block;
+        white-space: pre;
+        overflow: auto;
+      }
+    }
+
+    .cluster-remove-value a {
+      text-decoration: none;
+    }
+
+    .cluster-harmonized-value {
+      width: 100%;
+      font-family: $family-monospace;
+      font-size: 0.875em;
+      border: none;
+      border-bottom: 1px solid $grey-lighter;
+      padding: 0.25em 0.5em 0.25em;
+
+      &:focus {
+        outline: none;
+        border-bottom: 1px solid $grey;
+      }
+
+      transition: border 0.4s;
+    }
+
+    .cluster-actions {
+      padding-left: 10px;
     }
   }
 }
