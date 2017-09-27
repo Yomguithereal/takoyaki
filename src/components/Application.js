@@ -97,7 +97,6 @@ export default connectToStore(function Application(props) {
         </section>
       </div>
       <Tooltip id="icons" effect="solid" place="right" />
-      <Tooltip id="help" effect="solid" place="top" />
     </main>
   );
 });

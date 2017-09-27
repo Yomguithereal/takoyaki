@@ -104,6 +104,7 @@ class ClustersPage extends Component {
             </div>
             <div className="column" style={{height: '100%'}}>
               <ClusterList
+                actions={actions}
                 header={main.clusteredHeader}
                 selectedRecipe={recipe}
                 clusters={main.clusters}

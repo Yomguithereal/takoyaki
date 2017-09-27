@@ -8,6 +8,8 @@ import React, {Component} from 'react';
 import {format} from 'd3-format';
 import cls from 'classnames';
 
+import Button from '../../Button';
+
 import CLUSTERERS from '../../../definitions/clusterers';
 
 /**
@@ -38,7 +40,7 @@ function Recipe(props) {
   const computations = clusterer.estimate(cardinality);
 
   return (
-    <ul
+    <li
       className={cls('recipe', selected && 'selected')}
       onClick={() => selectRecipe(recipe.id)}>
       <div>
@@ -53,7 +55,7 @@ function Recipe(props) {
           </p>
         </div>
       </div>
-    </ul>
+    </li>
   );
 }
 
@@ -81,6 +83,11 @@ export default class RecipeList extends Component {
               selectRecipe={selectRecipe} />
           );
         })}
+        <li>
+          <Button style={{width: '100%'}}>
+            Create a custom recipe
+          </Button>
+        </li>
       </ul>
     );
   }

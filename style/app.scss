@@ -396,54 +396,6 @@ $aside-width: 44px;
 }
 
 // ClustersPage
-.clusters-description {
-
-}
-
-.cluster-information {
-  margin-bottom: 35px;
-
-  .cluster-value-list {
-    margin-top: 10px;
-    padding-left: 25px;
-    width: 100%;
-
-    .cluster-value {
-      white-space: pre;
-      cursor: pointer;
-    }
-
-    th {
-      font-size: 0.9em;
-    }
-
-    .cluster-value-rows {
-      width: 80px;
-    }
-  }
-
-  .cluster-merger {
-    margin-top: 10px;
-    font-size: 0.9em;
-
-    .cluster-harmonized-value {
-      margin-left: 5px;
-      width: 600px;
-      font-family: $family-monospace;
-      font-size: 1.1em;
-      border: none;
-      border-bottom: 1px solid $grey-lighter;
-
-      &:focus {
-        outline: none;
-        border-bottom: 1px solid $grey;
-      }
-
-      transition: border 0.4s;
-    }
-  }
-}
-
 .recipe-list {
   height: calc(100% - 10px);
   overflow-y: auto;
@@ -498,6 +450,10 @@ $aside-width: 44px;
       font-size: 0.875em;
       padding: 0.25em 0.5em 0.25em;
       vertical-align: top;
+
+      &.return-arrow {
+        color: $black;
+      }
     }
 
     .cluster-value {
@@ -510,8 +466,13 @@ $aside-width: 44px;
       }
     }
 
-    .cluster-remove-value a {
-      text-decoration: none;
+    .cluster-remove-value {
+      text-align: center;
+      font-weight: bold;
+
+      a {
+        text-decoration: none;
+      }
     }
 
     .cluster-harmonized-value {
