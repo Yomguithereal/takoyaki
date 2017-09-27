@@ -82,7 +82,7 @@ function Cluster(props) {
                         <code style={{maxWidth: `${adjustedWidth}px`}}>{sanitizedValue}</code>
                       </td>
                       <td className="cluster-remove-value">
-                        <div>
+                        <div onClick={() => actions.removeValueFromCluster(number, i)}>
                           <a>-</a>
                         </div>
                       </td>
