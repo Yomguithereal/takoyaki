@@ -15,7 +15,7 @@ import Button from '../../Button';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as mainActions, selectors as mainSelectors} from '../../../modules/main';
-import {selectors as recipeSelectors} from '../../../modules/recipes';
+import {actions as recipeActions, selectors as recipeSelectors} from '../../../modules/recipes';
 
 /**
  * Connection to store.
@@ -30,7 +30,8 @@ const connectToStore = connect(
   },
   dispatch => {
     return {
-      actions: bindActionCreators(mainActions, dispatch)
+      actions: bindActionCreators(mainActions, dispatch),
+      recipeActions: bindActionCreators(recipeActions, dispatch)
     };
   }
 );
@@ -44,6 +45,7 @@ class ClustersPage extends Component {
 
     this.runSelectedRecipe = this.runSelectedRecipe.bind(this);
     this.sortClusters = this.sortClusters.bind(this);
+    this.createRecipe = this.createRecipe.bind(this);
   }
 
   runSelectedRecipe(recipeId) {
@@ -78,6 +80,16 @@ class ClustersPage extends Component {
     return actions.sortClusters(by, order);
   }
 
+  createRecipe() {
+    const {
+      actions,
+      recipeActions
+    } = this.props;
+
+    recipeActions.create();
+    actions.changeStep('recipe');
+  }
+
   render() {
     const {
       actions,
@@ -88,7 +100,7 @@ class ClustersPage extends Component {
     } = this.props;
 
     const cardinality = (main.clusteredHeader && main.values) ?
-      main.values[main.clusteredHeader].length :
+      main.values[main.clusteredHeader].dimension :
       0;
 
     return (
@@ -100,7 +112,8 @@ class ClustersPage extends Component {
                 selectedRecipe={recipe}
                 recipes={availableRecipes}
                 cardinality={cardinality}
-                selectRecipe={this.runSelectedRecipe} />
+                selectRecipe={this.runSelectedRecipe}
+                create={this.createRecipe} />
             </div>
             <div className="column" style={{height: '100%'}}>
               <ClusterList

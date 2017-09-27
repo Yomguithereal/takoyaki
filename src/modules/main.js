@@ -7,12 +7,12 @@
 import CSV from 'papaparse';
 import Immutable from 'immutable';
 import MultiSet from 'mnemonist/multi-set';
-import sortBy from 'lodash/sortBy';
 import {saveAs} from 'file-saver';
 import naiveSample from 'pandemonium/naive-sample';
 import {createSelector} from 'reselect';
 import {createReducer} from './helpers';
 import {sortedRecipes} from '../definitions/helpers';
+import sortBy from 'lodash/sortBy';
 import CLUSTERERS from '../definitions/clusterers';
 import ClusteringWorker from '../workers/clustering.worker.js';
 
@@ -117,7 +117,23 @@ export const selectors = {
       values[i] = data[i][selectedHeader];
 
     return values;
-  }
+  },
+
+  sortedValues: createSelector(
+    state => state.main.values,
+    values => {
+      const sortedValues = {};
+
+      for (const header in values)
+        sortedValues[header] = sortBy(
+          Array.from(values[header].multiplicities()),
+          v => -v[1],
+          v => v[0]
+        );
+
+      return sortedValues;
+    }
+  )
 };
 
 /**
@@ -171,11 +187,7 @@ export default createReducer(DEFAULT_STATE, {
       for (let j = 0, m = data.length; j < m; j++)
         set.add(data[j][header]);
 
-      values[header] = Array.from(set.multiplicities());
-      values[header] = sortBy(values[header], [
-        v => -v[1],
-        v => v[0]
-      ]);
+      values[header] = set;
     }
 
     return {
@@ -288,9 +300,22 @@ export default createReducer(DEFAULT_STATE, {
       });
     });
 
+    // Updating values
+    const values = state.values[state.clusteredHeader];
+
+    harmonizedCluster.groups.forEach(group => {
+      if (group.value === harmonizedCluster.harmonizedValue)
+        return;
+
+      values.edit(group.value, harmonizedCluster.harmonizedValue);
+    });
+
     return {
       ...state,
-      clusters: newClusters
+      clusters: newClusters,
+      values: {
+        ...state.values
+      }
     };
   },
 

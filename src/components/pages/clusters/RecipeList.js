@@ -68,7 +68,8 @@ export default class RecipeList extends Component {
       cardinality,
       recipes,
       selectedRecipe,
-      selectRecipe
+      selectRecipe,
+      create
     } = this.props;
 
     return (
@@ -84,7 +85,7 @@ export default class RecipeList extends Component {
           );
         })}
         <li>
-          <Button style={{width: '100%'}}>
+          <Button onClick={create} style={{width: '100%'}}>
             Create a custom recipe
           </Button>
         </li>

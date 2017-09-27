@@ -15,7 +15,7 @@ import AffixTitle from '../../AffixTitle';
 import {Level, LevelLeft, LevelRight, LevelItem} from '../../levels';
 
 import {actions as globalActions} from '../../../modules/global';
-import {actions as mainActions} from '../../../modules/main';
+import {actions as mainActions, selectors as mainSelectors} from '../../../modules/main';
 
 /**
  * Connection to store.
@@ -23,7 +23,8 @@ import {actions as mainActions} from '../../../modules/main';
 const connectToStore = connect(
   state => {
     return {
-      main: state.main
+      main: state.main,
+      sortedValues: mainSelectors.sortedValues(state)
     };
   },
   dispatch => {
@@ -42,10 +43,6 @@ class UploadPage extends Component {
     super(props, context);
 
     this.selectHeader = this.selectHeader.bind(this);
-    // this.selectRecipe = this.selectRecipe.bind(this);
-    // this.createRecipe = this.createRecipe.bind(this);
-    // this.editRecipe = this.editRecipe.bind(this);
-    // this.deleteRecipe = this.deleteRecipe.bind(this);
     this.backToUpload = this.backToUpload.bind(this);
   }
 
@@ -59,43 +56,6 @@ class UploadPage extends Component {
     actions.changeStep('clusters');
   }
 
-  // selectRecipe(option) {
-  //   if (!option)
-  //     return this.props.actions.selectRecipe(null);
-
-  //   this.props.actions.selectRecipe(option.value);
-  // }
-
-  // createRecipe() {
-  //   const {
-  //     actions,
-  //     recipesActions: recipes
-  //   } = this.props;
-
-  //   recipes.create();
-  //   actions.changeStep('recipe');
-  // }
-
-  // editRecipe() {
-  //   const {
-  //     actions,
-  //     recipesActions: recipes
-  //   } = this.props;
-
-  //   recipes.select(this.props.main.selectedRecipe);
-  //   actions.changeStep('recipe');
-  // }
-
-  // deleteRecipe() {
-  //   const {
-  //     actions,
-  //     recipesActions: recipes
-  //   } = this.props;
-
-  //   actions.selectRecipe(null);
-  //   recipes.delete(this.props.main.selectedRecipe);
-  // }
-
   backToUpload() {
 
     // TODO: modal warning that we will erase everything!
@@ -105,7 +65,8 @@ class UploadPage extends Component {
   render() {
     const {
       actions,
-      main
+      main,
+      sortedValues
     } = this.props;
 
     return (
@@ -123,7 +84,7 @@ class UploadPage extends Component {
                     index={i}
                     header={header}
                     select={this.selectHeader}
-                    values={main.values[header]} />
+                    values={sortedValues[header]} />
                 );
               })
             }
