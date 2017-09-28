@@ -382,16 +382,9 @@ $aside-width: 44px;
   .card-footer {
     border-top: none;
   }
-}
 
-.card-footer-item-button {
-  background-color: $primary;
-  color: white;
-  text-decoration: none;
-
-  &:hover {
-    background-color: darken($primary, 2.5%);
-    color: white;
+  .card-footer-item-button {
+    height: 48px;
   }
 }
 

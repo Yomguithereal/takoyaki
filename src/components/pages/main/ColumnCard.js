@@ -9,6 +9,7 @@ import React, {Component} from 'react';
 import {format} from 'd3-format';
 import {AutoSizer, Table, Column} from 'react-virtualized';
 import {replaceSingleCharacter} from '../../helpers';
+import Button from '../../Button';
 
 /**
  * Formats.
@@ -27,6 +28,30 @@ export default class ColumnCard extends Component {
       select,
       values
     } = this.props;
+
+    if (!values)
+      return (
+        <div className="column-card">
+          <div className="card">
+            <header className="card-header">
+              <p className="card-header-title">
+                {index + 1}. {header}
+              </p>
+            </header>
+            <div className="card-content" style={{height: `${328}px`}}>
+              <em>This column does not contain string values.</em>
+            </div>
+            <footer className="card-footer">
+              <Button
+                disabled
+                className="card-footer-item card-footer-item-button"
+                onClick={() => select(header)}>
+                Cluster & Edit
+              </Button>
+            </footer>
+          </div>
+        </div>
+      );
 
     return (
       <div className="column-card">
@@ -95,11 +120,11 @@ export default class ColumnCard extends Component {
             </AutoSizer>
           </div>
           <footer className="card-footer">
-            <a
+            <Button
               className="card-footer-item card-footer-item-button"
               onClick={() => select(header)}>
               Cluster & Edit
-            </a>
+            </Button>
           </footer>
         </div>
       </div>

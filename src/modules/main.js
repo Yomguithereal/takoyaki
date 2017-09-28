@@ -13,6 +13,7 @@ import {createSelector} from 'reselect';
 import {createReducer} from './helpers';
 import {sortedRecipes} from '../definitions/helpers';
 import sortBy from 'lodash/sortBy';
+import {testColumnForStringValues} from '../lib/heuristics';
 import CLUSTERERS from '../definitions/clusterers';
 import ClusteringWorker from '../workers/clustering.worker.js';
 
@@ -181,6 +182,9 @@ export default createReducer(DEFAULT_STATE, {
     // Grabbing unique values
     for (let i = 0, l = headers.length; i < l; i++) {
       const header = headers[i];
+
+      if (!testColumnForStringValues(header, data))
+        continue;
 
       const set = new MultiSet();
 
