@@ -84,7 +84,7 @@ function Cluster(props) {
                       </td>
                       <td className="cluster-remove-value">
                         <div onClick={() => actions.removeValueFromCluster(number, i)}>
-                          <a>-</a>
+                          <a>×</a>
                         </div>
                       </td>
                     </tr>
