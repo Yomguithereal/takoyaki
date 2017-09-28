@@ -76,6 +76,7 @@ function Cluster(props) {
                         {NUMBER_FORMAT(group.rows.length)}
                       </td>
                       <td
+                        title={group.value}
                         className="cluster-value"
                         style={{width: `${adjustedWidth}px`}}
                         onClick={() => actions.updateHarmonizedValue(number, group.value)}>

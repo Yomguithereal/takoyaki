@@ -455,7 +455,8 @@ $aside-width: 44px;
       code {
         display: inline-block;
         white-space: pre;
-        overflow: auto;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
     }
 
