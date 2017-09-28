@@ -14,7 +14,6 @@ import {createReducer} from './helpers';
 import {sortedRecipes} from '../definitions/helpers';
 import sortBy from 'lodash/sortBy';
 import {testColumnForStringValues} from '../lib/heuristics';
-import CLUSTERERS from '../definitions/clusterers';
 import ClusteringWorker from '../workers/clustering.worker.js';
 
 import {GLOBAL_RESET} from './global';

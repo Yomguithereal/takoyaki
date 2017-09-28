@@ -30,8 +30,10 @@ const connectToStore = connect(
   },
   dispatch => {
     return {
-      actions: bindActionCreators(mainActions, dispatch),
-      recipeActions: bindActionCreators(recipeActions, dispatch)
+      actions: {
+        main: bindActionCreators(mainActions, dispatch),
+        recipe: bindActionCreators(recipeActions, dispatch)
+      }
     };
   }
 );
@@ -59,8 +61,8 @@ class ClustersPage extends Component {
     if (recipe && recipeId === recipe.id)
       return;
 
-    actions.selectRecipe(recipeId);
-    actions.runRecipe();
+    actions.main.selectRecipe(recipeId);
+    actions.main.runRecipe();
   }
 
   sortClusters(by) {
@@ -72,43 +74,40 @@ class ClustersPage extends Component {
     const currentSorting = main.clustersSorting;
 
     if (currentSorting.by === by)
-      return actions.sortClusters(by, currentSorting.order === 'asc' ? 'desc' : 'asc');
+      return actions.main.sortClusters(by, currentSorting.order === 'asc' ? 'desc' : 'asc');
 
     let order = 'asc';
 
     if (by === 'rows')
       order = 'desc';
 
-    return actions.sortClusters(by, order);
+    return actions.main.sortClusters(by, order);
   }
 
   createRecipe() {
     const {
-      actions,
-      recipeActions
+      actions
     } = this.props;
 
-    recipeActions.create();
-    actions.changeStep('recipe');
+    actions.recipe.create();
+    actions.main.changeStep('recipe');
   }
 
   editRecipe(recipe) {
     const {
-      actions,
-      recipeActions
+      actions
     } = this.props;
 
-    recipeActions.select(recipe);
-    actions.changeStep('recipe');
+    actions.recipe.select(recipe);
+    actions.main.changeStep('recipe');
   }
 
   deleteRecipe(recipe) {
     const {
-      actions,
-      recipeActions
+      actions
     } = this.props;
 
-    recipeActions.delete(recipe);
+    actions.recipe.delete(recipe);
     // TODO: modal warning
   }
 
@@ -141,7 +140,7 @@ class ClustersPage extends Component {
             </div>
             <div className="column" style={{height: '100%'}}>
               <ClusterList
-                actions={actions}
+                actions={actions.main}
                 header={main.clusteredHeader}
                 selectedRecipe={recipe}
                 clusters={main.clusters}
@@ -155,7 +154,7 @@ class ClustersPage extends Component {
             <LevelItem>
               <Button
                 outlined
-                onClick={() => actions.changeStep('main')}>
+                onClick={() => actions.main.changeStep('main')}>
                 Back
               </Button>
             </LevelItem>
@@ -164,7 +163,7 @@ class ClustersPage extends Component {
             <LevelItem>
               <Button
                 loading={main.clustering}
-                onClick={actions.runRecipe}>
+                onClick={actions.main.runRecipe}>
                 Re-cluster
               </Button>
             </LevelItem>
