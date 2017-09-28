@@ -48,7 +48,12 @@ export default function IconBar(props) {
       <li
         data-tip="Upload a file"
         data-for="icons"
-        onClick={() => canNavigate(main, 'upload') && actions.changeStep('upload')}
+        onClick={() => {
+          if (canNavigate(main, 'upload')) {
+            actions.global.reset();
+            actions.main.changeStep('upload');
+          }
+        }}
         className={cls(
           'icon-item',
           step === 'upload' && 'active',
@@ -59,7 +64,7 @@ export default function IconBar(props) {
       <li
         data-tip="Choose a recipe"
         data-for="icons"
-        onClick={() => canNavigate(main, 'main') && actions.changeStep('main')}
+        onClick={() => canNavigate(main, 'main') && actions.main.changeStep('main')}
         className={cls(
           'icon-item',
           step === 'main' && 'active',
@@ -70,7 +75,7 @@ export default function IconBar(props) {
       <li
         data-tip="Check found clusters"
         data-for="icons"
-        onClick={() => canNavigate(main, 'clusters') && actions.changeStep('clusters')}
+        onClick={() => canNavigate(main, 'clusters') && actions.main.changeStep('clusters')}
         className={cls(
           'icon-item',
           step === 'clusters' && 'active',
@@ -81,7 +86,7 @@ export default function IconBar(props) {
       <li
         data-tip="Explore a single cluster"
         data-for="icons"
-        onClick={() => canNavigate(main, 'exploration') && actions.changeStep('exploration')}
+        onClick={() => canNavigate(main, 'exploration') && actions.main.changeStep('exploration')}
         className={cls(
           'icon-item',
           step === 'exploration' && 'active',

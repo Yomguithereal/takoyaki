@@ -361,11 +361,11 @@ $aside-width: 44px;
 // MainPage
 .column-card {
   padding: 10px;
-  width: 50%;
+  width: 33%;
 
-  @media screen and (min-width: 1300px) {
-    width: 33%;
-  }
+  // @media screen and (min-width: 1300px) {
+  //   width: 33%;
+  // }
 
   .column-card-value {
     font-family: $family-monospace;

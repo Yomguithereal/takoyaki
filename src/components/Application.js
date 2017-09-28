@@ -17,6 +17,7 @@ import ExplorationPage from './pages/exploration/ExplorationPage';
 import RecipePage from './pages/recipe/RecipePage';
 
 import {actions as mainActions} from '../modules/main';
+import {actions as globalActions} from '../modules/global';
 
 /**
  * Routing function.
@@ -50,7 +51,10 @@ const connectToStore = connect(
   },
   dispatch => {
     return {
-      actions: bindActionCreators(mainActions, dispatch)
+      actions: {
+        main: bindActionCreators(mainActions, dispatch),
+        global: bindActionCreators(globalActions, dispatch)
+      }
     };
   }
 );
@@ -77,7 +81,7 @@ export default connectToStore(function Application(props) {
     if (step === 'main')
       return;
 
-    return actions.changeStep('main');
+    return actions.main.changeStep('main');
   };
 
   return (
