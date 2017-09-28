@@ -46,6 +46,8 @@ class ClustersPage extends Component {
     this.runSelectedRecipe = this.runSelectedRecipe.bind(this);
     this.sortClusters = this.sortClusters.bind(this);
     this.createRecipe = this.createRecipe.bind(this);
+    this.editRecipe = this.editRecipe.bind(this);
+    this.deleteRecipe = this.deleteRecipe.bind(this);
   }
 
   runSelectedRecipe(recipeId) {
@@ -54,7 +56,7 @@ class ClustersPage extends Component {
       recipe,
     } = this.props;
 
-    if (recipeId === recipe.id)
+    if (recipe && recipeId === recipe.id)
       return;
 
     actions.selectRecipe(recipeId);
@@ -90,6 +92,26 @@ class ClustersPage extends Component {
     actions.changeStep('recipe');
   }
 
+  editRecipe(recipe) {
+    const {
+      actions,
+      recipeActions
+    } = this.props;
+
+    recipeActions.select(recipe);
+    actions.changeStep('recipe');
+  }
+
+  deleteRecipe(recipe) {
+    const {
+      actions,
+      recipeActions
+    } = this.props;
+
+    recipeActions.delete(recipe);
+    // TODO: modal warning
+  }
+
   render() {
     const {
       actions,
@@ -113,7 +135,9 @@ class ClustersPage extends Component {
                 recipes={availableRecipes}
                 cardinality={cardinality}
                 selectRecipe={this.runSelectedRecipe}
-                create={this.createRecipe} />
+                createRecipe={this.createRecipe}
+                editRecipe={this.editRecipe}
+                deleteRecipe={this.deleteRecipe} />
             </div>
             <div className="column" style={{height: '100%'}}>
               <ClusterList

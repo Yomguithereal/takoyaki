@@ -32,12 +32,26 @@ function Recipe(props) {
     cardinality,
     recipe,
     selectRecipe,
+    editRecipe,
+    deleteRecipe,
     selected = false
   } = props;
 
   const clusterer = CLUSTERERS[recipe.clusterer];
 
   const computations = clusterer.estimate(cardinality);
+
+  const handleEditRecipe = e => {
+    e.stopPropagation();
+
+    editRecipe(recipe.id);
+  };
+
+  const handleDeleteRecipe = e => {
+    e.stopPropagation();
+
+    deleteRecipe(recipe.id);
+  };
 
   return (
     <li
@@ -50,9 +64,14 @@ function Recipe(props) {
             {recipe.description}
           </p>
           <p className="recipe-description">
-            Running this recipe requires approx. <span className="highlight">{COMPUTATIONS_FORMAT(computations)}</span>
+            Running this recipe requires ~ <span className="highlight">{COMPUTATIONS_FORMAT(computations)}</span>
             &nbsp;computations.
           </p>
+          {recipe.addedByUser && (
+            <div className="recipe-description">
+              <a onClick={handleEditRecipe}>edit</a>, <a onClick={handleDeleteRecipe}>delete</a>
+            </div>
+          )}
         </div>
       </div>
     </li>
@@ -69,7 +88,9 @@ export default class RecipeList extends Component {
       recipes,
       selectedRecipe,
       selectRecipe,
-      create
+      createRecipe,
+      editRecipe,
+      deleteRecipe
     } = this.props;
 
     return (
@@ -81,11 +102,13 @@ export default class RecipeList extends Component {
               cardinality={cardinality}
               recipe={recipe}
               selected={selectedRecipe && selectedRecipe.id === recipe.id}
-              selectRecipe={selectRecipe} />
+              selectRecipe={selectRecipe}
+              editRecipe={editRecipe}
+              deleteRecipe={deleteRecipe} />
           );
         })}
         <li>
-          <Button onClick={create} style={{width: '100%'}}>
+          <Button onClick={createRecipe} style={{width: '100%'}}>
             Create a custom recipe
           </Button>
         </li>

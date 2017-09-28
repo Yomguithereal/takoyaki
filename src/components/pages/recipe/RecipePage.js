@@ -52,7 +52,8 @@ class UploadPage extends Component {
     const {actions} = this.props;
 
     actions.main.selectRecipe(this.props.recipe.id);
-    actions.main.changeStep('main');
+    actions.main.runRecipe();
+    actions.main.changeStep('clusters');
   }
 
   render() {

@@ -171,6 +171,15 @@ s
     if (!clusters)
       return null;
 
+    if (!selectedRecipe)
+      return (
+        <div className="cluster-list">
+          <div>
+            Select a recipe to start finding clusters.
+          </div>
+        </div>
+      );
+
     return (
       <div className="cluster-list">
         <div>
